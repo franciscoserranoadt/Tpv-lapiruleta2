@@ -13,6 +13,8 @@
   <style>body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }</style>
 </head>
 <body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-24">
+  
+  <!-- CABECERA -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
     <div class="flex items-center gap-3">
       <a href="03-tickets-mesas.html" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700">
@@ -27,83 +29,58 @@
       <a href="13-config-impresoras.html" class="p-2 rounded-xl bg-stone-100 text-stone-700">
         <i data-lucide="printer" class="w-5 h-5"></i>
       </a>
-      <div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs">SM</div>
+      <div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs">LP</div>
     </div>
   </header>
 
-  <main class="p-3 max-w-lg mx-auto space-y-3">
+  <main class="p-4 max-w-lg mx-auto space-y-4">
+    <!-- BARRA BÚSQUEDA Y CATEGORÍAS -->
     <div class="relative">
       <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-stone-400"></i>
       <input type="text" placeholder="Buscar producto o código..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
     </div>
 
-    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-      <button class="px-3.5 py-1.5 rounded-lg bg-stone-900 text-white text-xs font-bold whitespace-nowrap">Todos (24)</button>
-      <button class="px-3.5 py-1.5 rounded-lg bg-white border border-stone-200 text-stone-600 text-xs font-semibold whitespace-nowrap">☕ Cafetería (8)</button>
-      <button class="px-3.5 py-1.5 rounded-lg bg-white border border-stone-200 text-stone-600 text-xs font-semibold whitespace-nowrap">🥐 Bollería (6)</button>
-      <button class="px-3.5 py-1.5 rounded-lg bg-white border border-stone-200 text-stone-600 text-xs font-semibold whitespace-nowrap">🥖 Panadería (4)</button>
+    <!-- Píldoras de Categorías -->
+    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center">
+      <button class="px-3.5 py-1.5 rounded-lg bg-stone-900 text-white text-xs font-bold whitespace-nowrap">Todos (0)</button>
+      <a href="10-catalogo-stock.html" class="px-3.5 py-1.5 rounded-lg bg-white border border-dashed border-stone-300 text-stone-500 hover:text-stone-800 text-xs font-semibold whitespace-nowrap flex items-center gap-1">
+        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Añadir categorías
+      </a>
     </div>
 
-    <div class="grid grid-cols-2 gap-2.5">
-      <div class="bg-white p-3 rounded-2xl border border-stone-200/80 shadow-sm flex flex-col justify-between active:scale-95 transition-transform cursor-pointer">
-        <div>
-          <span class="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-md font-medium">Café Arábica</span>
-          <h3 class="font-bold text-sm text-stone-900 mt-1">Café con leche</h3>
-        </div>
-        <div class="flex items-center justify-between mt-3">
-          <span class="font-extrabold text-[#1b7a4a] text-base">1,70 €</span>
-          <span class="w-7 h-7 rounded-full bg-emerald-50 text-[#1b7a4a] flex items-center justify-center font-bold text-lg">+</span>
-        </div>
+    <!-- ESTADO VACÍO (SIN PRODUCTOS FICTICIOS) -->
+    <div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-6">
+      <div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
+        <i data-lucide="shopping-bag" class="w-8 h-8 text-stone-400"></i>
       </div>
-
-      <div class="bg-white p-3 rounded-2xl border border-stone-200/80 shadow-sm flex flex-col justify-between active:scale-95 transition-transform cursor-pointer">
-        <div>
-          <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md font-medium">14 disp.</span>
-          <h3 class="font-bold text-sm text-stone-900 mt-1">Croissant Mantequilla</h3>
-        </div>
-        <div class="flex items-center justify-between mt-3">
-          <span class="font-extrabold text-[#1b7a4a] text-base">1,90 €</span>
-          <span class="w-7 h-7 rounded-full bg-emerald-50 text-[#1b7a4a] flex items-center justify-center font-bold text-lg">+</span>
-        </div>
+      <div class="space-y-1">
+        <h3 class="font-bold text-base text-stone-900">Catálogo limpio y listo</h3>
+        <p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
+          No hay artículos de ejemplo cargados. Añade tus propios productos reales para empezar a registrar ventas en caja.
+        </p>
       </div>
-
-      <div class="bg-white p-3 rounded-2xl border border-stone-200/80 shadow-sm flex flex-col justify-between active:scale-95 transition-transform cursor-pointer">
-        <div>
-          <span class="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-md font-medium">8 disp.</span>
-          <h3 class="font-bold text-sm text-stone-900 mt-1">Napolitana Chocolate</h3>
-        </div>
-        <div class="flex items-center justify-between mt-3">
-          <span class="font-extrabold text-[#1b7a4a] text-base">2,20 €</span>
-          <span class="w-7 h-7 rounded-full bg-emerald-50 text-[#1b7a4a] flex items-center justify-center font-bold text-lg">+</span>
-        </div>
-      </div>
-
-      <div class="bg-white p-3 rounded-2xl border border-stone-200/80 shadow-sm flex flex-col justify-between active:scale-95 transition-transform cursor-pointer">
-        <div>
-          <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md font-medium">Aceite AOVE</span>
-          <h3 class="font-bold text-sm text-stone-900 mt-1">Tostada Jamón Ibérico</h3>
-        </div>
-        <div class="flex items-center justify-between mt-3">
-          <span class="font-extrabold text-[#1b7a4a] text-base">3,80 €</span>
-          <span class="w-7 h-7 rounded-full bg-emerald-50 text-[#1b7a4a] flex items-center justify-center font-bold text-lg">+</span>
-        </div>
-      </div>
+      <a href="10-catalogo-stock.html" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+        <span>Crear mis productos en Catálogo</span>
+      </a>
     </div>
   </main>
 
+  <!-- BARRA DE COBRO TICKET FLOTANTE INFERIOR (ESTADO TICKET VACÍO) -->
   <div class="fixed bottom-14 left-0 right-0 p-3 bg-white/95 backdrop-blur border-t border-stone-200 shadow-md">
     <div class="max-w-lg mx-auto flex items-center justify-between gap-3">
-      <a href="03-tickets-mesas.html" class="flex items-center gap-2 bg-stone-100 px-3.5 py-2.5 rounded-xl text-stone-700 font-bold text-xs">
+      <div class="flex items-center gap-2 bg-stone-50 border border-stone-200 px-3.5 py-2.5 rounded-xl text-stone-400 font-bold text-xs">
         <i data-lucide="receipt" class="w-4 h-4"></i>
-        <span>Mesa 4 • 3 arts.</span>
-      </a>
-      <a href="02-cobro-pagos.html" class="flex-1 bg-[#1b7a4a] hover:bg-[#15613b] text-white py-2.5 px-4 rounded-xl flex items-center justify-between font-bold text-sm shadow">
+        <span>Ticket vacío • 0 arts.</span>
+      </div>
+      <button disabled class="flex-1 bg-stone-200 text-stone-400 py-2.5 px-4 rounded-xl flex items-center justify-between font-bold text-sm cursor-not-allowed">
         <span>COBRAR</span>
-        <span class="bg-white/20 px-2 py-0.5 rounded-lg text-sm">6,50 € ➔</span>
-      </a>
+        <span class="bg-stone-300/50 px-2 py-0.5 rounded-lg text-sm">0,00 €</span>
+      </button>
     </div>
   </div>
 
+  <!-- NAVEGACIÓN INFERIOR (TABS) -->
   <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around">
     <a href="index.html" class="flex flex-col items-center gap-0.5 text-[#1b7a4a]">
       <i data-lucide="calculator" class="w-5 h-5"></i>
