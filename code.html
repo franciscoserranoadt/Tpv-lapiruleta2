@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#fff8f5;}body{overscroll-behavior:none;user-select:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-low": "#fbf2ec", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#00522e", "tertiary": "#674d41", "on-tertiary-container": "#ffe8df", "outline-variant": "#bec9be", "primary": "#006036", "on-tertiary": "#ffffff", "surface-container-highest": "#eae1db", "tertiary-fixed-dim": "#e2bfb0", "primary-fixed-dim": "#80d9a0", "primary-container": "#1b7a4a", "secondary-fixed-dim": "#ffb779", "on-surface": "#1f1b18", "on-primary-fixed": "#00210f", "on-secondary": "#ffffff", "on-surface-variant": "#3f4941", "background": "#fff8f5", "secondary-container": "#fda552", "inverse-primary": "#80d9a0", "secondary": "#8f4e00", "surface": "#fff8f5", "on-secondary-container": "#703c00", "on-secondary-fixed": "#2e1500", "error": "#ba1a1a", "inverse-on-surface": "#f9efe9", "surface-container": "#f6ece7", "surface-dim": "#e1d8d3", "on-primary": "#ffffff", "outline": "#6f7a70", "error-container": "#ffdad6", "on-background": "#1f1b18", "inverse-surface": "#342f2c", "secondary-fixed": "#ffdcc1", "tertiary-container": "#816558", "on-error-container": "#93000a", "surface-variant": "#eae1db", "on-primary-container": "#abffc6", "surface-container-high": "#f0e6e1", "on-error": "#ffffff", "tertiary-fixed": "#ffdbcc", "surface-tint": "#006d3e", "on-secondary-fixed-variant": "#6c3a00", "on-tertiary-fixed": "#2a170e", "primary-fixed": "#9cf6ba", "surface-bright": "#fff8f5", "on-tertiary-fixed-variant": "#5a4136" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "0.5rem", "space-md": "0.75rem", "space-lg": "1rem", "space-xs": "0.25rem", "margin": "0.75rem", "space-sm": "0.5rem", "space-xl": "1.5rem" }, "fontFamily": { "headline-lg": ["Epilogue"], "headline-sm": ["Epilogue"], "body-sm": ["Plus Jakarta Sans"], "label-numeric-sm": ["Space Grotesk"], "label-action": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "label-receipt": ["Space Grotesk"], "label-numeric-lg": ["Space Grotesk"], "label-numeric-md": ["Space Grotesk"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Epilogue"] }, "fontSize": { "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "label-numeric-sm": ["13px", { "lineHeight": "16px", "fontWeight": "600" }], "label-action": ["15px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "22px", "fontWeight": "500" }], "label-receipt": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }], "label-numeric-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-numeric-md": ["18px", { "lineHeight": "22px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(56,35,25,0.06)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button aria-label="Menú principal" class="w-11 h-11 rounded-lg flex items-center justify-center text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs"><img alt="Logo La Piruleta" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V1FnFR6e1DBO5Vyj7RP37jXnC5y_h_Y8npKYfpE48WVObMbrxV9cam2PbhXyhPvKYkgGtwA_3sgcq5cn9LTJ5ZCA1uAInvjVxmezU3aPCsCRTDvpYE6hvSl2jpMK0egbJeitcAtp8bJ3rktja6pNZiFzjbs_qegf0-xpOBbEBymPSvMXtN-T6nNPCL3stUnAD6na_nGfrvSErrgSx9E7WSsj5V2iqyUYn_LyVI-9xaS9frSlGS0c1JQLFK"/><div class="hidden xs:flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-none">La Piruleta</span><span class="font-body-sm text-body-sm text-tertiary leading-tight">Ventas</span></div></div></div><div class="flex items-center gap-space-sm"><div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary/10 text-primary"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-numeric-sm text-label-numeric-sm font-semibold tracking-tight whitespace-nowrap">Caja 1 • Turno Abierto</span></div><button aria-label="Buscar o escanear código" class="w-11 h-11 rounded-lg flex items-center justify-center text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">barcode_scanner</span></button><button aria-label="Perfil de empleado" class="w-11 h-11 flex items-center justify-center rounded-full hover:ring-2 hover:ring-primary/20 transition-all" type="button"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDswdvxBPf8YVrX4CsS0-9QiQZwtf0PX3Y12KU1GkVAdyxK1RMIEfP1bfNDCsLrr-6LQKl0XKXEwPzjPtpe6hY78tNimffJGtWS4vTgp4N6pfdbduhe5xdvAsxgklMLohRgzq5yXIgSk6Ku4WxpzqIa7spu0E5-jRLWzCapgun2G_kmm74XZI2qISoqnFockVyQnUvx5tfvauHH6YNoa1IaIP58wtBroLsHh8iQIfEn6BYJOoGnYyETjA"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface"><div class="flex flex-col w-full pb-6 px-margin gap-space-md">
+<!-- Resumen superior / Cabecera de módulo -->
+<section class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface">Clientes &amp; Fidelidad</span>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-body-sm text-body-sm">184 clientes registrados en TPV</span>
+</div>
+</div>
+<button class="inline-flex items-center gap-1.5 px-space-md py-2.5 rounded-xl bg-primary text-on-primary shadow-sm active:translate-y-0.5 active:shadow-none transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">person_add</span>
+<span class="font-label-action text-label-action whitespace-nowrap">+ Nuevo Cliente</span>
+</button>
+</div>
+<!-- Buscador táctil amplio con escaneo -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest rounded-xl p-1 shadow-sm">
+<div class="flex items-center flex-1 px-space-sm gap-2">
+<span class="material-symbols-outlined text-[22px] text-tertiary">search</span>
+<input class="w-full bg-transparent py-2.5 text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none" placeholder="Buscar por nombre, teléfono (#600...), email..." type="text"/>
+</div>
+<button aria-label="Escanear tarjeta cliente" class="h-11 w-11 flex items-center justify-center rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high active:bg-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">qr_code_scanner</span>
+</button>
+</div>
+</section>
+<!-- Programa PiruClub & Métricas Rápidas -->
+<section class="flex flex-col gap-space-xs">
+<!-- Regla activa del club -->
+<div class="bg-secondary-fixed/50 rounded-xl p-space-sm flex items-center justify-between gap-space-sm shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">loyalty</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-action text-label-action text-on-secondary-container">PiruClub Pan &amp; Café</span>
+<span class="font-label-receipt text-label-receipt text-tertiary">1 € gastado = 10 pts • 100 pts = 1,00 € descuento</span>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-primary/15 text-primary font-label-receipt text-label-receipt font-bold">Activo</span>
+</div>
+<!-- Mini métricas del día -->
+<div class="grid grid-cols-3 gap-space-xs">
+<div class="bg-surface-container-lowest rounded-xl p-2.5 flex flex-col gap-0.5 shadow-sm">
+<span class="font-body-sm text-[11px] text-tertiary leading-tight truncate">Canjeados hoy</span>
+<span class="font-label-numeric-md text-label-numeric-md text-primary font-bold">450 <span class="text-[12px] font-normal">pts</span></span>
+<span class="font-label-receipt text-[10px] text-on-surface-variant">4,50 € descontados</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-2.5 flex flex-col gap-0.5 shadow-sm">
+<span class="font-body-sm text-[11px] text-tertiary leading-tight truncate">Fidelizados hoy</span>
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold">18</span>
+<span class="font-label-receipt text-[10px] text-primary font-medium">Ticket prom. 8,40€</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-2.5 flex flex-col gap-0.5 shadow-sm">
+<span class="font-body-sm text-[11px] text-tertiary leading-tight truncate">Saldo Cartera</span>
+<span class="font-label-numeric-md text-label-numeric-md text-secondary font-bold">342,80 <span class="text-[12px] font-normal">€</span></span>
+<span class="font-label-receipt text-[10px] text-on-surface-variant">Prepago activo</span>
+</div>
+</div>
+</section>
+<!-- Ficha Destacada: Cliente Seleccionado en Caja -->
+<section class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-md relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-primary/5 pointer-events-none"></div>
+<!-- Info básica de cliente -->
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover shadow-inner" data-alt="A warm and gentle portrait of an elegant Spanish woman in her early thirties enjoying artisan coffee in a sunlit rustic bakery with wooden details and pastry warm light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2YgEJW5GgdUHppU_8-Hf49UlUK5n70NlQ1VtTRcVwlyZ4bdzgxnUfptt8fT7u7ayEd9CC3aiQfXyy-iAes0Wx7k_s8jWPhKUXgUaYcDRdP96Hoku7nzfQRihvt7zIM8SS1gQY07GX-7xEMDN1PvKYR4YlUiHu5Hs5SIRHcX3klCNNQ79XsGdk2FV1IKt3buxwDkOjvTXkMKHnFylks6zmKTNNJ-d-_gXzkiaRWDZiA_--VVTH_ws8fA"/>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-[12px]" title="VIP Oro">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface">Elena Morales</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-receipt text-label-receipt font-bold tracking-wider">VIP ORO</span>
+</div>
+<span class="font-label-numeric-sm text-label-numeric-sm text-tertiary">+34 612 345 678</span>
+<span class="font-body-sm text-[11px] text-outline">Cliente frecuente • Miembro desde Mar 2023</span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors" title="Ver detalles y notas" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Balances y Recompensa Activa -->
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">award_star</span>
+<span class="font-label-receipt text-label-receipt uppercase font-bold tracking-wider">Puntos PiruClub</span>
+</div>
+<span class="font-label-numeric-lg text-label-numeric-lg text-primary font-bold leading-none mt-1">720 <span class="text-label-numeric-sm font-semibold">pts</span></span>
+<span class="font-label-receipt text-label-receipt text-on-surface-variant mt-1">Equivale a <strong class="text-on-surface">7,20 €</strong> en caja</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-receipt text-label-receipt uppercase font-bold tracking-wider">Monedero Prepago</span>
+</div>
+<span class="font-label-numeric-lg text-label-numeric-lg text-secondary font-bold leading-none mt-1">15,50 <span class="text-label-numeric-sm font-semibold">€</span></span>
+<span class="font-label-receipt text-label-receipt text-on-surface-variant mt-1">Saldo libre disponible</span>
+</div>
+</div>
+<!-- Progreso del cliente a la meta -->
+<div class="bg-surface-container rounded-xl p-space-sm flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-body-sm font-medium">
+<span class="text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">bakery_dining</span>
+          Desayuno Gratis La Piruleta
+        </span>
+<span class="font-label-numeric-sm text-label-numeric-sm text-tertiary">720 / 1.000 pts</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 72%;"></div>
+</div>
+<div class="flex justify-between items-center text-[11px] text-tertiary">
+<span>Faltan 280 pts (consumo de 28,00 €)</span>
+<span class="font-semibold text-primary">72% completado</span>
+</div>
+</div>
+<!-- Acciones Táctiles de Mostrador -->
+<div class="flex flex-col gap-space-xs pt-1">
+<button class="w-full h-12 rounded-xl bg-primary-container text-on-primary flex items-center justify-between px-space-md shadow-sm active:translate-y-0.5 transition-all" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[22px]">add_link</span>
+<span class="font-label-action text-label-action">Vincular a Ticket Actual (#104)</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-white/20 text-white font-label-numeric-sm text-[11px] font-bold">1 toque</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="h-11 rounded-xl bg-surface-container text-on-surface hover:bg-surface-container-high flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-[19px] text-primary" style="font-variation-settings: 'FILL' 1;">redeem</span>
+<span class="font-label-action text-label-action text-[13px]">Canjear Puntos</span>
+</button>
+<button class="h-11 rounded-xl bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-[19px]">payments</span>
+<span class="font-label-action text-label-action text-[13px]">Recargar Saldo</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Directorio de Clientes & Filtros Táctiles -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Directorio TPV</span>
+<span class="font-body-sm text-body-sm text-tertiary">Mostrando 4 de 184</span>
+</div>
+<!-- Chips de filtrado horizontal -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 -mx-margin px-margin">
+<button class="px-space-md py-1.5 rounded-full bg-inverse-surface text-inverse-on-surface font-label-action text-[13px] whitespace-nowrap shadow-sm" type="button">
+        Todos (184)
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-action text-[13px] whitespace-nowrap shadow-sm hover:bg-surface-container transition-colors" type="button">
+        Con Saldo (46)
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-action text-[13px] whitespace-nowrap shadow-sm hover:bg-surface-container transition-colors" type="button">
+        VIP Oro (28)
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-action text-[13px] whitespace-nowrap shadow-sm hover:bg-surface-container transition-colors" type="button">
+        Última visita hoy (12)
+      </button>
+</div>
+<!-- Lista de tarjetas de clientes -->
+<div class="flex flex-col gap-space-xs">
+<!-- Cliente 1 (Activo actualmente) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col gap-space-xs relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-headline-sm text-headline-sm shrink-0">
+              EM
+            </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 truncate">
+<span class="font-headline-sm text-[16px] text-on-surface truncate font-semibold">Elena Morales</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-receipt text-[10px] font-bold">VIP</span>
+</div>
+<span class="font-label-numeric-sm text-label-numeric-sm text-tertiary">+34 612 345 678</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-numeric-md text-label-numeric-md text-primary font-bold">720 pts</span>
+<span class="font-label-receipt text-label-receipt text-outline">7,20 € saldo pts</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 border-none text-[11px] text-tertiary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+            Hoy 10:15h • Café con leche + Croissant
+          </span>
+<span class="font-medium text-secondary">Prepago: 15,50 €</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1">
+<button class="flex-1 h-9 rounded-lg bg-primary text-on-primary font-label-action text-[13px] flex items-center justify-center gap-1 shadow-sm active:translate-y-0.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Seleccionado
+          </button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Historial" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Cliente 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-headline-sm text-headline-sm shrink-0">
+              MG
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface truncate font-semibold">Marcos Gallardo</span>
+<span class="font-label-numeric-sm text-label-numeric-sm text-tertiary">+34 677 890 123</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-numeric-md text-label-numeric-md text-primary font-bold">340 pts</span>
+<span class="font-label-receipt text-label-receipt text-outline">3,40 € saldo pts</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 text-[11px] text-tertiary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+            Última compra: Ayer 17:40h
+          </span>
+<span class="font-semibold text-secondary px-1.5 py-0.5 rounded bg-secondary-fixed/40">Prepago: 10,00 €</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1">
+<button class="flex-1 h-9 rounded-lg bg-surface-container-high text-on-surface font-label-action text-[13px] flex items-center justify-center gap-1 hover:bg-surface-variant active:translate-y-0.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">add_circle</span>
+            Asignar a Ticket
+          </button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Historial" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Cliente 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-tertiary flex items-center justify-center font-headline-sm text-headline-sm shrink-0">
+              CR
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface truncate font-semibold">Carmen Rivas</span>
+<span class="font-label-numeric-sm text-label-numeric-sm text-tertiary">+34 655 432 109</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold">95 pts</span>
+<span class="font-label-receipt text-label-receipt text-outline">0,95 € saldo pts</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 text-[11px] text-tertiary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_cafe</span>
+            Frecuente Desayunos • Barra
+          </span>
+<span class="text-outline">Sin saldo prepago</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1">
+<button class="flex-1 h-9 rounded-lg bg-surface-container-high text-on-surface font-label-action text-[13px] flex items-center justify-center gap-1 hover:bg-surface-variant active:translate-y-0.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">add_circle</span>
+            Asignar a Ticket
+          </button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Historial" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Cliente 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-headline-sm text-headline-sm shrink-0">
+              DN
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface truncate font-semibold">David Navarro</span>
+<span class="font-label-numeric-sm text-label-numeric-sm text-tertiary">+34 644 221 889</span>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-label-numeric-md text-label-numeric-md text-primary font-bold">510 pts</span>
+<span class="font-label-receipt text-label-receipt text-outline">5,10 € saldo pts</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 text-[11px]">
+<span class="inline-flex items-center gap-1 text-primary font-medium px-1.5 py-0.5 rounded bg-primary/10">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">redeem</span>
+            ¡Premio disponible: Café Gratis!
+          </span>
+<span class="font-medium text-secondary">Prepago: 4,50 €</span>
+</div>
+<div class="flex items-center gap-space-xs pt-1">
+<button class="flex-1 h-9 rounded-lg bg-surface-container-high text-on-surface font-label-action text-[13px] flex items-center justify-center gap-1 hover:bg-surface-variant active:translate-y-0.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">add_circle</span>
+            Asignar a Ticket
+          </button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Historial" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</button>
+<button class="w-9 h-9 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Editar" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-3px_12px_rgba(56,35,25,0.06)]" data-active-classes="text-primary font-bold"><div class="h-16 px-gutter grid grid-cols-4 items-center"><a class="relative flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="ventas" href="#"><span class="material-symbols-outlined text-[22px]">point_of_sale</span><span class="font-body-sm text-body-sm font-medium tracking-tight">Ventas</span></a><a class="relative flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="tickets-abiertos" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">receipt_long</span><span class="absolute -top-1 -right-2.5 min-w-[18px] h-[18px] px-1 bg-secondary text-on-secondary rounded-full font-label-numeric-sm text-[11px] leading-tight flex items-center justify-center font-bold">3</span></div><span class="font-body-sm text-body-sm font-medium tracking-tight">Tickets</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="catalogo" href="#"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-body-sm text-body-sm font-medium tracking-tight">Catálogo</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="turno-caja" href="#"><span class="material-symbols-outlined text-[22px]">payments</span><span class="font-body-sm text-body-sm font-medium tracking-tight">Turno / Caja</span></a></div></nav></body></html>
