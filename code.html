@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cierre de Caja - La Piruleta</title>
+  <link rel="manifest" href="./manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>body { font-family: 'Epilogue', sans-serif; }</style>
+</head>
+<body class="bg-[#fff8f5] text-stone-800 pb-20">
+  <header class="bg-white border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
+    <a href="index.html" class="p-2 rounded-xl bg-stone-100 text-stone-700"><i data-lucide="arrow-left" class="w-5 h-5"></i></a>
+    <h1 class="font-bold text-sm">Cierre de Turno #42 (Arqueo Z)</h1>
+    <a href="06-movimiento-caja.html" class="text-xs font-bold text-[#1b7a4a]">+ Movimiento</a>
+  </header>
+
+  <main class="p-4 max-w-lg mx-auto space-y-4">
+    <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3 shadow-sm">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-bold text-stone-500 uppercase">Total Facturado</span>
+        <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">64 tickets</span>
+      </div>
+      <div class="text-3xl font-extrabold text-[#1b7a4a]">482,60 €</div>
+      <div class="grid grid-cols-3 gap-2 pt-2 border-t border-stone-100 text-center">
+        <div><div class="text-[11px] text-stone-500">Efectivo</div><div class="font-bold text-xs">215,40 €</div></div>
+        <div><div class="text-[11px] text-stone-500">Datáfono</div><div class="font-bold text-xs">228,70 €</div></div>
+        <div><div class="text-[11px] text-stone-500">Bizum</div><div class="font-bold text-xs">38,50 €</div></div>
+      </div>
+    </div>
+
+    <div class="bg-white p-4 rounded-2xl border border-stone-200 space-y-3 shadow-sm">
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-bold text-stone-500 uppercase">Efectivo Esperado en Cajón</span>
+        <span class="font-bold text-sm text-stone-900">380,40 €</span>
+      </div>
+      <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-600"></i>
+          <span class="text-xs font-bold text-emerald-900">Cuadre Perfecto</span>
+        </div>
+        <span class="font-bold text-emerald-700 text-xs">0,00 € descuadre</span>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <a href="14-plantilla-ticket.html" class="block w-full py-3 bg-stone-100 hover:bg-stone-200 text-stone-800 text-center font-bold text-xs rounded-xl border border-stone-200">
+        🖨️ IMPRIMIR REPORTE Z DE CIERRE
+      </a>
+      <a href="index.html" class="block w-full py-3.5 bg-[#1b7a4a] text-white text-center font-bold text-sm rounded-xl shadow">
+        🔒 FINALIZAR Y CERRAR TURNO (380,40 €)
+      </a>
+    </div>
+  </main>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
