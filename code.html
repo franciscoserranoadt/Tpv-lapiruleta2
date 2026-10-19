@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#fff8f5;}body{overscroll-behavior:none;user-select:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-low": "#fbf2ec", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#00522e", "tertiary": "#674d41", "on-tertiary-container": "#ffe8df", "outline-variant": "#bec9be", "primary": "#006036", "on-tertiary": "#ffffff", "surface-container-highest": "#eae1db", "tertiary-fixed-dim": "#e2bfb0", "primary-fixed-dim": "#80d9a0", "primary-container": "#1b7a4a", "secondary-fixed-dim": "#ffb779", "on-surface": "#1f1b18", "on-primary-fixed": "#00210f", "on-secondary": "#ffffff", "on-surface-variant": "#3f4941", "background": "#fff8f5", "secondary-container": "#fda552", "inverse-primary": "#80d9a0", "secondary": "#8f4e00", "surface": "#fff8f5", "on-secondary-container": "#703c00", "on-secondary-fixed": "#2e1500", "error": "#ba1a1a", "inverse-on-surface": "#f9efe9", "surface-container": "#f6ece7", "surface-dim": "#e1d8d3", "on-primary": "#ffffff", "outline": "#6f7a70", "error-container": "#ffdad6", "on-background": "#1f1b18", "inverse-surface": "#342f2c", "secondary-fixed": "#ffdcc1", "tertiary-container": "#816558", "on-error-container": "#93000a", "surface-variant": "#eae1db", "on-primary-container": "#abffc6", "surface-container-high": "#f0e6e1", "on-error": "#ffffff", "tertiary-fixed": "#ffdbcc", "surface-tint": "#006d3e", "on-secondary-fixed-variant": "#6c3a00", "on-tertiary-fixed": "#2a170e", "primary-fixed": "#9cf6ba", "surface-bright": "#fff8f5", "on-tertiary-fixed-variant": "#5a4136" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "0.5rem", "space-md": "0.75rem", "space-lg": "1rem", "space-xs": "0.25rem", "margin": "0.75rem", "space-sm": "0.5rem", "space-xl": "1.5rem" }, "fontFamily": { "headline-lg": ["Epilogue"], "headline-sm": ["Epilogue"], "body-sm": ["Plus Jakarta Sans"], "label-numeric-sm": ["Space Grotesk"], "label-action": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "label-receipt": ["Space Grotesk"], "label-numeric-lg": ["Space Grotesk"], "label-numeric-md": ["Space Grotesk"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Epilogue"] }, "fontSize": { "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "label-numeric-sm": ["13px", { "lineHeight": "16px", "fontWeight": "600" }], "label-action": ["15px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "22px", "fontWeight": "500" }], "label-receipt": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }], "label-numeric-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "label-numeric-md": ["18px", { "lineHeight": "22px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(56,35,25,0.06)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button aria-label="Menú principal" class="w-11 h-11 rounded-lg flex items-center justify-center text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs"><img alt="Logo La Piruleta" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V1FnFR6e1DBO5Vyj7RP37jXnC5y_h_Y8npKYfpE48WVObMbrxV9cam2PbhXyhPvKYkgGtwA_3sgcq5cn9LTJ5ZCA1uAInvjVxmezU3aPCsCRTDvpYE6hvSl2jpMK0egbJeitcAtp8bJ3rktja6pNZiFzjbs_qegf0-xpOBbEBymPSvMXtN-T6nNPCL3stUnAD6na_nGfrvSErrgSx9E7WSsj5V2iqyUYn_LyVI-9xaS9frSlGS0c1JQLFK"/><div class="hidden xs:flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface leading-none">La Piruleta</span><span class="font-body-sm text-body-sm text-tertiary leading-tight">Ventas</span></div></div></div><div class="flex items-center gap-space-sm"><div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary/10 text-primary"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-numeric-sm text-label-numeric-sm font-semibold tracking-tight whitespace-nowrap">Caja 1 • Turno Abierto</span></div><button aria-label="Buscar o escanear código" class="w-11 h-11 rounded-lg flex items-center justify-center text-on-surface hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">barcode_scanner</span></button><button aria-label="Perfil de empleado" class="w-11 h-11 flex items-center justify-center rounded-full hover:ring-2 hover:ring-primary/20 transition-all" type="button"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDswdvxBPf8YVrX4CsS0-9QiQZwtf0PX3Y12KU1GkVAdyxK1RMIEfP1bfNDCsLrr-6LQKl0XKXEwPzjPtpe6hY78tNimffJGtWS4vTgp4N6pfdbduhe5xdvAsxgklMLohRgzq5yXIgSk6Ku4WxpzqIa7spu0E5-jRLWzCapgun2G_kmm74XZI2qISoqnFockVyQnUvx5tfvauHH6YNoa1IaIP58wtBroLsHh8iQIfEn6BYJOoGnYyETjA"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface"><div class="flex flex-col w-full pb-6">
+<!-- Dynamic Period & Search Control Hub -->
+<section class="px-margin pt-space-sm pb-space-sm flex flex-col gap-space-sm bg-surface">
+<!-- Search Bar with quick-clear and scan auxiliary -->
+<div class="flex items-center gap-space-xs">
+<div class="flex-1 flex items-center bg-surface-container rounded-xl px-space-md py-2 shadow-sm focus-within:bg-surface-container-lowest transition-all">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input class="w-full bg-transparent border-0 outline-none font-body-md text-body-md text-on-surface placeholder:text-outline" id="search-input" placeholder="Buscar Nº ticket, camarero, método..." type="search"/>
+<button aria-label="Limpiar búsqueda" class="text-outline hover:text-on-surface hidden transition-opacity" id="clear-search-btn">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<button aria-label="Filtrar por calendario" class="h-11 px-space-md rounded-xl bg-surface-container-low text-tertiary flex items-center gap-1.5 shadow-sm active:bg-surface-container-high transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] text-primary">calendar_today</span>
+<span class="font-label-action text-label-action text-primary">Hoy, 24 Oct</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">expand_more</span>
+</button>
+</div>
+<!-- Status Filters Rail -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5" role="tablist">
+<button aria-selected="true" class="filter-pill active px-3.5 py-1.5 rounded-full bg-tertiary text-on-tertiary font-label-action text-[13px] tracking-wide whitespace-nowrap shadow-sm flex items-center gap-1.5 transition-all" onclick="filterTickets('all', this)" role="tab">
+<span>Todos</span>
+<span class="bg-surface-container-lowest/20 text-on-tertiary rounded-full px-1.5 text-[11px] font-label-numeric-sm">64</span>
+</button>
+<button aria-selected="false" class="filter-pill px-3.5 py-1.5 rounded-full bg-surface-container text-tertiary font-label-action text-[13px] tracking-wide whitespace-nowrap shadow-sm flex items-center gap-1.5 transition-all hover:bg-surface-container-high" onclick="filterTickets('completed', this)" role="tab">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Completados</span>
+<span class="text-outline font-label-numeric-sm text-[11px]">62</span>
+</button>
+<button aria-selected="false" class="filter-pill px-3.5 py-1.5 rounded-full bg-surface-container text-tertiary font-label-action text-[13px] tracking-wide whitespace-nowrap shadow-sm flex items-center gap-1.5 transition-all hover:bg-surface-container-high" onclick="filterTickets('refunded', this)" role="tab">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>Reembolsos</span>
+<span class="bg-secondary-fixed text-on-secondary-fixed rounded-full px-1.5 text-[11px] font-label-numeric-sm font-bold">2</span>
+</button>
+<button aria-selected="false" class="filter-pill px-3.5 py-1.5 rounded-full bg-surface-container text-outline font-label-action text-[13px] tracking-wide whitespace-nowrap shadow-sm flex items-center gap-1.5 transition-all opacity-70" onclick="filterTickets('cancelled', this)" role="tab">
+<span>Cancelados</span>
+<span class="font-label-numeric-sm text-[11px]">0</span>
+</button>
+</div>
+</section>
+<!-- Summary Metric Strip (Bakery Tactile Dashboard) -->
+<section class="px-margin my-space-xs">
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+</div>
+<div>
+<span class="font-label-receipt text-label-receipt uppercase tracking-wider text-outline block leading-none">Turno Mañana • Panadería Central</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Resumen de Facturación</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-outline font-label-numeric-sm text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          Sincronizado
+        </span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs pt-1">
+<!-- Metric 1: Net Sales -->
+<div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col justify-between">
+<span class="font-body-sm text-[11px] text-tertiary">Ventas Netas</span>
+<div class="mt-1">
+<span class="font-label-numeric-md text-label-numeric-md text-primary font-bold">482,60</span>
+<span class="font-label-numeric-sm text-label-numeric-sm text-primary font-bold">€</span>
+</div>
+<span class="font-label-receipt text-[10px] text-outline mt-0.5">+8.2% vs ayer</span>
+</div>
+<!-- Metric 2: Total Tickets -->
+<div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col justify-between">
+<span class="font-body-sm text-[11px] text-tertiary">Tickets Totales</span>
+<div class="mt-1">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold">64</span>
+<span class="font-label-receipt text-[11px] text-outline font-normal ml-0.5">ops</span>
+</div>
+<span class="font-label-receipt text-[10px] text-outline mt-0.5">Ticket medio 7,66€</span>
+</div>
+<!-- Metric 3: Refunds -->
+<div class="bg-surface-container-low rounded-lg p-2.5 flex flex-col justify-between">
+<span class="font-body-sm text-[11px] text-tertiary">Reembolsos</span>
+<div class="mt-1">
+<span class="font-label-numeric-md text-label-numeric-md text-secondary font-bold">-8,40</span>
+<span class="font-label-numeric-sm text-label-numeric-sm text-secondary font-bold">€</span>
+</div>
+<span class="font-label-receipt text-[10px] text-secondary font-semibold mt-0.5">2 devueltos</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Chronological Transaction Feed -->
+<section class="px-margin mt-space-sm flex flex-col gap-space-xs" id="ticket-feed">
+<div class="flex items-center justify-between px-1 py-1">
+<span class="font-label-action text-label-action text-tertiary tracking-wide uppercase text-[12px]">Actividad Reciente</span>
+<span class="font-label-receipt text-label-receipt text-outline">Mostrando últimos 6</span>
+</div>
+<!-- TICKET #0142 (Completed) -->
+<article class="ticket-item group w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden" data-type="completed" onclick="openReceiptModal('ticket-0142')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">receipt</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold tracking-tight">#0142</span>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-receipt text-[11px] font-bold">Cobrado</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Hace 12 min • Mesa 4 • Sofía M.</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold block">6,50 €</span>
+<span class="font-label-receipt text-[11px] text-tertiary flex items-center justify-end gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">payments</span> Efectivo
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-low/70 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-on-surface-variant font-body-sm text-[12px]">
+<span class="truncate">3 artículos: Café con leche, Croissant mantequilla, Napolitana</span>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:translate-x-0.5 transition-transform ml-1">chevron_right</span>
+</div>
+</article>
+<!-- TICKET #0141 (Refund Partial) -->
+<article class="ticket-item group w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden" data-type="refunded" onclick="openReceiptModal('ticket-0141')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-error-container/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]">keyboard_return</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold tracking-tight">#0141</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-receipt text-[11px] font-bold tracking-wide">REEMBOLSADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Hace 35 min • Mesa 2 • Lucas R.</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-numeric-md text-label-numeric-md text-secondary font-bold block">-4,50 €</span>
+<span class="font-label-receipt text-[11px] text-tertiary flex items-center justify-end gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">credit_card</span> Tarjeta
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-high/60 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-tertiary font-body-sm text-[12px]">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span class="truncate">Motivo: Devolución Tarta Zanahoria por error comanda</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:translate-x-0.5 transition-transform ml-1">chevron_right</span>
+</div>
+</article>
+<!-- TICKET #0140 (Completed Takeaway) -->
+<article class="ticket-item group w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden" data-type="completed" onclick="openReceiptModal('ticket-0140')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold tracking-tight">#0140</span>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-receipt text-[11px] font-bold">Completado</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Hace 50 min • Para Llevar • Carlos M.</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold block">14,20 €</span>
+<span class="font-label-receipt text-[11px] text-tertiary flex items-center justify-end gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">contactless</span> Datáfono
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-low/70 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-on-surface-variant font-body-sm text-[12px]">
+<span class="truncate">4 art.: Hogaza Masa Madre 1kg, 2x Zumo Naranja, Cookie Choco</span>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:translate-x-0.5 transition-transform ml-1">chevron_right</span>
+</div>
+</article>
+<!-- TICKET #0139 (Completed Bizum/QR) -->
+<article class="ticket-item group w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden" data-type="completed" onclick="openReceiptModal('ticket-0139')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">qr_code_2</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold tracking-tight">#0139</span>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-receipt text-[11px] font-bold">Completado</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Hace 1h 15m • Terraza M3 • Sofía M.</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold block">9,80 €</span>
+<span class="font-label-receipt text-[11px] text-tertiary flex items-center justify-end gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">smartphone</span> Bizum QR
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-low/70 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-on-surface-variant font-body-sm text-[12px]">
+<span class="truncate">2 art.: Tostada Aguacate &amp; Tomate, Matcha Latte Avena</span>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:translate-x-0.5 transition-transform ml-1">chevron_right</span>
+</div>
+</article>
+<!-- TICKET #0138 (Total Refund) -->
+<article class="ticket-item group w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden" data-type="refunded" onclick="openReceiptModal('ticket-0138')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-error-container/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]">undo</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold tracking-tight">#0138</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-receipt text-[11px] font-bold tracking-wide">REEMBOLSADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Hace 1h 40m • Barra • Sofía M.</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-numeric-md text-label-numeric-md text-secondary font-bold block">-3,90 €</span>
+<span class="font-label-receipt text-[11px] text-tertiary flex items-center justify-end gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">payments</span> Efectivo
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-high/60 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-tertiary font-body-sm text-[12px]">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-secondary">inventory_2</span>
+<span class="truncate">Motivo: Pan centeno agotado tras cobro previo</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:translate-x-0.5 transition-transform ml-1">chevron_right</span>
+</div>
+</article>
+<!-- TICKET #0137 (Group Breakfast) -->
+<article class="ticket-item group w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm active:scale-[0.99] transition-all cursor-pointer flex flex-col gap-2 relative overflow-hidden" data-type="completed" onclick="openReceiptModal('ticket-0137')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">groups</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold tracking-tight">#0137</span>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-receipt text-[11px] font-bold">Completado</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Hace 2h 10m • Mesa 5 • Lucas R.</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-numeric-md text-label-numeric-md text-on-surface font-bold block">28,40 €</span>
+<span class="font-label-receipt text-[11px] text-tertiary flex items-center justify-end gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">credit_card</span> Datáfono
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-low/70 rounded-lg px-2.5 py-1.5 flex items-center justify-between text-on-surface-variant font-body-sm text-[12px]">
+<span class="truncate">8 art.: 4x Desayuno Clásico, 2x Brioche Almendras, 2x Capuccino</span>
+<span class="material-symbols-outlined text-outline text-[18px] group-hover:translate-x-0.5 transition-transform ml-1">chevron_right</span>
+</div>
+</article>
+</section>
+<!-- Interactive Thermal Receipt & Refund Detail Drawer/Modal -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-end justify-center transition-all duration-300" id="receipt-modal-backdrop" onclick="closeReceiptModal(event)">
+<div class="w-full max-w-lg bg-surface-container-lowest rounded-t-2xl shadow-xl p-space-lg flex flex-col gap-space-md transform translate-y-full transition-transform duration-300 max-h-[777px] overflow-y-auto" id="receipt-modal-card" onclick="event.stopPropagation()">
+<!-- Modal Handle Bar -->
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto -mt-1 cursor-grab"></div>
+<!-- Ticket Header Info -->
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface" id="modal-ticket-id">Ticket #0141</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-receipt text-[11px] font-bold" id="modal-ticket-status">REEMBOLSADO</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5" id="modal-ticket-meta">24 Octubre 2024, 10:48 • Terminal Caja 1 • Atendió Lucas R.</p>
+</div>
+<button aria-label="Cerrar detalle de ticket" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-outline hover:text-on-surface" onclick="closeReceiptModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Thermal Style Paper Card Representation -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm relative">
+<div class="flex items-center justify-between border-b-0 pb-1">
+<span class="font-label-action text-[13px] text-tertiary">Detalle de Comanda (Mesa 2)</span>
+<span class="font-label-receipt text-label-receipt text-outline">Ref: TX-98402</span>
+</div>
+<!-- Breakdown List -->
+<div class="flex flex-col gap-2 font-label-receipt text-label-receipt" id="modal-ticket-lines">
+<!-- Item 1 -->
+<div class="flex items-center justify-between">
+<div class="flex items-start gap-2">
+<span class="font-bold text-on-surface">2x</span>
+<div>
+<span class="font-body-sm text-on-surface block">Café con Leche Grande</span>
+<span class="text-tertiary text-[11px]">Leche Avena (+0,30€)</span>
+</div>
+</div>
+<span class="font-label-numeric-sm text-label-numeric-sm text-on-surface">4,20 €</span>
+</div>
+<!-- Item 2 (Refunded) -->
+<div class="flex items-center justify-between bg-error-container/30 p-2 rounded-lg -mx-1">
+<div class="flex items-start gap-2">
+<span class="font-bold text-error">1x</span>
+<div>
+<span class="font-body-sm text-on-surface block line-through">Porción Tarta Zanahoria</span>
+<span class="text-secondary text-[11px] font-semibold">Devuelto: Error en comanda</span>
+</div>
+</div>
+<span class="font-label-numeric-sm text-label-numeric-sm text-secondary font-bold">-4,50 €</span>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between">
+<div class="flex items-start gap-2">
+<span class="font-bold text-on-surface">1x</span>
+<div>
+<span class="font-body-sm text-on-surface block">Croissant Relleno Pistacho</span>
+<span class="text-tertiary text-[11px]">Horneado artesanal</span>
+</div>
+</div>
+<span class="font-label-numeric-sm text-label-numeric-sm text-on-surface">2,80 €</span>
+</div>
+</div>
+<!-- Totals & Taxes Partition -->
+<div class="bg-surface-container-lowest rounded-lg p-2.5 flex flex-col gap-1 mt-1">
+<div class="flex items-center justify-between text-outline text-[12px] font-body-sm">
+<span>Subtotal (Base imponible)</span>
+<span class="font-label-numeric-sm">2,27 €</span>
+</div>
+<div class="flex items-center justify-between text-outline text-[12px] font-body-sm">
+<span>IVA Incluido (10%)</span>
+<span class="font-label-numeric-sm">0,23 €</span>
+</div>
+<div class="flex items-center justify-between text-on-surface font-label-numeric-md text-label-numeric-md font-bold pt-1">
+<span>Total Neto Ticket</span>
+<span class="text-primary font-bold">2,50 €</span>
+</div>
+</div>
+<!-- Payment Breakdown Badge -->
+<div class="flex items-center justify-between text-on-surface-variant text-[12px] pt-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">credit_card</span>
+<span class="font-body-sm">Tarjeta Visa (**** 4892)</span>
+</div>
+<span class="font-label-numeric-sm text-label-numeric-sm text-on-surface">Cobro orig.: 7,00 €</span>
+</div>
+</div>
+<!-- Quick Action Buttons for Cashier -->
+<div class="flex flex-col gap-space-xs pt-1">
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="h-12 rounded-xl bg-surface-container-high text-on-surface font-label-action text-[13px] flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors shadow-sm" onclick="triggerPrintDemo()">
+<span class="material-symbols-outlined text-[20px] text-tertiary">print</span>
+<span>Reimprimir Ticket</span>
+</button>
+<button class="h-12 rounded-xl bg-surface-container-high text-on-surface font-label-action text-[13px] flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors shadow-sm" onclick="triggerEmailReceiptDemo()">
+<span class="material-symbols-outlined text-[20px] text-tertiary">mail</span>
+<span>Enviar Recibo</span>
+</button>
+</div>
+<button class="w-full h-12 rounded-xl bg-secondary-container text-on-secondary-container font-label-action text-label-action flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all" id="action-refund-btn" onclick="triggerRefundAction()">
+<span class="material-symbols-outlined text-[20px]">currency_exchange</span>
+<span>Gestionar Nuevo Reembolso</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Toast Notification Feedback (Artisanal Delight) -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full shadow-lg font-body-sm text-[13px] flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-200" id="toast-notification">
+<span class="material-symbols-outlined text-[18px] text-primary-fixed" id="toast-icon">check_circle</span>
+<span id="toast-msg">Imprimiendo ticket en Impresora Barra...</span>
+</div>
+</div>
+<script>
+  // Filter tickets by type
+  function filterTickets(type, buttonEl) {
+    // Update tabs
+    const pills = document.querySelectorAll('.filter-pill');
+    pills.forEach(p => {
+      p.classList.remove('bg-tertiary', 'text-on-tertiary', 'active');
+      p.classList.add('bg-surface-container', 'text-tertiary');
+      p.setAttribute('aria-selected', 'false');
+    });
+
+    buttonEl.classList.remove('bg-surface-container', 'text-tertiary');
+    buttonEl.classList.add('bg-tertiary', 'text-on-tertiary', 'active');
+    buttonEl.setAttribute('aria-selected', 'true');
+
+    // Filter cards
+    const cards = document.querySelectorAll('.ticket-item');
+    cards.forEach(card => {
+      const cardType = card.getAttribute('data-type');
+      if (type === 'all' || cardType === type) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // Open receipt details modal
+  function openReceiptModal(ticketKey) {
+    const backdrop = document.getElementById('receipt-modal-backdrop');
+    const modal = document.getElementById('receipt-modal-card');
+    
+    // Customize modal according to ticket
+    if (ticketKey === 'ticket-0142') {
+      document.getElementById('modal-ticket-id').textContent = 'Ticket #0142';
+      document.getElementById('modal-ticket-status').textContent = 'COBRADO';
+      document.getElementById('modal-ticket-status').className = 'px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-receipt text-[11px] font-bold';
+      document.getElementById('modal-ticket-meta').textContent = '24 Octubre 2024, 11:12 • Terminal Caja 1 • Atendió Sofía M.';
+      document.getElementById('action-refund-btn').innerHTML = '<span class="material-symbols-outlined text-[20px]">currency_exchange</span><span>Emitir Devolución o Reembolso</span>';
+    } else {
+      document.getElementById('modal-ticket-id').textContent = 'Ticket #0141';
+      document.getElementById('modal-ticket-status').textContent = 'REEMBOLSADO';
+      document.getElementById('modal-ticket-status').className = 'px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-receipt text-[11px] font-bold';
+      document.getElementById('modal-ticket-meta').textContent = '24 Octubre 2024, 10:48 • Terminal Caja 1 • Atendió Lucas R.';
+      document.getElementById('action-refund-btn').innerHTML = '<span class="material-symbols-outlined text-[20px]">verified</span><span>Ver Justificante de Abono</span>';
+    }
+
+    backdrop.classList.remove('hidden');
+    backdrop.classList.add('flex');
+    setTimeout(() => {
+      modal.classList.remove('translate-y-full');
+      modal.classList.add('translate-y-0');
+    }, 10);
+  }
+
+  // Close receipt details modal
+  function closeReceiptModal(e) {
+    if (e && e.target !== e.currentTarget && e.currentTarget.id !== 'receipt-modal-backdrop') return;
+    const backdrop = document.getElementById('receipt-modal-backdrop');
+    const modal = document.getElementById('receipt-modal-card');
+    
+    modal.classList.remove('translate-y-0');
+    modal.classList.add('translate-y-full');
+    setTimeout(() => {
+      backdrop.classList.remove('flex');
+      backdrop.classList.add('hidden');
+    }, 280);
+  }
+
+  // Toast feedback helper
+  function showToast(msg, icon = 'check_circle') {
+    const toast = document.getElementById('toast-notification');
+    const msgEl = document.getElementById('toast-msg');
+    const iconEl = document.getElementById('toast-icon');
+    
+    msgEl.textContent = msg;
+    iconEl.textContent = icon;
+    toast.classList.remove('opacity-0', 'pointer-events-none');
+    toast.classList.add('opacity-100');
+
+    setTimeout(() => {
+      toast.classList.remove('opacity-100');
+      toast.classList.add('opacity-0', 'pointer-events-none');
+    }, 2400);
+  }
+
+  function triggerPrintDemo() {
+    showToast('Enviado a impresora térmica ESC/POS...', 'print');
+  }
+
+  function triggerEmailReceiptDemo() {
+    showToast('Enviando copia digital al cliente...', 'mail');
+  }
+
+  function triggerRefundAction() {
+    showToast('Iniciando flujo de devolución...', 'receipt_long');
+  }
+
+  // Search filter live interaction
+  const searchInput = document.getElementById('search-input');
+  const clearBtn = document.getElementById('clear-search-btn');
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    clearBtn.classList.toggle('hidden', query.length === 0);
+
+    const cards = document.querySelectorAll('.ticket-item');
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.style.display = text.includes(query) ? 'flex' : 'none';
+    });
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.classList.add('hidden');
+    document.querySelectorAll('.ticket-item').forEach(card => card.style.display = 'flex');
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-3px_12px_rgba(56,35,25,0.06)]" data-active-classes="text-primary font-bold"><div class="h-16 px-gutter grid grid-cols-4 items-center"><a class="relative flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="ventas" href="#"><span class="material-symbols-outlined text-[22px]">point_of_sale</span><span class="font-body-sm text-body-sm font-medium tracking-tight">Ventas</span></a><a class="relative flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="tickets-abiertos" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">receipt_long</span><span class="absolute -top-1 -right-2.5 min-w-[18px] h-[18px] px-1 bg-secondary text-on-secondary rounded-full font-label-numeric-sm text-[11px] leading-tight flex items-center justify-center font-bold">3</span></div><span class="font-body-sm text-body-sm font-medium tracking-tight">Tickets</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="catalogo" href="#"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-body-sm text-body-sm font-medium tracking-tight">Catálogo</span></a><a class="flex flex-col items-center justify-center h-full gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="turno-caja" href="#"><span class="material-symbols-outlined text-[22px]">payments</span><span class="font-body-sm text-body-sm font-medium tracking-tight">Turno / Caja</span></a></div></nav></body></html>
