@@ -1,5 +1,7 @@
-// Service Worker para soporte offline básico y caché en La Piruleta TPV
-const CACHE_NAME = 'lapiruleta-tpv-v1';
+// Service Worker v2 para soporte offline y caché en La Piruleta TPV
+const CACHE_NAME = 'lapiruleta-tpv-v2';
+
+// Lista completa de todos los recursos y pantallas del repositorio con rutas relativas
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -19,6 +21,7 @@ const ASSETS_TO_CACHE = [
   './manifest.json'
 ];
 
+// Instalación: almacena en caché todos los archivos del TPV
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -28,6 +31,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
+// Activación: limpia versiones de caché antiguas para que los cambios se reflejen de inmediato
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -43,11 +47,23 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Intercepción de peticiones de red: busca primero en caché y si no, hace petición de red limpia
 self.addEventListener('fetch', (event) => {
+  // Solo interceptamos peticiones GET dentro del mismo origen
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request).catch(() => {
-        return caches.match('./index.html');
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        return networkResponse;
+      }).catch(() => {
+        // En caso de estar sin conexión y fallar, devolver la pantalla principal si es una navegación
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
       });
     })
   );
