@@ -1,8 +1,7 @@
-// Service Worker v3 con estrategia 'Network First' (Red Primero) para La Piruleta TPV
-// Con esta configuración, siempre consulta GitHub para mostrar los últimos cambios al instante.
-// Si no hay conexión a internet (modo offline en mostrador), sirve la copia guardada en caché.
+// Service Worker v4 con Estrategia Network-First Agresiva y Purga Inmediata de Caché
+// Diseñado para La Piruleta TPV (Actualización automática instantánea en PC, Tablets y Móvil)
 
-const CACHE_NAME = 'lapiruleta-tpv-live-v3';
+const CACHE_NAME = 'lapiruleta-tpv-live-v4';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -23,7 +22,7 @@ const ASSETS_TO_CACHE = [
   './manifest.json'
 ];
 
-// Instalación inmediata sin esperar
+// 1. INSTALACIÓN: Obliga al nuevo Service Worker a activarse de inmediato sin esperar
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
@@ -31,7 +30,8 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activación inmediata y purga de versiones viejas de caché
+// 2. ACTIVACIÓN: Borra inmediatamente todas las versiones viejas de caché (v1, v2, v3, etc.)
+// y toma control de todas las ventanas abiertas al instante.
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -46,15 +46,19 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// ESTRATEGIA: NETWORK FIRST (Red primero, caché de respaldo offline)
+// 3. ESTRATEGIA: NETWORK FIRST CON TIMESTAMP DE EVASIÓN DE CACHÉ PARA DOCUMENTOS HTML
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+
+  // Solo gestionamos peticiones del mismo origen
+  if (url.origin !== self.location.origin) return;
+
   event.respondWith(
-    // 1. Intenta pedir la versión más reciente a GitHub
-    fetch(event.request)
+    // Intenta siempre pedir la versión en vivo de GitHub Pages
+    fetch(event.request, { cache: 'no-store' })
       .then((networkResponse) => {
-        // Si responde bien, actualiza en segundo plano la caché local
         if (networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -64,7 +68,7 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       })
       .catch(() => {
-        // 2. Si no hay internet o falla la red, lee de la caché local para seguir trabajando offline
+        // Modo offline (si falla la conexión o estamos sin internet)
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
