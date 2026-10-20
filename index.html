@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>TPV Ventas - La Piruleta</title>
-<link href="./manifest.json" rel="manifest"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<style>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TPV Ventas - La Piruleta</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
     html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
     body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
     .scrollbar-none::-webkit-scrollbar { display: none; }
@@ -18,288 +18,297 @@
   </style>
 </head>
 <body class="bg-[#fff8f5] text-stone-800 antialiased select-none h-screen max-h-screen flex flex-col overflow-hidden">
-<!-- CABECERA SUPERIOR PROFESIONAL TPV COMPACTA -->
-<header class="bg-[#1b7a4a] text-white px-4 py-2 flex items-center justify-between shadow-sm shrink-0">
-<div class="flex items-center gap-3">
-<div class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-xl bg-white text-[#1b7a4a] flex items-center justify-center font-extrabold text-xs shadow">
+
+  <!-- CABECERA SUPERIOR PROFESIONAL TPV COMPACTA -->
+  <header class="bg-[#1b7a4a] text-white px-4 py-2 flex items-center justify-between shadow-sm shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-white text-[#1b7a4a] flex items-center justify-center font-extrabold text-xs shadow">
           LP
         </div>
-<div>
-<div class="flex items-center gap-2">
-<h1 class="font-bold text-sm tracking-tight leading-none">LA PIRULETA</h1>
-<span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium">Terminal Táctil v6.5</span>
-</div>
-<div class="flex items-center gap-2 text-[11px] text-emerald-100 mt-0.5">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
-<span>Cloud Conectado</span>
-<span>•</span>
-<span>Caja 1 • Tarifa Estándar</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Accesos rápidos cabecera -->
-<div class="flex items-center gap-2">
-<div class="flex items-center gap-1.5 bg-emerald-900/40 px-2.5 py-1 rounded-xl text-xs font-semibold">
-<i class="w-3.5 h-3.5 text-emerald-300" data-lucide="user"></i>
-<span>Paco (01 - Mostrador)</span>
-</div>
-<a class="flex items-center gap-1 px-2.5 py-1 bg-emerald-800/80 hover:bg-emerald-800 rounded-xl text-xs font-bold transition-colors" href="04-plano-mesas.html">
-<i class="w-3.5 h-3.5" data-lucide="layout-grid"></i>
-<span>Mesas</span>
-</a>
-<a class="flex items-center gap-1 px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-sm transition-colors" href="03-tickets-mesas.html">
-<i class="w-3.5 h-3.5" data-lucide="clock"></i>
-<span>Pendientes</span>
-<span class="bg-white text-amber-700 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-extrabold ml-0.5" id="badge-contador-pendientes">0</span>
-</a>
-<a class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-200" href="13-config-impresoras.html">
-<i class="w-3.5 h-3.5" data-lucide="settings"></i>
-</a>
-</div>
-</header>
-<!-- CONTENEDOR PRINCIPAL A DOBLE COLUMNA CON AJUSTE 100% HEIGHT -->
-<main class="flex-1 p-2 grid grid-cols-12 gap-2.5 max-w-[1750px] w-full mx-auto min-h-0 overflow-hidden">
-<!-- COLUMNA IZQUIERDA: COMANDAS, TICKET, CALCULADORA Y COBRO DIRECTO -->
-<section class="col-span-12 lg:col-span-5 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col h-full min-h-0 overflow-hidden">
-<!-- Info Comanda / Mesa -->
-<div class="px-3 py-1.5 border-b border-stone-100 flex items-center justify-between bg-stone-50/70 shrink-0">
-<div>
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<span class="font-extrabold text-xs text-stone-900" id="label-ticket-mesa">BARRA</span>
-<span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded-md" id="label-ticket-numero">#T-001</span>
-</div>
-<span class="text-[10px] text-stone-400 font-medium">Cliente General</span>
-</div>
-<button class="px-2 py-0.5 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg flex items-center gap-1 transition-colors" onclick="limpiarTicket()" type="button">
-<i class="w-3 h-3" data-lucide="trash-2"></i>
-<span>Limpiar</span>
-</button>
-</div>
-<!-- Cabecera de la tabla de ticket -->
-<div class="grid grid-cols-12 px-3 py-1 bg-stone-100/70 text-[10px] font-bold text-stone-500 border-b border-stone-200 uppercase tracking-wider shrink-0">
-<span class="col-span-6">Artículo</span>
-<span class="col-span-2 text-center">Cant</span>
-<span class="col-span-2 text-right">Precio</span>
-<span class="col-span-2 text-right">Total</span>
-</div>
-<!-- Lista de líneas de comanda con scroll autónomo -->
-<div class="flex-1 overflow-y-auto divide-y divide-stone-100 px-2 py-1 min-h-0" id="cuerpo-ticket">
-</div>
-<!-- Total y Desglose de Impuestos -->
-<div class="px-3 py-1.5 bg-stone-50/90 border-t border-stone-200 space-y-0.5 shrink-0">
-<div class="flex items-center justify-between text-[11px] text-stone-500 font-medium">
-<span>Base imponible: <span id="base-imponible">0.00 €</span></span>
-<span>IVA inc. (10%): <span id="iva-calculado">0.00 €</span></span>
-</div>
-<div class="flex items-baseline justify-between pt-0.5">
-<span class="text-[11px] font-extrabold text-stone-600 uppercase tracking-wider">TOTAL A PAGAR</span>
-<span class="text-2xl font-black text-[#1b7a4a]" id="total-display">0.00 €</span>
-</div>
-</div>
-<!-- Indicador visual interactivo de multiplicador de cantidad -->
-<div class="hidden px-3 py-1.5 bg-amber-500/10 border-t border-b border-amber-300 text-amber-900 flex items-center justify-between animate-pulse shrink-0" id="banner-multiplicador">
-<div class="flex items-center gap-1.5 text-xs font-bold">
-<span class="w-2 h-2 rounded-full bg-amber-500"></span>
-<span>Multiplicador activo:</span>
-<span class="px-1.5 py-0.5 bg-amber-500 text-white font-black text-xs rounded-md shadow-xs" id="texto-buffer-cantidad">✕ 0 uds</span>
-<span class="text-[11px] font-medium text-amber-700 hidden sm:inline">para el siguiente artículo</span>
-</div>
-<button class="p-0.5 hover:bg-amber-200 rounded-md text-amber-800 transition-colors" onclick="cancelarMultiplicador()" title="Cancelar cantidad multiplicada" type="button">
-<i class="w-3.5 h-3.5" data-lucide="x"></i>
-</button>
-</div>
-<!-- Teclado Numérico Táctil y Botonera Rápida Compacta -->
-<div class="p-2 bg-white border-t border-stone-200 grid grid-cols-4 gap-1.5 shrink-0">
-<div class="col-span-3 grid grid-cols-3 gap-1.5">
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('7')" type="button">7</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('8')" type="button">8</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('9')" type="button">9</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('4')" type="button">4</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('5')" type="button">5</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('6')" type="button">6</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('1')" type="button">1</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('2')" type="button">2</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('3')" type="button">3</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('0')" type="button">0</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado(',')" type="button">,</button>
-<button class="h-9 sm:h-10 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 font-extrabold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('C')" type="button">C</button>
-</div>
-<div class="col-span-1 flex flex-col gap-1.5">
-<button class="flex-1 rounded-xl bg-[#e07a5f]/20 hover:bg-[#e07a5f]/30 border border-[#e07a5f]/40 text-[#c85a3d] font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors" onclick="dejarPendiente()" type="button">
-<i class="w-3.5 h-3.5 mb-0.5" data-lucide="clock"></i>
-<span>Dejar<br/>Pendiente</span>
-</button>
-<!-- BOTÓN ASIGNAR A MESA: GUARDA EL TICKET TEMPORAL Y NAVEGA AL PLANO -->
-<button class="flex-1 rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors" onclick="iniciarAsignarMesa()" type="button">
-<i class="w-3.5 h-3.5 mb-0.5" data-lucide="utensils"></i>
-<span>Asignar<br/>a Mesa</span>
-</button>
-</div>
-<div class="col-span-4 grid grid-cols-3 gap-1.5 pt-0.5">
-<button class="h-10 sm:h-11 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform" onclick="procesarCobro('Efectivo')" type="button">
-<i class="w-4 h-4" data-lucide="banknote"></i>
-<span>EFECTIVO</span>
-</button>
-<button class="h-10 sm:h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform" onclick="procesarCobro('Tarjeta')" type="button">
-<i class="w-4 h-4" data-lucide="credit-card"></i>
-<span>TARJETA</span>
-</button>
-<button class="h-10 sm:h-11 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform" onclick="procesarCobro('Bizum')" type="button">
-<i class="w-4 h-4" data-lucide="smartphone"></i>
-<span>BIZUM</span>
-</button>
-</div>
-</div>
-</section>
-<!-- COLUMNA DERECHA: PESTAÑAS DE CATEGORÍAS + PRODUCTOS -->
-<section class="col-span-12 lg:col-span-7 flex flex-col h-full min-h-0 space-y-2 overflow-hidden">
-<div class="bg-white p-2 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between gap-2 overflow-hidden shrink-0">
-<div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5" id="pills-categorias">
-</div>
-<div class="flex items-center gap-1.5 shrink-0 pl-2 border-l border-stone-200">
-<button class="px-2.5 py-1 rounded-xl bg-emerald-50 text-[#1b7a4a] border border-emerald-300 font-bold text-xs flex items-center gap-1.5 hover:bg-emerald-100 transition-colors whitespace-nowrap shadow-sm" onclick="abrirModalNuevaCategoria()" type="button">
-<i class="w-3.5 h-3.5" data-lucide="folder-plus"></i>
-<span>+ Categoría</span>
-</button>
-<a class="p-1.5 rounded-xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors" href="10-catalogo-stock.html" title="Abrir Catálogo">
-<i class="w-3.5 h-3.5" data-lucide="external-link"></i>
-</a>
-</div>
-</div>
-<div class="flex-1 bg-white p-3 rounded-2xl border border-stone-200 shadow-sm overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 content-start min-h-0" id="grid-productos-venta">
-</div>
-<div class="bg-white/80 backdrop-blur rounded-xl px-3 py-1.5 border border-stone-200 flex items-center justify-between text-xs text-stone-500 shrink-0">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<span class="font-medium text-stone-700" id="contador-productos-label">0 productos disponibles</span>
-</div>
-<div class="flex items-center gap-3">
-<span class="text-stone-400">Toca un producto para añadir directo</span>
-<a class="font-bold text-[#1b7a4a] hover:underline flex items-center gap-1" href="10-catalogo-stock.html">
-<i class="w-3.5 h-3.5" data-lucide="plus"></i>
-<span>Crear Rápido</span>
-</a>
-</div>
-</div>
-</section>
-</main>
-<!-- NAVEGACIÓN INFERIOR PERSISTENTE (FOOTER UNIFICADO) -->
-<footer class="bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md shrink-0">
-<div class="flex items-center gap-6">
-<a class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200" href="index.html">
-<i class="w-3.5 h-3.5" data-lucide="calculator"></i>
-<span>Ventas TPV</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="03-tickets-mesas.html">
-<i class="w-3.5 h-3.5" data-lucide="receipt"></i>
-<span>Tickets Abiertos</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="04-plano-mesas.html">
-<i class="w-3.5 h-3.5" data-lucide="layout-grid"></i>
-<span>Plano de Mesas</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="05-cierre-caja.html">
-<i class="w-3.5 h-3.5" data-lucide="banknote"></i>
-<span>Caja / Turno</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="10-catalogo-stock.html">
-<i class="w-3.5 h-3.5" data-lucide="package"></i>
-<span>Catálogo</span>
-</a>
-</div>
-<div class="text-[11px] text-stone-400 flex items-center gap-1.5">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-<span>Terminal Conectada • Venta Directa</span>
-</div>
-</footer>
-<!-- MODAL: NUEVA CATEGORÍA -->
-<div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" id="modal-categoria">
-<div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl border border-stone-200">
-<div class="flex items-center justify-between border-b border-stone-100 pb-3">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-[#1b7a4a]">
-<i class="w-4 h-4" data-lucide="folder-plus"></i>
-</div>
-<div>
-<h2 class="font-bold text-sm text-stone-900 leading-tight">Nueva Categoría</h2>
-<p class="text-[11px] text-stone-500">Organiza tus productos por departamentos</p>
-</div>
-</div>
-<button class="p-1 rounded-lg bg-stone-100 text-stone-400 hover:text-stone-600" onclick="cerrarModalNuevaCategoria()" type="button">
-<i class="w-4 h-4" data-lucide="x"></i>
-</button>
-</div>
-<div class="space-y-3">
-<div>
-<label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la Categoría *</label>
-<input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-nombre" placeholder="Ej: Cafés, Desayunos, Bollería..." type="text"/>
-</div>
-<div>
-<label class="block text-xs font-semibold text-stone-700 mb-1.5">Color distintivo</label>
-<div class="flex items-center gap-2.5">
-<label class="cursor-pointer">
-<input checked="" class="sr-only peer" name="cat-color" type="radio" value="#1b7a4a"/>
-<span class="w-7 h-7 rounded-full bg-[#1b7a4a] block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
-</label>
-<label class="cursor-pointer">
-<input class="sr-only peer" name="cat-color" type="radio" value="#d97706"/>
-<span class="w-7 h-7 rounded-full bg-amber-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
-</label>
-<label class="cursor-pointer">
-<input class="sr-only peer" name="cat-color" type="radio" value="#f97316"/>
-<span class="w-7 h-7 rounded-full bg-orange-500 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
-</label>
-<label class="cursor-pointer">
-<input class="sr-only peer" name="cat-color" type="radio" value="#e11d48"/>
-<span class="w-7 h-7 rounded-full bg-rose-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
-</label>
-<label class="cursor-pointer">
-<input class="sr-only peer" name="cat-color" type="radio" value="#4f46e5"/>
-<span class="w-7 h-7 rounded-full bg-indigo-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
-</label>
-</div>
-</div>
-<div class="p-2.5 bg-stone-50 rounded-xl border border-stone-200 flex items-center justify-between">
-<span class="text-xs font-medium text-stone-700">Mostrar en barra rápida del TPV</span>
-<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" id="cat-mostrar" type="checkbox"/>
-</div>
-</div>
-<div class="pt-2 flex gap-2">
-<button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200 transition-colors" onclick="cerrarModalNuevaCategoria()" type="button">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-sm tracking-tight leading-none">LA PIRULETA</h1>
+            <span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium">Terminal Táctil v6.5</span>
+          </div>
+          <div class="flex items-center gap-2 text-[11px] text-emerald-100 mt-0.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+            <span>Cloud Conectado</span>
+            <span>•</span>
+            <span>Caja 1 • Tarifa Estándar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accesos rápidos cabecera -->
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 bg-emerald-900/40 px-2.5 py-1 rounded-xl text-xs font-semibold">
+        <i data-lucide="user" class="w-3.5 h-3.5 text-emerald-300"></i>
+        <span>Paco (01 - Mostrador)</span>
+      </div>
+      <button type="button" onclick="asignarAMesa()" class="flex items-center gap-1 px-2.5 py-1 bg-emerald-800/80 hover:bg-emerald-800 rounded-xl text-xs font-bold transition-colors">
+        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+        <span>Mesas</span>
+      </button>
+      <a href="03-tickets-mesas.html" class="flex items-center gap-1 px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-sm transition-colors">
+        <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+        <span>Pendientes</span>
+        <span id="badge-contador-pendientes" class="bg-white text-amber-700 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-extrabold ml-0.5">0</span>
+      </a>
+      <a href="13-config-impresoras.html" class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-200">
+        <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL A DOBLE COLUMNA CON AJUSTE 100% HEIGHT -->
+  <main class="flex-1 p-2 grid grid-cols-12 gap-2.5 max-w-[1750px] w-full mx-auto min-h-0 overflow-hidden">
+    
+    <!-- COLUMNA IZQUIERDA: COMANDAS, TICKET, CALCULADORA Y COBRO DIRECTO -->
+    <section class="col-span-12 lg:col-span-5 bg-white rounded-2xl border border-stone-200 shadow-sm flex flex-col h-full min-h-0 overflow-hidden">
+      
+      <!-- Info Comanda / Mesa -->
+      <div class="px-3 py-1.5 border-b border-stone-100 flex items-center justify-between bg-stone-50/70 shrink-0">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="label-ticket-mesa" class="font-extrabold text-xs text-stone-900">BARRA</span>
+            <span id="label-ticket-numero" class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded-md">#T-001</span>
+          </div>
+          <span class="text-[10px] text-stone-400 font-medium">Cliente General</span>
+        </div>
+        <button type="button" onclick="limpiarTicket()" class="px-2 py-0.5 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg flex items-center gap-1 transition-colors">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          <span>Limpiar</span>
+        </button>
+      </div>
+
+      <!-- Cabecera de la tabla de ticket -->
+      <div class="grid grid-cols-12 px-3 py-1 bg-stone-100/70 text-[10px] font-bold text-stone-500 border-b border-stone-200 uppercase tracking-wider shrink-0">
+        <span class="col-span-6">Artículo</span>
+        <span class="col-span-2 text-center">Cant</span>
+        <span class="col-span-2 text-right">Precio</span>
+        <span class="col-span-2 text-right">Total</span>
+      </div>
+
+      <!-- Lista de líneas de comanda con scroll autónomo -->
+      <div id="cuerpo-ticket" class="flex-1 overflow-y-auto divide-y divide-stone-100 px-2 py-1 min-h-0">
+      </div>
+
+      <!-- Total y Desglose de Impuestos -->
+      <div class="px-3 py-1.5 bg-stone-50/90 border-t border-stone-200 space-y-0.5 shrink-0">
+        <div class="flex items-center justify-between text-[11px] text-stone-500 font-medium">
+          <span>Base imponible: <span id="base-imponible">0.00 €</span></span>
+          <span>IVA inc. (10%): <span id="iva-calculado">0.00 €</span></span>
+        </div>
+        <div class="flex items-baseline justify-between pt-0.5">
+          <span class="text-[11px] font-extrabold text-stone-600 uppercase tracking-wider">TOTAL A PAGAR</span>
+          <span id="total-display" class="text-2xl font-black text-[#1b7a4a]">0.00 €</span>
+        </div>
+      </div>
+
+      <!-- INDICADOR VISUAL DE MULTIPLICADOR DE CANTIDAD ACTIVO -->
+      <div id="banner-multiplicador" class="hidden px-3 py-1.5 bg-amber-50 border-t border-amber-200 flex items-center justify-between text-xs text-amber-900 font-bold shrink-0 animate-pulse">
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="calculator" class="w-4 h-4 text-amber-600"></i>
+          <span>Cantidad seleccionada: <strong id="valor-multiplicador" class="text-base text-amber-700 bg-amber-200/80 px-2 py-0.5 rounded-md ml-1">1</strong></span>
+        </div>
+        <button type="button" onclick="cancelarMultiplicador()" class="text-xs text-amber-700 hover:text-amber-900 underline font-semibold">
+          Cancelar (C)
+        </button>
+      </div>
+
+      <!-- Teclado Numérico Táctil y Botonera Rápida Compacta -->
+      <div class="p-2 bg-white border-t border-stone-200 grid grid-cols-4 gap-1.5 shrink-0">
+        <div class="col-span-3 grid grid-cols-3 gap-1.5">
+          <button type="button" onclick="pulsarTeclado('7')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">7</button>
+          <button type="button" onclick="pulsarTeclado('8')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">8</button>
+          <button type="button" onclick="pulsarTeclado('9')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">9</button>
+          
+          <button type="button" onclick="pulsarTeclado('4')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">4</button>
+          <button type="button" onclick="pulsarTeclado('5')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">5</button>
+          <button type="button" onclick="pulsarTeclado('6')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">6</button>
+          
+          <button type="button" onclick="pulsarTeclado('1')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">1</button>
+          <button type="button" onclick="pulsarTeclado('2')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">2</button>
+          <button type="button" onclick="pulsarTeclado('3')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">3</button>
+          
+          <button type="button" onclick="pulsarTeclado('0')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">0</button>
+          <button type="button" onclick="pulsarTeclado(',')" class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform">,</button>
+          <button type="button" onclick="pulsarTeclado('C')" class="h-9 sm:h-10 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 font-extrabold text-base active:scale-95 transition-transform">C</button>
+        </div>
+
+        <div class="col-span-1 flex flex-col gap-1.5">
+          <button type="button" onclick="dejarPendiente()" class="flex-1 rounded-xl bg-[#e07a5f]/20 hover:bg-[#e07a5f]/30 border border-[#e07a5f]/40 text-[#c85a3d] font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors">
+            <i data-lucide="clock" class="w-3.5 h-3.5 mb-0.5"></i>
+            <span>Dejar<br>Pendiente</span>
+          </button>
+          <button type="button" onclick="asignarAMesa()" class="flex-1 rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors">
+            <i data-lucide="utensils" class="w-3.5 h-3.5 mb-0.5"></i>
+            <span>Asignar<br>a Mesa</span>
+          </button>
+        </div>
+
+        <div class="col-span-4 grid grid-cols-3 gap-1.5 pt-0.5">
+          <button type="button" onclick="procesarCobro('Efectivo')" class="h-10 sm:h-11 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform">
+            <i data-lucide="banknote" class="w-4 h-4"></i>
+            <span>EFECTIVO</span>
+          </button>
+          <button type="button" onclick="procesarCobro('Tarjeta')" class="h-10 sm:h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform">
+            <i data-lucide="credit-card" class="w-4 h-4"></i>
+            <span>TARJETA</span>
+          </button>
+          <button type="button" onclick="procesarCobro('Bizum')" class="h-10 sm:h-11 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform">
+            <i data-lucide="smartphone" class="w-4 h-4"></i>
+            <span>BIZUM</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUMNA DERECHA: PESTAÑAS DE CATEGORÍAS + PRODUCTOS -->
+    <section class="col-span-12 lg:col-span-7 flex flex-col h-full min-h-0 space-y-2 overflow-hidden">
+      
+      <div class="bg-white p-2 rounded-2xl border border-stone-200 shadow-sm flex items-center justify-between gap-2 overflow-hidden shrink-0">
+        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5" id="pills-categorias">
+        </div>
+
+        <div class="flex items-center gap-1.5 shrink-0 pl-2 border-l border-stone-200">
+          <button type="button" onclick="abrirModalNuevaCategoria()" class="px-2.5 py-1 rounded-xl bg-emerald-50 text-[#1b7a4a] border border-emerald-300 font-bold text-xs flex items-center gap-1.5 hover:bg-emerald-100 transition-colors whitespace-nowrap shadow-sm">
+            <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i>
+            <span>+ Categoría</span>
+          </button>
+          <a href="10-catalogo-stock.html" title="Abrir Catálogo" class="p-1.5 rounded-xl bg-stone-100 text-stone-600 hover:bg-stone-200 transition-colors">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+
+      <div id="grid-productos-venta" class="flex-1 bg-white p-3 rounded-2xl border border-stone-200 shadow-sm overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 content-start min-h-0">
+      </div>
+
+      <div class="bg-white/80 backdrop-blur rounded-xl px-3 py-1.5 border border-stone-200 flex items-center justify-between text-xs text-stone-500 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span id="contador-productos-label" class="font-medium text-stone-700">0 productos disponibles</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-stone-400">Toca un producto para añadir directo</span>
+          <a href="10-catalogo-stock.html" class="font-bold text-[#1b7a4a] hover:underline flex items-center gap-1">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>Crear Rápido</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- NAVEGACIÓN INFERIOR PERSISTENTE (FOOTER UNIFICADO) -->
+  <footer class="bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md shrink-0">
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
+        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+        <span>Ventas TPV</span>
+      </a>
+      <a href="03-tickets-mesas.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+        <span>Tickets Abiertos</span>
+      </a>
+      <a href="04-plano-mesas.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+        <span>Plano de Mesas</span>
+      </a>
+      <a href="05-cierre-caja.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+        <span>Caja / Turno</span>
+      </a>
+      <a href="10-catalogo-stock.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="package" class="w-3.5 h-3.5"></i>
+        <span>Catálogo</span>
+      </a>
+    </div>
+    <div class="text-[11px] text-stone-400 flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      <span>Terminal Conectada • Venta Directa</span>
+    </div>
+  </footer>
+
+  <!-- MODAL: NUEVA CATEGORÍA -->
+  <div id="modal-categoria" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl border border-stone-200">
+      
+      <div class="flex items-center justify-between border-b border-stone-100 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-[#1b7a4a]">
+            <i data-lucide="folder-plus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="font-bold text-sm text-stone-900 leading-tight">Nueva Categoría</h2>
+            <p class="text-[11px] text-stone-500">Organiza tus productos por departamentos</p>
+          </div>
+        </div>
+        <button type="button" onclick="cerrarModalNuevaCategoria()" class="p-1 rounded-lg bg-stone-100 text-stone-400 hover:text-stone-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la Categoría *</label>
+          <input type="text" id="cat-nombre" placeholder="Ej: Cafés, Desayunos, Bollería..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1.5">Color distintivo</label>
+          <div class="flex items-center gap-2.5">
+            <label class="cursor-pointer">
+              <input type="radio" name="cat-color" value="#1b7a4a" checked class="sr-only peer">
+              <span class="w-7 h-7 rounded-full bg-[#1b7a4a] block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="cat-color" value="#d97706" class="sr-only peer">
+              <span class="w-7 h-7 rounded-full bg-amber-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="cat-color" value="#f97316" class="sr-only peer">
+              <span class="w-7 h-7 rounded-full bg-orange-500 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="cat-color" value="#e11d48" class="sr-only peer">
+              <span class="w-7 h-7 rounded-full bg-rose-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="cat-color" value="#4f46e5" class="sr-only peer">
+              <span class="w-7 h-7 rounded-full bg-indigo-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="p-2.5 bg-stone-50 rounded-xl border border-stone-200 flex items-center justify-between">
+          <span class="text-xs font-medium text-stone-700">Mostrar en barra rápida del TPV</span>
+          <input type="checkbox" id="cat-mostrar" checked class="w-4 h-4 accent-[#1b7a4a] rounded">
+        </div>
+      </div>
+
+      <div class="pt-2 flex gap-2">
+        <button type="button" onclick="cerrarModalNuevaCategoria()" class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200 transition-colors">
           Cancelar
         </button>
-<button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow transition-colors" onclick="guardarCategoria()" type="button">
+        <button type="button" onclick="guardarCategoria()" class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow transition-colors">
           Guardar Categoría
         </button>
-</div>
-</div>
-</div>
-<script>
+      </div>
+    </div>
+  </div>
+
+  <script>
     let categoriaActiva = 'TODOS';
     let lineasComanda = [];
     let ticketNumeroActual = 1;
-    let bufferCantidad = '';
-
-    function actualizarIndicadorMultiplicador() {
-      const banner = document.getElementById('banner-multiplicador');
-      const texto = document.getElementById('texto-buffer-cantidad');
-      if (!banner || !texto) return;
-
-      if (bufferCantidad !== '') {
-        texto.textContent = `✕ ${bufferCantidad} uds activas`;
-        banner.classList.remove('hidden');
-      } else {
-        banner.classList.add('hidden');
-      }
-    }
-
-    function cancelarMultiplicador() {
-      bufferCantidad = '';
-      actualizarIndicadorMultiplicador();
-    }
+    let bufferCantidad = ''; // Buffer para el multiplicador numérico
+    let ticketIdActivo = null;
 
     function obtenerCategorias() {
       try {
@@ -331,10 +340,12 @@
       if (badge) {
         badge.textContent = tickets.length;
       }
-      ticketNumeroActual = tickets.length + 1;
-      const numLabel = document.getElementById('label-ticket-numero');
-      if (numLabel) {
-        numLabel.textContent = '#T-' + String(ticketNumeroActual).padStart(3, '0');
+      if (!ticketIdActivo) {
+        ticketNumeroActual = tickets.length + 1;
+        const numLabel = document.getElementById('label-ticket-numero');
+        if (numLabel) {
+          numLabel.textContent = '#T-' + String(ticketNumeroActual).padStart(3, '0');
+        }
       }
     }
 
@@ -474,19 +485,15 @@
       lucide.createIcons();
     }
 
+    // AÑADIR AL TICKET CON SOPORTE PARA MULTIPLICADOR DE TECLADO
     function agregarAlTicket(prodId) {
       const prods = obtenerProductos();
       const p = prods.find(item => item.id === prodId);
       if (!p) return;
 
       let cantidadASumar = 1;
-      if (bufferCantidad !== '') {
-        const val = parseInt(bufferCantidad, 10);
-        if (!isNaN(val) && val > 0) {
-          cantidadASumar = val;
-        }
-        bufferCantidad = '';
-        actualizarIndicadorMultiplicador();
+      if (bufferCantidad && parseInt(bufferCantidad, 10) > 0) {
+        cantidadASumar = parseInt(bufferCantidad, 10);
       }
 
       const index = lineasComanda.findIndex(item => item.id === prodId);
@@ -500,6 +507,8 @@
           cant: cantidadASumar
         });
       }
+
+      cancelarMultiplicador();
       renderizarTicket();
     }
 
@@ -515,10 +524,12 @@
     }
 
     function limpiarTicket() {
-      if (lineasComanda.length === 0) return;
       lineasComanda = [];
+      ticketIdActivo = null;
+      cancelarMultiplicador();
       const mesaLabel = document.getElementById('label-ticket-mesa');
       if (mesaLabel) mesaLabel.textContent = 'BARRA';
+      actualizarBadgePendientes();
       renderizarTicket();
     }
 
@@ -573,6 +584,7 @@
       lucide.createIcons();
     }
 
+    // GESTIÓN DEL TECLADO NUMÉRICO (MULTIPLICADOR Y ACCIONES)
     function pulsarTeclado(valor) {
       if (valor === 'C') {
         if (bufferCantidad !== '') {
@@ -583,12 +595,29 @@
         return;
       }
 
-      if (valor >= '0' && valor <= '9') {
-        if (bufferCantidad === '' && valor === '0') {
-          return; // Ignorar el 0 inicial
-        }
-        bufferCantidad += valor;
-        actualizarIndicadorMultiplicador();
+      if (valor === ',') return;
+
+      if (bufferCantidad === '' && valor === '0') return;
+      if (bufferCantidad.length >= 3) return;
+
+      bufferCantidad += valor;
+      mostrarMultiplicador();
+    }
+
+    function mostrarMultiplicador() {
+      const banner = document.getElementById('banner-multiplicador');
+      const valLabel = document.getElementById('valor-multiplicador');
+      if (banner && valLabel) {
+        valLabel.textContent = bufferCantidad;
+        banner.classList.remove('hidden');
+      }
+    }
+
+    function cancelarMultiplicador() {
+      bufferCantidad = '';
+      const banner = document.getElementById('banner-multiplicador');
+      if (banner) {
+        banner.classList.add('hidden');
       }
     }
 
@@ -605,31 +634,34 @@
       const horaStr = ahora.getHours().toString().padStart(2, '0') + ':' + ahora.getMinutes().toString().padStart(2, '0');
 
       let tickets = obtenerTicketsPendientes();
-      const numTicket = '#T-' + String(tickets.length + 1).padStart(3, '0');
-      const mesaActual = document.getElementById('label-ticket-mesa').textContent || 'BARRA';
+      const numTicket = document.getElementById('label-ticket-numero')?.textContent || ('#T-' + String(tickets.length + 1).padStart(3, '0'));
+      const ubicacionActual = document.getElementById('label-ticket-mesa')?.textContent || 'BARRA';
 
       const nuevoTicketPendiente = {
-        id: 't_' + Date.now(),
+        id: ticketIdActivo || ('t_' + Date.now()),
         numero: numTicket,
-        ubicacion: mesaActual,
+        ubicacion: ubicacionActual,
         hora: horaStr,
         timestamp: Date.now(),
         lineas: JSON.parse(JSON.stringify(lineasComanda)),
         total: total.toFixed(2)
       };
 
-      tickets.push(nuevoTicketPendiente);
+      const existeIdx = tickets.findIndex(t => t.id === nuevoTicketPendiente.id);
+      if (existeIdx >= 0) {
+        tickets[existeIdx] = nuevoTicketPendiente;
+      } else {
+        tickets.push(nuevoTicketPendiente);
+      }
+
       localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(tickets));
 
       limpiarTicket();
-      actualizarBadgePendientes();
       alert(`Comanda ${numTicket} aparcada correctamente en Tickets Pendientes.`);
     }
 
-    // INICIAR ASIGNACIÓN DE MESA: PASA EL TICKET AL PLANO
-    function iniciarAsignarMesa() {
+    function asignarAMesa() {
       if (lineasComanda.length === 0) {
-        // Si no hay productos, permite ir al plano para seleccionar mesa e iniciar pedido
         window.location.href = '04-plano-mesas.html';
         return;
       }
@@ -637,30 +669,15 @@
       let total = 0;
       lineasComanda.forEach(l => { total += (l.precio * l.cant); });
 
-      const ahora = new Date();
-      const horaStr = ahora.getHours().toString().padStart(2, '0') + ':' + ahora.getMinutes().toString().padStart(2, '0');
-
-      let tickets = obtenerTicketsPendientes();
-      const numTicket = '#T-' + String(tickets.length + 1).padStart(3, '0');
-
-      const ticketAsignando = {
-        id: 't_' + Date.now(),
-        numero: numTicket,
-        ubicacion: 'BARRA',
-        hora: horaStr,
-        timestamp: Date.now(),
+      const pedidoParaAsignar = {
         lineas: JSON.parse(JSON.stringify(lineasComanda)),
-        total: total.toFixed(2)
+        total: total.toFixed(2),
+        artsCount: lineasComanda.reduce((acc, it) => acc + it.cant, 0),
+        numero: document.getElementById('label-ticket-numero')?.textContent || '#T-001',
+        ticketId: ticketIdActivo
       };
 
-      // Guardamos la comanda que se asignará en el plano
-      localStorage.setItem('lapiruleta_asignar_mesa', JSON.stringify(ticketAsignando));
-      
-      // Limpiamos la pantalla de ventas
-      lineasComanda = [];
-      renderizarTicket();
-
-      // Navegamos al plano de mesas
+      localStorage.setItem('lapiruleta_asignar_mesa', JSON.stringify(pedidoParaAsignar));
       window.location.href = '04-plano-mesas.html';
     }
 
@@ -671,29 +688,41 @@
       window.location.href = '02-cobro-pagos.html';
     }
 
-    // Comprobar si se ha recuperado o abierto una mesa desde el plano o tickets
+    // COMPROBAR Y CARGAR TICKET APARCADO AL VOLVER DE TICKETS PENDIENTES
     function comprobarTicketRecuperado() {
       try {
-        const ticketRecuperado = localStorage.getItem('lapiruleta_ticket_activo');
-        if (ticketRecuperado) {
-          const t = JSON.parse(ticketRecuperado);
-          if (t) {
-            lineasComanda = t.lineas || [];
+        const ticketGuardado = localStorage.getItem('lapiruleta_ticket_activo');
+        if (ticketGuardado) {
+          const t = JSON.parse(ticketGuardado);
+          if (t && t.lineas && Array.isArray(t.lineas) && t.lineas.length > 0) {
+            lineasComanda = t.lineas.map(l => ({
+              id: l.id,
+              nombre: l.nombre,
+              precio: parseFloat(l.precio),
+              cant: parseInt(l.cant, 10) || 1
+            }));
+            
+            ticketIdActivo = t.id || null;
+
             const mesaLabel = document.getElementById('label-ticket-mesa');
             const numLabel = document.getElementById('label-ticket-numero');
             if (mesaLabel) mesaLabel.textContent = t.ubicacion || 'BARRA';
             if (numLabel) numLabel.textContent = t.numero || '#T-001';
+
             localStorage.removeItem('lapiruleta_ticket_activo');
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error('Error recuperando ticket:', e);
+      }
     }
 
+    // INICIALIZACIÓN SECUENCIAL
     renderizarPestañas();
     renderizarProductos();
-    comprobarTicketRecuperado();
-    renderizarTicket();
-    actualizarBadgePendientes();
+    comprobarTicketRecuperado(); // Carga las líneas del ticket recuperado antes de pintar
+    renderizarTicket();          // Pinta el ticket con sus subtotales y total
+    actualizarBadgePendientes();  // Actualiza el badge de pendientes
     lucide.createIcons();
 
     if ('serviceWorker' in navigator) {
@@ -708,4 +737,5 @@
       });
     }
   </script>
-</body></html>
+</body>
+</html>
