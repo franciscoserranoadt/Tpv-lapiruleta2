@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es">
-<head>
+<html lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>TPV Ventas - La Piruleta</title>
@@ -52,7 +51,7 @@
 <a class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow-sm transition-colors" href="03-tickets-mesas.html">
 <i class="w-4 h-4" data-lucide="clock"></i>
 <span>Pendientes</span>
-<span class="bg-white text-amber-700 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-extrabold ml-0.5">0</span>
+<span class="bg-white text-amber-700 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-extrabold ml-0.5" id="badge-pendientes">0</span>
 </a>
 <a class="p-2 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-200" href="13-config-impresoras.html">
 <i class="w-4 h-4" data-lucide="settings"></i>
@@ -69,7 +68,7 @@
 <div class="flex items-center gap-2">
 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
 <span class="font-extrabold text-sm text-stone-900">BARRA</span>
-<span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md">#T-001</span>
+<span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md" id="ticket-id-display">#T-001</span>
 </div>
 <span class="text-[11px] text-stone-500 font-medium">Cliente General</span>
 </div>
@@ -176,6 +175,11 @@
 <span>Terminal Conectada • Venta Directa</span>
 </div>
 </nav>
+<!-- TOAST DE NOTIFICACIÓN SUTIL -->
+<div class="fixed top-4 right-4 z-50 pointer-events-none transition-all duration-300 opacity-0 transform -translate-y-2 flex items-center gap-2 bg-stone-900/90 backdrop-blur text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-semibold border border-stone-700" id="toast-notificacion">
+<i class="w-4 h-4 text-emerald-400" data-lucide="check-circle-2"></i>
+<span id="toast-mensaje">Ticket guardado correctamente</span>
+</div>
 <!-- MODAL: NUEVA CATEGORÍA (CORREGIDO Y 100% OPERATIVO) -->
 <div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" id="modal-categoria">
 <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl border border-stone-200">
@@ -242,6 +246,7 @@
 <script>
     let categoriaActiva = 'TODOS';
     let lineasComanda = [];
+    let correlativoTicket = 1;
 
     // LECTURA DE DATOS DESDE LOCALSTORAGE
     function obtenerCategorias() {
@@ -258,6 +263,56 @@
       } catch (e) {
         return [];
       }
+    }
+
+    function obtenerTicketsPendientes() {
+      try {
+        return JSON.parse(localStorage.getItem('lapiruleta_tickets_pendientes') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function guardarTicketsPendientes(tickets) {
+      localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(tickets));
+    }
+
+    function actualizarBadgePendientes() {
+      const tickets = obtenerTicketsPendientes();
+      const badge = document.getElementById('badge-pendientes');
+      if (badge) {
+        badge.textContent = tickets.length;
+      }
+    }
+
+    function actualizarNumeroTicketActual() {
+      const tickets = obtenerTicketsPendientes();
+      let maxNum = 0;
+      tickets.forEach(t => {
+        if (t.numero && t.numero > maxNum) maxNum = t.numero;
+        else if (t.id && typeof t.id === 'string' && t.id.startsWith('T-')) {
+          const n = parseInt(t.id.replace('T-', ''), 10);
+          if (!isNaN(n) && n > maxNum) maxNum = n;
+        }
+      });
+      correlativoTicket = maxNum + 1;
+      const el = document.getElementById('ticket-id-display');
+      if (el) {
+        el.textContent = `#T-${String(correlativoTicket).padStart(3, '0')}`;
+      }
+    }
+
+    function mostrarNotificacion(texto) {
+      const toast = document.getElementById('toast-notificacion');
+      const mensaje = document.getElementById('toast-mensaje');
+      if (!toast || !mensaje) return;
+      mensaje.textContent = texto;
+      toast.classList.remove('opacity-0', '-translate-y-2');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-2');
+      }, 2500);
     }
 
     // MODAL DE CATEGORÍA
@@ -440,6 +495,10 @@
       renderizarTicket();
     }
 
+    function calcularTotalActual() {
+      return lineasComanda.reduce((acc, item) => acc + (item.precio * item.cant), 0);
+    }
+
     function renderizarTicket() {
       const cuerpo = document.getElementById('cuerpo-ticket');
       const totalDisplay = document.getElementById('total-display');
@@ -498,10 +557,47 @@
       }
     }
 
+    // DEJAR TICKET PENDIENTE CON PERSISTENCIA REAL
     function dejarPendiente() {
-      if (lineasComanda.length === 0) return alert('No hay líneas en el ticket para dejar pendientes');
-      alert('Comanda #T-001 guardada en Tickets Pendientes');
+      if (lineasComanda.length === 0) {
+        alert('No hay líneas en el ticket para dejar pendientes');
+        return;
+      }
+
+      const ticketsPendientes = obtenerTicketsPendientes();
+      const ahora = new Date();
+      const horaStr = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      const fechaStr = ahora.toLocaleDateString('es-ES');
+
+      const totalCalculado = calcularTotalActual();
+      const numTicket = correlativoTicket;
+      const ticketIdFormateado = `T-${String(numTicket).padStart(3, '0')}`;
+
+      const nuevoTicketPendiente = {
+        id: ticketIdFormateado,
+        numero: numTicket,
+        mesa: 'BARRA',
+        ubicacion: 'Barra Principal',
+        cliente: 'Cliente General',
+        camarero: 'Paco',
+        hora: horaStr,
+        fecha: fechaStr,
+        timestamp: ahora.getTime(),
+        lineas: JSON.parse(JSON.stringify(lineasComanda)),
+        total: totalCalculado,
+        estado: 'pendiente'
+      };
+
+      ticketsPendientes.push(nuevoTicketPendiente);
+      guardarTicketsPendientes(ticketsPendientes);
+
+      // Feedback y actualización en tiempo real
+      actualizarBadgePendientes();
+      mostrarNotificacion(`Ticket #${ticketIdFormateado} guardado en Pendientes (${totalCalculado.toFixed(2)} €)`);
+
+      // Limpiar ticket y actualizar correlativo
       limpiarTicket();
+      actualizarNumeroTicketActual();
     }
 
     function procesarCobro(metodo) {
@@ -512,6 +608,8 @@
     }
 
     // INICIALIZACIÓN
+    actualizarNumeroTicketActual();
+    actualizarBadgePendientes();
     renderizarPestañas();
     renderizarProductos();
     renderizarTicket();
@@ -540,5 +638,4 @@
       });
     }
   </script>
-</body>
-</html>
+</body></html>
