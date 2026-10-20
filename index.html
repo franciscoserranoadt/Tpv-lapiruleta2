@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>La Piruleta TPV - Ventas</title>
+  <title>TPV Ventas - La Piruleta</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }</style>
+  <style>
+    body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
+  </style>
 </head>
-<body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-24">
-  
-  <!-- CABECERA -->
+<body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-28">
+
+  <!-- CABECERA PERSISTENTE TPV -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
     <div class="flex items-center gap-3">
       <a href="03-tickets-mesas.html" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700">
@@ -22,66 +24,68 @@
       </a>
       <div class="flex items-center gap-2">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="font-bold text-xs text-stone-900">Caja 1 • Turno Abierto</span>
+        <span class="font-bold text-sm text-stone-900">Caja 1 • Turno Abierto</span>
       </div>
     </div>
     <div class="flex items-center gap-2">
-      <a href="13-config-impresoras.html" class="p-2 rounded-xl bg-stone-100 text-stone-700">
+      <a href="13-config-impresoras.html" class="p-2 rounded-xl bg-stone-100 text-stone-700 hover:bg-stone-200">
         <i data-lucide="printer" class="w-5 h-5"></i>
       </a>
-      <div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs">LP</div>
+      <div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs shadow-sm">LP</div>
     </div>
   </header>
 
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="p-4 max-w-lg mx-auto space-y-4">
-    <!-- BARRA BÚSQUEDA Y CATEGORÍAS -->
+    <!-- Buscador táctil -->
     <div class="relative">
-      <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-stone-400"></i>
-      <input type="text" placeholder="Buscar producto o código..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+      <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-stone-400"></i>
+      <input type="text" id="busqueda-venta" oninput="renderizarGridVentas()" placeholder="Buscar producto o código..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
     </div>
 
-    <!-- Píldoras de Categorías -->
-    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center">
-      <button class="px-3.5 py-1.5 rounded-lg bg-stone-900 text-white text-xs font-bold whitespace-nowrap">Todos (0)</button>
-      <a href="10-catalogo-stock.html" class="px-3.5 py-1.5 rounded-lg bg-white border border-dashed border-stone-300 text-stone-500 hover:text-stone-800 text-xs font-semibold whitespace-nowrap flex items-center gap-1">
-        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Añadir categorías
-      </a>
+    <!-- Pestañas de categorías dinámicas sincronizadas con localStorage -->
+    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center" id="categorias-ventas">
+      <!-- Se llena dinámicamente con las categorías guardadas -->
     </div>
 
-    <!-- ESTADO VACÍO (SIN PRODUCTOS FICTICIOS) -->
-    <div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-6">
-      <div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
-        <i data-lucide="shopping-bag" class="w-8 h-8 text-stone-400"></i>
+    <!-- Grid de productos táctiles para venta directa -->
+    <div id="grid-productos" class="grid grid-cols-2 gap-3">
+      <!-- Se renderiza desde localStorage -->
+    </div>
+
+    <!-- Estado si aún no hay productos creados -->
+    <div id="sin-productos-aviso" class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-3">
+      <div class="w-14 h-14 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
+        <i data-lucide="shopping-bag" class="w-7 h-7 text-[#1b7a4a]"></i>
       </div>
-      <div class="space-y-1">
-        <h3 class="font-bold text-base text-stone-900">Catálogo limpio y listo</h3>
-        <p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
-          No hay artículos de ejemplo cargados. Añade tus propios productos reales para empezar a registrar ventas en caja.
-        </p>
-      </div>
-      <a href="10-catalogo-stock.html" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors">
-        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+      <h3 class="font-bold text-sm text-stone-900">Catálogo limpio y listo</h3>
+      <p class="text-xs text-stone-500 max-w-xs mx-auto">No hay artículos registrados. Empieza añadiendo los artículos de tu cafetería en Catálogo.</p>
+      <a href="10-catalogo-stock.html" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#1b7a4a] text-white rounded-xl text-xs font-bold shadow hover:bg-[#15613b] transition-colors">
+        <i data-lucide="plus" class="w-4 h-4"></i>
         <span>Crear mis productos en Catálogo</span>
       </a>
     </div>
   </main>
 
-  <!-- BARRA DE COBRO TICKET FLOTANTE INFERIOR (ESTADO TICKET VACÍO) -->
-  <div class="fixed bottom-14 left-0 right-0 p-3 bg-white/95 backdrop-blur border-t border-stone-200 shadow-md">
-    <div class="max-w-lg mx-auto flex items-center justify-between gap-3">
-      <div class="flex items-center gap-2 bg-stone-50 border border-stone-200 px-3.5 py-2.5 rounded-xl text-stone-400 font-bold text-xs">
-        <i data-lucide="receipt" class="w-4 h-4"></i>
-        <span>Ticket vacío • 0 arts.</span>
+  <!-- BARRA FLOTANTE DE TICKET Y COBRO ACTIVO -->
+  <div class="fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur border-t border-stone-200 p-3 shadow-lg">
+    <div class="max-w-lg mx-auto flex items-center gap-3">
+      <div class="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 flex items-center justify-between">
+        <div class="flex items-center gap-1.5 text-stone-600 text-xs">
+          <i data-lucide="receipt" class="w-4 h-4 text-stone-400"></i>
+          <span id="ticket-badge">Ticket vacío • 0 arts.</span>
+        </div>
+        <button onclick="vaciarTicket()" id="btn-vaciar" class="text-[10px] text-stone-400 hover:text-rose-600 hidden font-semibold">Vaciar</button>
       </div>
-      <button disabled class="flex-1 bg-stone-200 text-stone-400 py-2.5 px-4 rounded-xl flex items-center justify-between font-bold text-sm cursor-not-allowed">
+      <a href="02-cobro-pagos.html" id="btn-cobrar" class="px-5 py-2.5 rounded-xl bg-stone-300 text-stone-500 font-bold text-xs flex items-center gap-2 pointer-events-none transition-colors">
         <span>COBRAR</span>
-        <span class="bg-stone-300/50 px-2 py-0.5 rounded-lg text-sm">0,00 €</span>
-      </button>
+        <span id="total-cobrar">0,00 €</span>
+      </a>
     </div>
   </div>
 
-  <!-- NAVEGACIÓN INFERIOR (TABS) -->
-  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around">
+  <!-- NAVEGACIÓN INFERIOR (TABS PERSISTENTES) -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around shadow-lg">
     <a href="index.html" class="flex flex-col items-center gap-0.5 text-[#1b7a4a]">
       <i data-lucide="calculator" class="w-5 h-5"></i>
       <span class="text-[10px] font-bold">Ventas</span>
@@ -105,6 +109,136 @@
   </nav>
 
   <script>
+    let categoriaSeleccionada = 'Todos';
+    let cesta = [];
+
+    function obtenerCategorias() {
+      return JSON.parse(localStorage.getItem('lapiruleta_categorias') || '[]');
+    }
+
+    function obtenerProductos() {
+      return JSON.parse(localStorage.getItem('lapiruleta_productos') || '[]');
+    }
+
+    function renderizarCategoriasVentas() {
+      const contenedor = document.getElementById('categorias-ventas');
+      const cats = obtenerCategorias();
+      const prods = obtenerProductos();
+
+      let html = `
+        <button onclick="filtrarVenta('Todos')" class="px-3.5 py-1.5 rounded-xl ${categoriaSeleccionada === 'Todos' ? 'bg-stone-900 text-white' : 'bg-white border border-stone-200 text-stone-600'} text-xs font-bold whitespace-nowrap shadow-sm">
+          Todos (${prods.length})
+        </button>
+      `;
+
+      cats.forEach(c => {
+        const activa = categoriaSeleccionada === c.nombre;
+        html += `
+          <button onclick="filtrarVenta('${c.nombre}')" class="px-3.5 py-1.5 rounded-xl ${activa ? 'bg-[#1b7a4a] text-white shadow' : 'bg-white border border-stone-200 text-stone-600'} text-xs font-bold whitespace-nowrap flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full" style="background-color: ${c.color}"></span>
+            <span>${c.nombre}</span>
+          </button>
+        `;
+      });
+
+      html += `
+        <a href="10-catalogo-stock.html" class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-[#1b7a4a] text-xs font-bold whitespace-nowrap flex items-center gap-1">
+          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+          <span>Añadir categorías</span>
+        </a>
+      `;
+
+      contenedor.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function filtrarVenta(cat) {
+      categoriaSeleccionada = cat;
+      renderizarCategoriasVentas();
+      renderizarGridVentas();
+    }
+
+    function renderizarGridVentas() {
+      const grid = document.getElementById('grid-productos');
+      const aviso = document.getElementById('sin-productos-aviso');
+      const query = (document.getElementById('busqueda-venta').value || '').toLowerCase();
+
+      let prods = obtenerProductos();
+
+      if (prods.length === 0) {
+        grid.classList.add('hidden');
+        aviso.classList.remove('hidden');
+        return;
+      }
+
+      grid.classList.remove('hidden');
+      aviso.classList.add('hidden');
+
+      if (categoriaSeleccionada !== 'Todos') {
+        prods = prods.filter(p => p.categoria === categoriaSeleccionada);
+      }
+      if (query) {
+        prods = prods.filter(p => p.nombre.toLowerCase().includes(query));
+      }
+
+      if (prods.length === 0) {
+        grid.innerHTML = `<div class="col-span-2 text-center py-8 text-stone-400 text-xs">No hay productos en esta selección.</div>`;
+        return;
+      }
+
+      grid.innerHTML = prods.map(p => `
+        <button onclick="agregarAlTicket('${p.id}')" class="bg-white p-3.5 rounded-2xl border border-stone-200 shadow-sm text-left flex flex-col justify-between hover:border-[#1b7a4a] active:scale-95 transition-transform min-h-[92px]">
+          <div>
+            <span class="text-[10px] text-stone-400 font-semibold uppercase tracking-wider">${p.categoria}</span>
+            <h4 class="font-bold text-sm text-stone-900 leading-snug line-clamp-2">${p.nombre}</h4>
+          </div>
+          <div class="flex items-center justify-between pt-2">
+            <span class="text-sm font-extrabold text-[#1b7a4a]">${p.precio} €</span>
+            <span class="w-6 h-6 rounded-lg bg-emerald-50 text-[#1b7a4a] flex items-center justify-center font-bold text-xs">+</span>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function agregarAlTicket(id) {
+      const prod = obtenerProductos().find(p => p.id === id);
+      if (!prod) return;
+      cesta.push(prod);
+      actualizarTicketBar();
+    }
+
+    function vaciarTicket() {
+      cesta = [];
+      actualizarTicketBar();
+    }
+
+    function actualizarTicketBar() {
+      const badge = document.getElementById('ticket-badge');
+      const btnVaciar = document.getElementById('btn-vaciar');
+      const btnCobrar = document.getElementById('btn-cobrar');
+      const totalSpan = document.getElementById('total-cobrar');
+
+      const count = cesta.length;
+      const total = cesta.reduce((acc, p) => acc + parseFloat(p.precio), 0);
+
+      if (count === 0) {
+        badge.textContent = 'Ticket vacío • 0 arts.';
+        btnVaciar.classList.add('hidden');
+        btnCobrar.classList.remove('bg-[#1b7a4a]', 'text-white', 'pointer-events-auto', 'shadow');
+        btnCobrar.classList.add('bg-stone-300', 'text-stone-500', 'pointer-events-none');
+        totalSpan.textContent = '0,00 €';
+      } else {
+        badge.textContent = `Ticket activo • ${count} ${count === 1 ? 'art.' : 'arts.'}`;
+        btnVaciar.classList.remove('hidden');
+        btnCobrar.classList.remove('bg-stone-300', 'text-stone-500', 'pointer-events-none');
+        btnCobrar.classList.add('bg-[#1b7a4a]', 'text-white', 'pointer-events-auto', 'shadow');
+        totalSpan.textContent = `${total.toFixed(2)} €`;
+      }
+    }
+
+    // Inicializar al cargar
+    renderizarCategoriasVentas();
+    renderizarGridVentas();
     lucide.createIcons();
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
   </script>
