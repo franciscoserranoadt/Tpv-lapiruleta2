@@ -1,160 +1,283 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Catálogo e Inventario - La Piruleta TPV</title>
-<link href="./manifest.json" rel="manifest"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Catálogo e Inventario - La Piruleta TPV</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
     body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
   </style>
 </head>
 <body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-28">
-<!-- CABECERA PERSISTENTE TPV -->
-<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
-<div class="flex items-center gap-3">
-<a class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700" href="index.html">
-<i class="w-5 h-5" data-lucide="arrow-left"></i>
-</a>
-<div>
-<h1 class="font-bold text-sm text-stone-900 leading-tight">Catálogo e Inventario</h1>
-<p class="text-[11px] text-stone-500">Gestión de productos y stock</p>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<a class="p-2 rounded-xl bg-stone-100 text-stone-700 hover:bg-stone-200" href="13-config-impresoras.html">
-<i class="w-5 h-5" data-lucide="printer"></i>
-</a>
-<div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+
+  <!-- CABECERA PERSISTENTE TPV -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      </a>
+      <div>
+        <h1 class="font-bold text-sm text-stone-900 leading-tight">Catálogo e Inventario</h1>
+        <p class="text-[11px] text-stone-500">Gestión de productos y stock</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="document.getElementById('modal-categoria').classList.remove('hidden')" class="px-2.5 py-1.5 rounded-xl bg-emerald-50 text-[#1b7a4a] border border-emerald-200 font-bold text-xs flex items-center gap-1 hover:bg-emerald-100 transition-colors">
+        <i data-lucide="folder-plus" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Nueva</span> Categoría
+      </button>
+      <div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs shadow-sm">
         LP
       </div>
-</div>
-</header>
-<!-- CONTENIDO PRINCIPAL -->
-<main class="p-4 max-w-lg mx-auto space-y-4">
-<!-- Buscador y escáner -->
-<div class="flex gap-2">
-<div class="relative flex-1">
-<i class="w-4 h-4 absolute left-3.5 top-3 text-stone-400" data-lucide="search"></i>
-<input class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" placeholder="Buscar por nombre, código o SKU..." type="text"/>
-</div>
-<button class="p-2.5 bg-[#1b7a4a] text-white rounded-xl shadow-sm hover:bg-[#15613b] flex items-center justify-center">
-<i class="w-5 h-5" data-lucide="scan-barcode"></i>
-</button>
-</div>
-<!-- Pestañas de categorías -->
-<div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center"><button class="px-3.5 py-1.5 rounded-xl bg-stone-900 text-white text-xs font-bold whitespace-nowrap shadow-sm">
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="p-4 max-w-lg mx-auto space-y-4">
+
+    <!-- Buscador y escáner -->
+    <div class="flex gap-2">
+      <div class="relative flex-1">
+        <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-stone-400"></i>
+        <input type="text" placeholder="Buscar por nombre, código o SKU..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+      </div>
+      <button class="p-2.5 bg-[#1b7a4a] text-white rounded-xl shadow-sm hover:bg-[#15613b] flex items-center justify-center">
+        <i data-lucide="scan-barcode" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Pestañas de categorías limpias (Sin categorías de ejemplo) -->
+    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center" id="contenedor-categorias">
+      <button class="px-3.5 py-1.5 rounded-xl bg-stone-900 text-white text-xs font-bold whitespace-nowrap shadow-sm">
         Todos (0)
       </button>
-<button class="px-3 py-1.5 rounded-xl border border-dashed border-[#1b7a4a] text-[#1b7a4a] bg-stone-50 hover:bg-stone-100 text-xs font-semibold whitespace-nowrap inline-flex items-center gap-1 shadow-sm transition-colors" onclick="document.getElementById('modal-categoria').classList.remove('hidden')"><i class="w-3.5 h-3.5" data-lucide="folder-plus"></i><span>+ Categoría</span></button></div>
-<!-- Estado Limpio (Sin productos ficticios) -->
-<div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-4">
-<div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
-<i class="w-8 h-8 text-[#1b7a4a]" data-lucide="package-open"></i>
-</div>
-<div class="space-y-1">
-<h3 class="font-bold text-base text-stone-900">Catálogo limpio y listo</h3>
-<p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
+      <button onclick="document.getElementById('modal-categoria').classList.remove('hidden')" class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-[#1b7a4a] text-xs font-bold whitespace-nowrap flex items-center gap-1 hover:bg-emerald-100 transition-colors">
+        <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i>
+        <span>+ Categoría</span>
+      </button>
+    </div>
+
+    <!-- Estado Limpio -->
+    <div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-4">
+      <div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
+        <i data-lucide="package-open" class="w-8 h-8 text-[#1b7a4a]"></i>
+      </div>
+      <div class="space-y-1">
+        <h3 class="font-bold text-base text-stone-900">Catálogo limpio y listo</h3>
+        <p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
           Todavía no hay artículos registrados. Empieza añadiendo los cafés, panes, dulces o desayunos propios de tu cafetería.
         </p>
-</div>
-<button class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors" onclick="document.getElementById('modal-crear').classList.remove('hidden')">
-<i class="w-4 h-4" data-lucide="plus-circle"></i>
-<span>Añadir primer producto</span>
-</button>
-</div>
-<!-- Resumen inferior del catálogo -->
-<div class="bg-stone-100/70 rounded-2xl p-3 flex items-center justify-between text-xs text-stone-600 border border-stone-200">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<span class="font-semibold">0 Artículos en Catálogo</span>
-</div>
-<span class="text-stone-400 font-medium">Stock sincronizado</span>
-</div>
-</main>
-<!-- BOTÓN FLOTANTE PARA CREAR ARTÍCULO -->
-<div class="fixed bottom-20 right-4 z-30 max-w-lg mx-auto"><div class="flex items-center gap-2"><button class="flex items-center gap-1.5 px-3 py-3 bg-white border border-stone-200 text-stone-700 rounded-2xl shadow-lg hover:bg-stone-50 font-bold text-xs transition-transform active:scale-95" onclick="document.getElementById('modal-categoria').classList.remove('hidden')"><i class="w-4 h-4 text-[#1b7a4a]" data-lucide="folder-plus"></i><span class="hidden sm:inline">+ CATEGORÍA</span></button><button class="flex items-center gap-2 px-4 py-3 bg-[#1b7a4a] text-white rounded-2xl shadow-lg hover:bg-[#15613b] font-bold text-xs transition-transform active:scale-95" onclick="document.getElementById('modal-crear').classList.remove('hidden')"><i class="w-4 h-4" data-lucide="plus"></i><span>NUEVO ARTÍCULO</span></button></div></div>
-<!-- MODAL / FORMULARIO RÁPIDO PARA CREAR / EDITAR PRODUCTO -->
-<div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-crear">
-<div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
-<div class="flex items-center justify-between border-b border-stone-100 pb-3">
-<div>
-<h2 class="font-bold text-base text-stone-900">Nuevo Artículo</h2>
-<p class="text-[11px] text-stone-500">Añadir producto al catálogo de venta</p>
-</div>
-<button class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200" onclick="document.getElementById('modal-crear').classList.add('hidden')">
-<i class="w-4 h-4" data-lucide="x"></i>
-</button>
-</div>
-<div class="space-y-3">
-<div>
-<label class="block text-xs font-semibold text-stone-700 mb-1">Nombre del Producto</label>
-<input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" placeholder="Ej: Café con leche, Croissant mantequilla..." type="text"/>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<div><div class="flex items-center justify-between mb-1"><label class="block text-xs font-semibold text-stone-700">Categoría</label><button class="text-[11px] font-bold text-[#1b7a4a] hover:underline flex items-center gap-0.5" onclick="document.getElementById('modal-crear').classList.add('hidden'); document.getElementById('modal-categoria').classList.remove('hidden')" type="button">+ Crear nueva</button></div><select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]"><option disabled="" selected="" value="">Selecciona o crea categoría...</option></select></div>
-<div>
-<label class="block text-xs font-semibold text-stone-700 mb-1">Coste (€)</label>
-<input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" placeholder="0.45" step="0.01" type="number"/>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<div>
-<label class="block text-xs font-semibold text-stone-700 mb-1">Categoría</label>
-<select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]"><option disabled="" selected="" value="">Selecciona o crea categoría...</option></select>
-</div>
-<div>
-<label class="block text-xs font-semibold text-stone-700 mb-1">IVA Aplicable</label>
-<select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]"><option disabled="" selected="" value="">Selecciona o crea categoría...</option></select>
-</div>
-</div>
-<div class="pt-2 flex items-center justify-between">
-<span class="text-xs font-semibold text-stone-700">Disponible para la venta directa</span>
-<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" type="checkbox"/>
-</div>
-</div>
-<div class="pt-3 flex gap-2">
-<button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200" onclick="document.getElementById('modal-crear').classList.add('hidden')">
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
+        <button onclick="document.getElementById('modal-crear').classList.remove('hidden')" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Añadir primer producto</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Resumen inferior del catálogo -->
+    <div class="bg-stone-100/70 rounded-2xl p-3 flex items-center justify-between text-xs text-stone-600 border border-stone-200">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span class="font-semibold">0 Artículos en Catálogo</span>
+      </div>
+      <span class="text-stone-400 font-medium">Stock sincronizado</span>
+    </div>
+
+  </main>
+
+  <!-- BOTONES FLOTANTES DE ACCIÓN RÁPIDA -->
+  <div class="fixed bottom-20 right-4 z-30 flex items-center gap-2">
+    <button onclick="document.getElementById('modal-categoria').classList.remove('hidden')" title="Añadir Categoría" class="p-3 bg-white text-stone-700 border border-stone-200 rounded-2xl shadow-lg hover:bg-stone-50 transition-transform active:scale-95 flex items-center justify-center">
+      <i data-lucide="folder-plus" class="w-5 h-5 text-[#1b7a4a]"></i>
+    </button>
+    <button onclick="document.getElementById('modal-crear').classList.remove('hidden')" class="flex items-center gap-2 px-4 py-3 bg-[#1b7a4a] text-white rounded-2xl shadow-lg hover:bg-[#15613b] font-bold text-xs transition-transform active:scale-95">
+      <i data-lucide="plus" class="w-4 h-4"></i>
+      <span>NUEVO ARTÍCULO</span>
+    </button>
+  </div>
+
+  <!-- MODAL PARA CREAR CATEGORÍA (SIN SELECTOR DE ICONOS) -->
+  <div id="modal-categoria" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
+      <div class="flex items-center justify-between border-b border-stone-100 pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-[#1b7a4a]">
+            <i data-lucide="folder-plus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h2 class="font-bold text-base text-stone-900">Nueva Categoría</h2>
+            <p class="text-[11px] text-stone-500">Organiza tus productos por departamentos o tipos</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('modal-categoria').classList.add('hidden')" class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la Categoría</label>
+          <input type="text" id="cat-nombre" placeholder="Ej: Bocadillos, Zumos Naturales, Desayunos..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1.5">Color de distinción rápida</label>
+          <div class="flex items-center gap-2.5">
+            <label class="cursor-pointer"><input type="radio" name="cat-color" value="#1b7a4a" checked class="sr-only peer"><span class="w-7 h-7 rounded-full bg-[#1b7a4a] block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span></label>
+            <label class="cursor-pointer"><input type="radio" name="cat-color" value="#d97706" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-amber-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span></label>
+            <label class="cursor-pointer"><input type="radio" name="cat-color" value="#f97316" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-orange-500 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span></label>
+            <label class="cursor-pointer"><input type="radio" name="cat-color" value="#e11d48" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-rose-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span></label>
+            <label class="cursor-pointer"><input type="radio" name="cat-color" value="#4f46e5" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-indigo-600 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span></label>
+            <label class="cursor-pointer"><input type="radio" name="cat-color" value="#3f3f46" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-zinc-700 block ring-offset-2 peer-checked:ring-2 peer-checked:ring-stone-900"></span></label>
+          </div>
+        </div>
+
+        <div>
+          <div class="p-3 bg-stone-50 rounded-xl border border-stone-200 flex items-center justify-between">
+            <span class="text-xs font-semibold text-stone-700">Mostrar en barra rápida del TPV</span>
+            <input type="checkbox" checked class="w-4 h-4 accent-[#1b7a4a] rounded">
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3 flex gap-2">
+        <button onclick="document.getElementById('modal-categoria').classList.add('hidden')" class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200">
           Cancelar
         </button>
-<button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow" onclick="document.getElementById('modal-crear').classList.add('hidden')">
+        <button onclick="guardarCategoriaRapida()" class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow">
+          Guardar Categoría
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PARA CREAR ARTÍCULO -->
+  <div id="modal-crear" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
+      <div class="flex items-center justify-between border-b border-stone-100 pb-3">
+        <div>
+          <h2 class="font-bold text-base text-stone-900">Nuevo Artículo</h2>
+          <p class="text-[11px] text-stone-500">Añadir producto al catálogo de venta</p>
+        </div>
+        <button onclick="document.getElementById('modal-crear').classList.add('hidden')" class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-stone-700 mb-1">Nombre del Producto</label>
+          <input type="text" placeholder="Ej: Café con leche, Croissant mantequilla..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Precio PVP (€)</label>
+            <input type="number" step="0.01" placeholder="1.80" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">Coste (€)</label>
+            <input type="number" step="0.01" placeholder="0.45" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-semibold text-stone-700">Categoría</label>
+              <button type="button" onclick="document.getElementById('modal-crear').classList.add('hidden'); document.getElementById('modal-categoria').classList.remove('hidden')" class="text-[11px] text-[#1b7a4a] font-bold hover:underline">+ Crear nueva</button>
+            </div>
+            <select id="select-categorias" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+              <option value="" disabled selected>Selecciona o crea categoría...</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-stone-700 mb-1">IVA Aplicable</label>
+            <select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
+              <option>10% (Hostelería / Alimentación)</option>
+              <option>4% (Pan común / Leche)</option>
+              <option>21% (General)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-between">
+          <span class="text-xs font-semibold text-stone-700">Disponible para la venta directa</span>
+          <input type="checkbox" checked class="w-4 h-4 accent-[#1b7a4a] rounded">
+        </div>
+      </div>
+
+      <div class="pt-3 flex gap-2">
+        <button onclick="document.getElementById('modal-crear').classList.add('hidden')" class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200">
+          Cancelar
+        </button>
+        <button onclick="document.getElementById('modal-crear').classList.add('hidden')" class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow">
           Guardar Producto
         </button>
-</div>
-</div>
-</div><div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-categoria"><div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200"><div class="flex items-center justify-between border-b border-stone-100 pb-3"><div><h2 class="font-bold text-base text-stone-900">Nueva Categoría</h2><p class="text-[11px] text-stone-500">Organiza tus productos por departamentos o tipos</p></div><button class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200" onclick="document.getElementById('modal-categoria').classList.add('hidden')"><i class="w-4 h-4" data-lucide="x"></i></button></div><div class="space-y-3"><div><label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la Categoría</label><input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" placeholder="Ej: Bocadillos, Zumos Naturales, Desayunos..." type="text"/></div><div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-semibold text-stone-700 mb-1">Icono asignado</label><select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]"><option>☕ Café / Bebida caliente</option><option>🥐 Bollería / Dulce</option><option>🥖 Pan / Salado</option><option>🍰 Tartas &amp; Pasteles</option><option>🥤 Refrescos / Fríos</option><option>🥪 Bocadillos &amp; Snacks</option></select></div><div><label class="block text-xs font-semibold text-stone-700 mb-1">Orden de visualización</label><input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" min="1" type="number" value="5"/></div></div><div><label class="block text-xs font-semibold text-stone-700 mb-1.5">Color de distinción rápida</label><div class="flex items-center gap-2.5"><button class="w-7 h-7 rounded-full bg-[#1b7a4a] ring-2 ring-offset-2 ring-[#1b7a4a]" type="button"></button><button class="w-7 h-7 rounded-full bg-amber-600 hover:scale-105 transition-transform" type="button"></button><button class="w-7 h-7 rounded-full bg-orange-500 hover:scale-105 transition-transform" type="button"></button><button class="w-7 h-7 rounded-full bg-rose-600 hover:scale-105 transition-transform" type="button"></button><button class="w-7 h-7 rounded-full bg-indigo-600 hover:scale-105 transition-transform" type="button"></button><button class="w-7 h-7 rounded-full bg-stone-700 hover:scale-105 transition-transform" type="button"></button></div></div><div class="pt-2 flex items-center justify-between"><span class="text-xs font-semibold text-stone-700">Mostrar en barra rápida del TPV</span><input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" type="checkbox"/></div></div><div class="pt-3 flex gap-2"><button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200" onclick="document.getElementById('modal-categoria').classList.add('hidden')">Cancelar</button><button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow" onclick="document.getElementById('modal-categoria').classList.add('hidden')">Guardar Categoría</button></div></div></div>
-<!-- NAVEGACIÓN INFERIOR (TABS PERSISTENTES EXACTOS A TODAS LAS PANTALLAS) -->
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around shadow-lg">
-<a class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700" href="index.html">
-<i class="w-5 h-5" data-lucide="calculator"></i>
-<span class="text-[10px] font-medium">Ventas</span>
-</a>
-<a class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700" href="03-tickets-mesas.html">
-<i class="w-5 h-5" data-lucide="receipt"></i>
-<span class="text-[10px] font-medium">Tickets</span>
-</a>
-<a class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700" href="04-plano-mesas.html">
-<i class="w-5 h-5" data-lucide="layout-grid"></i>
-<span class="text-[10px] font-medium">Mesas</span>
-</a>
-<a class="flex flex-col items-center gap-0.5 text-[#1b7a4a]" href="10-catalogo-stock.html">
-<i class="w-5 h-5" data-lucide="package"></i>
-<span class="text-[10px] font-bold">Catálogo</span>
-</a>
-<a class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700" href="05-cierre-caja.html">
-<i class="w-5 h-5" data-lucide="banknote"></i>
-<span class="text-[10px] font-medium">Caja</span>
-</a>
-</nav>
-<script>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVEGACIÓN INFERIOR (TABS IDÉNTICOS) -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around shadow-lg">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
+      <i data-lucide="calculator" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Ventas</span>
+    </a>
+    <a href="03-tickets-mesas.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
+      <i data-lucide="receipt" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Tickets</span>
+    </a>
+    <a href="04-plano-mesas.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
+      <i data-lucide="layout-grid" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Mesas</span>
+    </a>
+    <a href="10-catalogo-stock.html" class="flex flex-col items-center gap-0.5 text-[#1b7a4a]">
+      <i data-lucide="package" class="w-5 h-5"></i>
+      <span class="text-[10px] font-bold">Catálogo</span>
+    </a>
+    <a href="05-cierre-caja.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
+      <i data-lucide="banknote" class="w-5 h-5"></i>
+      <span class="text-[10px] font-medium">Caja</span>
+    </a>
+  </nav>
+
+  <script>
     lucide.createIcons();
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+
+    function guardarCategoriaRapida() {
+      const input = document.getElementById('cat-nombre');
+      const nombre = input.value.trim();
+      if (!nombre) return;
+
+      // 1. Añadir el botón a la barra horizontal de filtros
+      const contenedor = document.getElementById('contenedor-categorias');
+      const btn = document.createElement('button');
+      btn.className = 'px-3.5 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-600 text-xs font-medium whitespace-nowrap shadow-sm hover:border-[#1b7a4a] transition-colors';
+      btn.textContent = nombre;
+      contenedor.insertBefore(btn, contenedor.lastElementChild);
+
+      // 2. Añadir como opción válida al selector del modal de artículos
+      const select = document.getElementById('select-categorias');
+      const opt = document.createElement('option');
+      opt.textContent = nombre;
+      opt.value = nombre;
+      select.appendChild(opt);
+      select.value = nombre;
+
+      // 3. Limpiar y cerrar modal
+      input.value = '';
+      document.getElementById('modal-categoria').classList.add('hidden');
+    }
   </script>
 </body>
 </html>
