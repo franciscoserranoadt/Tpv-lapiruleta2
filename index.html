@@ -334,6 +334,14 @@
       }
     }
 
+    function obtenerVentasTurno() {
+      try {
+        return JSON.parse(localStorage.getItem('lapiruleta_ventas') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
     function actualizarBadgePendientes() {
       const tickets = obtenerTicketsPendientes();
       const badge = document.getElementById('badge-contador-pendientes');
@@ -341,7 +349,8 @@
         badge.textContent = tickets.length;
       }
       if (!ticketIdActivo) {
-        ticketNumeroActual = tickets.length + 1;
+        const ventas = obtenerVentasTurno();
+        ticketNumeroActual = tickets.length + ventas.length + 1;
         const numLabel = document.getElementById('label-ticket-numero');
         if (numLabel) {
           numLabel.textContent = '#T-' + String(ticketNumeroActual).padStart(3, '0');
@@ -681,11 +690,46 @@
       window.location.href = '04-plano-mesas.html';
     }
 
+    // COBRO DIRECTO: REGISTRA LA VENTA EN EL TURNO PARA QUE CIERRE DE CAJA LA SUME
     function procesarCobro(metodo) {
       if (lineasComanda.length === 0) {
         return alert('El ticket está vacío. Toca un producto antes de cobrar.');
       }
-      window.location.href = '02-cobro-pagos.html';
+
+      let total = 0;
+      lineasComanda.forEach(l => { total += (l.precio * l.cant); });
+
+      const numTicket = document.getElementById('label-ticket-numero')?.textContent || '#T-001';
+      const ubicacion = document.getElementById('label-ticket-mesa')?.textContent || 'BARRA';
+
+      const nuevaVenta = {
+        id: 'v_' + Date.now(),
+        numero: numTicket,
+        ubicacion: ubicacion,
+        total: total.toFixed(2),
+        metodo: metodo, // 'Efectivo', 'Tarjeta' o 'Bizum'
+        lineas: JSON.parse(JSON.stringify(lineasComanda)),
+        fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        timestamp: Date.now()
+      };
+
+      try {
+        const ventas = obtenerVentasTurno();
+        ventas.push(nuevaVenta);
+        localStorage.setItem('lapiruleta_ventas', JSON.stringify(ventas));
+
+        // Si este ticket provenía de una comanda aparcada, retirarlo de pendientes
+        if (ticketIdActivo) {
+          let ticketsPendientes = obtenerTicketsPendientes();
+          ticketsPendientes = ticketsPendientes.filter(t => t.id !== ticketIdActivo);
+          localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(ticketsPendientes));
+        }
+      } catch (e) {
+        console.error('Error guardando venta:', e);
+      }
+
+      alert(`✓ Cobro registrado con éxito:\n${numTicket} • ${total.toFixed(2)} € pagado en ${metodo.toUpperCase()}`);
+      limpiarTicket();
     }
 
     // COMPROBAR Y CARGAR TICKET APARCADO AL VOLVER DE TICKETS PENDIENTES
@@ -722,7 +766,7 @@
     renderizarProductos();
     comprobarTicketRecuperado(); // Carga las líneas del ticket recuperado antes de pintar
     renderizarTicket();          // Pinta el ticket con sus subtotales y total
-    actualizarBadgePendientes();  // Actualiza el badge de pendientes
+    actualizarBadgePendientes();  // Actualiza el badge de pendientes y número correlativo
     lucide.createIcons();
 
     if ('serviceWorker' in navigator) {
