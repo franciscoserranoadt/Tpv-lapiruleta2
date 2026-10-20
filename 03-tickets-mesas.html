@@ -10,44 +10,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }</style>
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+    body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
+  </style>
 </head>
-<body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-24">
+<body class="bg-[#fff8f5] text-stone-800 antialiased select-none h-screen max-h-screen flex flex-col overflow-hidden">
   
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
+  <!-- CABECERA SUPERIOR PROFESIONAL TPV COMPACTA -->
+  <header class="bg-[#1b7a4a] text-white px-4 py-2 flex items-center justify-between shadow-sm shrink-0">
     <div class="flex items-center gap-3">
-      <a href="index.html" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700">
-        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      <a href="index.html" class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-100 transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
       </a>
       <div>
-        <h1 class="font-bold text-sm text-stone-900 leading-tight">Tickets Abiertos y Mesas</h1>
-        <p class="text-[11px] text-stone-500">0 comandas activas • Total: 0,00 €</p>
+        <div class="flex items-center gap-2">
+          <h1 class="font-bold text-sm tracking-tight leading-none">Tickets Abiertos y Mesas</h1>
+          <span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium">Comandas activas</span>
+        </div>
+        <p class="text-[11px] text-emerald-100 mt-0.5">0 comandas activas • Total: 0,00 €</p>
       </div>
     </div>
-    <a href="04-plano-mesas.html" class="px-3 py-1.5 rounded-xl bg-emerald-50 text-[#1b7a4a] border border-emerald-200 font-bold text-xs flex items-center gap-1.5">
-      <i data-lucide="map" class="w-4 h-4"></i>
-      <span>Ver Plano</span>
-    </a>
+    <div class="flex items-center gap-2">
+      <a href="04-plano-mesas.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 text-white font-bold text-xs transition-colors">
+        <i data-lucide="layout-grid" class="w-4 h-4"></i>
+        <span>Ver Plano</span>
+      </a>
+      <a href="index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm transition-colors">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span>Nueva Venta</span>
+      </a>
+    </div>
   </header>
 
-  <main class="p-4 max-w-lg mx-auto space-y-4">
-    <!-- ESTADO VACÍO (SIN TICKETS / COMANDAS DE EJEMPLO) -->
-    <div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-6">
-      <div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
-        <i data-lucide="receipt" class="w-8 h-8 text-stone-400"></i>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 p-4 max-w-4xl w-full mx-auto flex flex-col justify-center items-center min-h-0 overflow-y-auto">
+    <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-8 max-w-md w-full text-center space-y-4">
+      <div class="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-600 mx-auto">
+        <i data-lucide="receipt" class="w-8 h-8"></i>
       </div>
-      <div class="space-y-1">
-        <h3 class="font-bold text-base text-stone-900">No hay tickets abiertos</h3>
-        <p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">
-          Actualmente no hay mesas ocupadas ni comandas pendientes de cobro.
-        </p>
+      <div>
+        <h2 class="font-bold text-base text-stone-800">No hay tickets abiertos</h2>
+        <p class="text-xs text-stone-400 mt-1 max-w-xs mx-auto">Actualmente no hay mesas ocupadas ni comandas pendientes de cobro.</p>
       </div>
-      <div class="flex flex-col sm:flex-row gap-2 justify-center pt-2">
-        <a href="index.html" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors">
+      <div class="pt-2 flex flex-col sm:flex-row gap-2.5 justify-center">
+        <a href="index.html" class="px-4 py-2.5 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs flex items-center justify-center gap-2 shadow transition-colors">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
           <span>Abrir nueva comanda</span>
         </a>
-        <a href="04-plano-mesas.html" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold rounded-xl transition-colors">
+        <a href="04-plano-mesas.html" class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs flex items-center justify-center gap-2 transition-colors">
           <i data-lucide="layout-grid" class="w-4 h-4"></i>
           <span>Asignar mesa en plano</span>
         </a>
@@ -55,30 +66,43 @@
     </div>
   </main>
 
-  <!-- NAVEGACIÓN INFERIOR (TABS) -->
-  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around">
-    <a href="index.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="calculator" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Ventas</span>
-    </a>
-    <a href="03-tickets-mesas.html" class="flex flex-col items-center gap-0.5 text-[#1b7a4a]">
-      <i data-lucide="receipt" class="w-5 h-5"></i>
-      <span class="text-[10px] font-bold">Tickets</span>
-    </a>
-    <a href="04-plano-mesas.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="layout-grid" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Mesas</span>
-    </a>
-    <a href="10-catalogo-stock.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="package" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Catálogo</span>
-    </a>
-    <a href="05-cierre-caja.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="banknote" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Caja</span>
-    </a>
-  </nav>
+  <!-- BARRA INFERIOR DE NAVEGACIÓN UNIFICADA (IDÉNTICA A INDEX) -->
+  <footer class="bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md shrink-0">
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+        <span>Ventas TPV</span>
+      </a>
+      <a href="03-tickets-mesas.html" class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
+        <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+        <span>Tickets Abiertos</span>
+      </a>
+      <a href="04-plano-mesas.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+        <span>Plano de Mesas</span>
+      </a>
+      <a href="05-cierre-caja.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+        <span>Caja / Turno</span>
+      </a>
+      <a href="10-catalogo-stock.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="package" class="w-3.5 h-3.5"></i>
+        <span>Catálogo</span>
+      </a>
+    </div>
+    <div class="text-[11px] text-stone-400 flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      <span>Terminal Conectada • Venta Directa</span>
+    </div>
+  </footer>
 
-  <script>lucide.createIcons();</script>
+  <script>
+    lucide.createIcons();
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(console.warn);
+      });
+    }
+  </script>
 </body>
 </html>
