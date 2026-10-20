@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es">
-<head>
+<html lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>Catálogo e Inventario - La Piruleta TPV</title>
@@ -44,21 +43,166 @@
 <i class="w-4 h-4 absolute left-3.5 top-3 text-stone-400" data-lucide="search"></i>
 <input class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="search-catalog-input" oninput="window.onSearchChange(this.value)" placeholder="Buscar por nombre, código o SKU..." type="text"/>
 </div>
-<button class="p-2.5 bg-[#1b7a4a] text-white rounded-xl shadow-sm hover:bg-[#15613b] flex items-center justify-center">
+<button class="p-2.5 bg-[#1b7a4a] text-white rounded-xl shadow-sm hover:bg-[#15613b] flex items-center justify-center" type="button">
 <i class="w-5 h-5" data-lucide="scan-barcode"></i>
 </button>
 </div>
 <!-- Pestañas de categorías -->
-<div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center" id="category-tabs-container"><button class="px-3.5 py-1.5 rounded-xl bg-stone-900 text-white text-xs font-bold whitespace-nowrap shadow-sm" id="tab-all" onclick="window.filterCategory('all')">Todos (0)</button><button class="px-3 py-1.5 rounded-xl border border-dashed border-[#1b7a4a] text-[#1b7a4a] bg-stone-50 hover:bg-stone-100 text-xs font-semibold whitespace-nowrap inline-flex items-center gap-1 shadow-sm transition-colors" onclick="window.abrirModalCategoria()"><i class="w-3.5 h-3.5" data-lucide="folder-plus"></i><span>+ Categoría</span></button></div>
+<div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center" id="category-tabs-container">
+<button class="px-3.5 py-1.5 rounded-xl bg-stone-900 text-white text-xs font-bold whitespace-nowrap shadow-sm" id="tab-all" onclick="window.filterCategory('all')">Todos (0)</button>
+<button class="px-3 py-1.5 rounded-xl border border-dashed border-[#1b7a4a] text-[#1b7a4a] bg-stone-50 hover:bg-stone-100 text-xs font-semibold whitespace-nowrap inline-flex items-center gap-1 shadow-sm transition-colors" onclick="window.abrirModalCategoria()" type="button">
+<i class="w-3.5 h-3.5" data-lucide="folder-plus"></i><span>+ Categoría</span>
+</button>
+</div>
 <!-- Estado Limpio (Sin productos ficticios) -->
-<div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-4" id="empty-state-container"><div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400"><i class="w-8 h-8 text-[#1b7a4a]" data-lucide="package-open"></i></div><div class="space-y-1"><h3 class="font-bold text-base text-stone-900">Catálogo limpio y listo</h3><p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">Todavía no hay artículos registrados. Empieza añadiendo los cafés, panes, dulces o desayunos propios de tu cafetería.</p></div><button class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors" onclick="window.abrirModalProducto()"><i class="w-4 h-4" data-lucide="plus-circle"></i><span>Añadir primer producto</span></button></div><div class="hidden space-y-3" id="product-list-container"></div>
+<div class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-4 shadow-sm my-4" id="empty-state-container">
+<div class="w-16 h-16 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
+<i class="w-8 h-8 text-[#1b7a4a]" data-lucide="package-open"></i>
+</div>
+<div class="space-y-1">
+<h3 class="font-bold text-base text-stone-900">Catálogo limpio y listo</h3>
+<p class="text-xs text-stone-500 max-w-xs mx-auto leading-relaxed">Todavía no hay artículos registrados. Empieza añadiendo los cafés, panes, dulces o desayunos propios de tu cafetería.</p>
+</div>
+<button class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold rounded-xl shadow transition-colors" onclick="window.abrirModalProducto()" type="button">
+<i class="w-4 h-4" data-lucide="plus-circle"></i><span>Añadir primer producto</span>
+</button>
+</div>
+<!-- Lista de productos -->
+<div class="hidden space-y-3" id="product-list-container"></div>
 <!-- Resumen inferior del catálogo -->
-<div class="bg-stone-100/70 rounded-2xl p-3 flex items-center justify-between text-xs text-stone-600 border border-stone-200"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="font-semibold" id="total-catalog-count">0 Artículos en Catálogo</span></div><span class="text-stone-400 font-medium" id="sync-status-indicator">Stock sincronizado</span></div>
+<div class="bg-stone-100/70 rounded-2xl p-3 flex items-center justify-between text-xs text-stone-600 border border-stone-200">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-semibold" id="total-catalog-count">0 Artículos en Catálogo</span>
+</div>
+<span class="text-stone-400 font-medium" id="sync-status-indicator">Stock sincronizado</span>
+</div>
 </main>
 <!-- BOTÓN FLOTANTE PARA CREAR ARTÍCULO -->
-<div class="fixed bottom-20 right-4 z-30 max-w-lg mx-auto"><div class="flex items-center gap-2"><button class="flex items-center gap-1.5 px-3 py-3 bg-white border border-stone-200 text-stone-700 rounded-2xl shadow-lg hover:bg-stone-50 font-bold text-xs transition-transform active:scale-95" onclick="document.getElementById('modal-categoria').classList.remove('hidden')"><i class="w-4 h-4 text-[#1b7a4a]" data-lucide="folder-plus"></i><span class="hidden sm:inline">+ CATEGORÍA</span></button><button class="flex items-center gap-2 px-4 py-3 bg-[#1b7a4a] text-white rounded-2xl shadow-lg hover:bg-[#15613b] font-bold text-xs transition-transform active:scale-95" onclick="document.getElementById('modal-crear').classList.remove('hidden')"><i class="w-4 h-4" data-lucide="plus"></i><span>NUEVO ARTÍCULO</span></button></div></div>
+<div class="fixed bottom-20 right-4 z-30 max-w-lg mx-auto">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-3 bg-white border border-stone-200 text-stone-700 rounded-2xl shadow-lg hover:bg-stone-50 font-bold text-xs transition-transform active:scale-95" onclick="window.abrirModalCategoria()" type="button">
+<i class="w-4 h-4 text-[#1b7a4a]" data-lucide="folder-plus"></i><span class="hidden sm:inline">+ CATEGORÍA</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-3 bg-[#1b7a4a] text-white rounded-2xl shadow-lg hover:bg-[#15613b] font-bold text-xs transition-transform active:scale-95" onclick="window.abrirModalProducto()" type="button">
+<i class="w-4 h-4" data-lucide="plus"></i><span>NUEVO ARTÍCULO</span>
+</button>
+</div>
+</div>
 <!-- MODAL / FORMULARIO RÁPIDO PARA CREAR / EDITAR PRODUCTO -->
-<div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-crear"><div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200"><div class="flex items-center justify-between border-b border-stone-100 pb-3"><div><h2 class="font-bold text-base text-stone-900">Nuevo Artículo</h2><p class="text-[11px] text-stone-500">Añadir producto al catálogo de venta</p></div><button class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200" onclick="document.getElementById('modal-crear').classList.add('hidden')"><i class="w-4 h-4" data-lucide="x"></i></button></div><div class="space-y-3"><div><label class="block text-xs font-semibold text-stone-700 mb-1">Nombre del Producto *</label><input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-nombre" placeholder="Ej: Café con leche, Croissant mantequilla..." type="text"/></div><div class="grid grid-cols-2 gap-3"><div><div class="flex items-center justify-between mb-1"><label class="block text-xs font-semibold text-stone-700">Categoría *</label><button class="text-[11px] font-bold text-[#1b7a4a] hover:underline flex items-center gap-0.5" onclick="document.getElementById('modal-crear').classList.add('hidden'); window.abrirModalCategoria()" type="button">+ Crear</button></div><select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-categoria"><option value="">Selecciona categoría...</option></select></div><div><label class="block text-xs font-semibold text-stone-700 mb-1">PVP Venta (€) *</label><input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-pvp" placeholder="1.80" step="0.05" type="number"/></div></div><div class="grid grid-cols-3 gap-2"><div><label class="block text-xs font-semibold text-stone-700 mb-1">Coste (€)</label><input class="w-full px-2.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-coste" placeholder="0.45" step="0.01" type="number"/></div><div><label class="block text-xs font-semibold text-stone-700 mb-1">Stock</label><input class="w-full px-2.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-stock" placeholder="25" type="number" value="20"/></div><div><label class="block text-xs font-semibold text-stone-700 mb-1">IVA</label><select class="w-full px-2.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-iva"><option value="10%">10%</option><option value="21%">21%</option><option value="4%">4%</option><option value="0%">0%</option></select></div></div><div class="pt-2 flex items-center justify-between"><span class="text-xs font-semibold text-stone-700">Disponible para venta rápida</span><input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" id="prod-disponible" type="checkbox"/></div></div><div class="pt-3 flex gap-2"><button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200" onclick="document.getElementById('modal-crear').classList.add('hidden')">Cancelar</button><button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow" onclick="window.guardarProducto()">Guardar Producto</button></div></div></div><div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-categoria"><div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200"><div class="flex items-center justify-between border-b border-stone-100 pb-3"><div><h2 class="font-bold text-base text-stone-900">Nueva Categoría</h2><p class="text-[11px] text-stone-500">Organiza tus productos por departamentos o tipos</p></div><button class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200" onclick="document.getElementById('modal-categoria').classList.add('hidden')"><i class="w-4 h-4" data-lucide="x"></i></button></div><div class="space-y-3"><div><label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la Categoría *</label><input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-nombre" placeholder="Ej: Cafés, Bollería, Bocadillos..." type="text"/></div><div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-semibold text-stone-700 mb-1">Icono asignado</label><select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-icono"><option value="coffee">☕ Café / Caliente</option><option value="croissant">🥐 Bollería / Dulce</option><option value="sandwich">🥪 Bocadillos</option><option value="cake-slice">🍰 Tartas</option><option value="cup-soda">🥤 Bebidas / Fríos</option><option value="package">📦 Varios / Otros</option></select></div><div><label class="block text-xs font-semibold text-stone-700 mb-1">Color distintivo</label><select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-color"><option value="#1b7a4a">Verde TPV</option><option value="#d97706">Ambar / Café</option><option value="#f97316">Naranja</option><option value="#e11d48">Rojo / Fresa</option><option value="#4f46e5">Indigo</option><option value="#44403c">Piedra oscuro</option></select></div></div><div class="pt-2 flex items-center justify-between"><span class="text-xs font-semibold text-stone-700">Mostrar en barra rápida del TPV</span><input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" id="cat-en-tpv" type="checkbox"/></div></div><div class="pt-3 flex gap-2"><button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200" onclick="document.getElementById('modal-categoria').classList.add('hidden')">Cancelar</button><button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow" onclick="window.guardarCategoria()">Guardar Categoría</button></div></div></div>
+<div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-crear">
+<div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
+<div class="flex items-center justify-between border-b border-stone-100 pb-3">
+<div>
+<h2 class="font-bold text-base text-stone-900">Nuevo Artículo</h2>
+<p class="text-[11px] text-stone-500">Añadir producto al catálogo de venta</p>
+</div>
+<button class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200" onclick="window.cerrarModalProducto()" type="button">
+<i class="w-4 h-4" data-lucide="x"></i>
+</button>
+</div>
+<div class="space-y-3">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Nombre del Producto *</label>
+<input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-nombre" placeholder="Ej: Café con leche, Croissant mantequilla..." type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="block text-xs font-semibold text-stone-700">Categoría</label>
+<button class="text-[11px] font-bold text-[#1b7a4a] hover:underline flex items-center gap-0.5" onclick="window.cerrarModalProducto(); window.abrirModalCategoria()" type="button">+ Crear</button>
+</div>
+<select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-categoria">
+<option value="">Sin categoría</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">PVP Venta (€) *</label>
+<input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-precio" placeholder="1.80" step="0.05" type="number"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Coste (€)</label>
+<input class="w-full px-2.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-coste" placeholder="0.45" step="0.01" type="number"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Stock</label>
+<input class="w-full px-2.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-stock" placeholder="20" type="number" value="20"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">IVA</label>
+<select class="w-full px-2.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="prod-iva">
+<option value="10%">10%</option>
+<option value="21%">21%</option>
+<option value="4%">4%</option>
+<option value="0%">0%</option>
+</select>
+</div>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="text-xs font-semibold text-stone-700">Disponible para venta rápida</span>
+<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" id="prod-disponible" type="checkbox"/>
+</div>
+</div>
+<div class="pt-3 flex gap-2">
+<button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200" onclick="window.cerrarModalProducto()" type="button">Cancelar</button>
+<button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow" onclick="window.guardarProducto()" type="button">Guardar Producto</button>
+</div>
+</div>
+</div>
+<!-- MODAL PARA CREAR CATEGORÍA -->
+<div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-categoria">
+<div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 space-y-4 shadow-2xl animate-in slide-in-from-bottom duration-200">
+<div class="flex items-center justify-between border-b border-stone-100 pb-3">
+<div>
+<h2 class="font-bold text-base text-stone-900">Nueva Categoría</h2>
+<p class="text-[11px] text-stone-500">Organiza tus productos por departamentos o tipos</p>
+</div>
+<button class="p-1.5 rounded-lg bg-stone-100 text-stone-500 hover:bg-stone-200" onclick="window.cerrarModalCategoria()" type="button">
+<i class="w-4 h-4" data-lucide="x"></i>
+</button>
+</div>
+<div class="space-y-3">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Nombre de la Categoría *</label>
+<input class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-nombre" placeholder="Ej: Cafés, Bollería, Bocadillos..." type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Icono asignado</label>
+<select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-icono">
+<option value="coffee">☕ Café / Caliente</option>
+<option value="croissant">🥐 Bollería / Dulce</option>
+<option value="sandwich">🥪 Bocadillos</option>
+<option value="cake-slice">🍰 Tartas</option>
+<option value="cup-soda">🥤 Bebidas / Fríos</option>
+<option value="package">📦 Varios / Otros</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Color distintivo</label>
+<select class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cat-color">
+<option value="#1b7a4a">Verde TPV</option>
+<option value="#d97706">Ámbar / Café</option>
+<option value="#f97316">Naranja</option>
+<option value="#e11d48">Rojo / Fresa</option>
+<option value="#4f46e5">Índigo</option>
+<option value="#44403c">Piedra oscuro</option>
+</select>
+</div>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="text-xs font-semibold text-stone-700">Mostrar en barra rápida del TPV</span>
+<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" id="cat-en-tpv" type="checkbox"/>
+</div>
+</div>
+<div class="pt-3 flex gap-2">
+<button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200" onclick="window.cerrarModalCategoria()" type="button">Cancelar</button>
+<button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow" onclick="window.guardarCategoria()" type="button">Guardar Categoría</button>
+</div>
+</div>
+</div>
 <!-- NAVEGACIÓN INFERIOR (TABS PERSISTENTES EXACTOS A TODAS LAS PANTALLAS) -->
 <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around shadow-lg">
 <a class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700" href="index.html">
@@ -83,8 +227,332 @@
 </a>
 </nav>
 <script>
-    lucide.createIcons();
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
-  </script>
-</body>
-</html>
+  let activeCategoryFilter = 'all';
+  let searchQuery = '';
+
+  function getProductos() {
+    try {
+      return JSON.parse(localStorage.getItem('lapiruleta_productos')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveProductos(prods) {
+    localStorage.setItem('lapiruleta_productos', JSON.stringify(prods));
+  }
+
+  function getCategorias() {
+    try {
+      return JSON.parse(localStorage.getItem('lapiruleta_categorias')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCategorias(cats) {
+    localStorage.setItem('lapiruleta_categorias', JSON.stringify(cats));
+  }
+
+  window.abrirModalProducto = function() {
+    const modal = document.getElementById('modal-crear');
+    if (modal) {
+      modal.classList.remove('hidden');
+      const nombreInput = document.getElementById('prod-nombre');
+      if (nombreInput) nombreInput.focus();
+    }
+  };
+
+  window.cerrarModalProducto = function() {
+    const modal = document.getElementById('modal-crear');
+    if (modal) modal.classList.add('hidden');
+    const pNom = document.getElementById('prod-nombre');
+    const pPre = document.getElementById('prod-precio');
+    const pCos = document.getElementById('prod-coste');
+    const pSto = document.getElementById('prod-stock');
+    if (pNom) pNom.value = '';
+    if (pPre) pPre.value = '';
+    if (pCos) pCos.value = '';
+    if (pSto) pSto.value = '20';
+  };
+
+  window.abrirModalCategoria = function() {
+    const modal = document.getElementById('modal-categoria');
+    if (modal) {
+      modal.classList.remove('hidden');
+      const catInput = document.getElementById('cat-nombre');
+      if (catInput) catInput.focus();
+    }
+  };
+
+  window.cerrarModalCategoria = function() {
+    const modal = document.getElementById('modal-categoria');
+    if (modal) modal.classList.add('hidden');
+    const cNom = document.getElementById('cat-nombre');
+    if (cNom) cNom.value = '';
+  };
+
+  window.guardarCategoria = function() {
+    const nombreEl = document.getElementById('cat-nombre');
+    const iconoEl = document.getElementById('cat-icono');
+    const colorEl = document.getElementById('cat-color');
+    const enTpvEl = document.getElementById('cat-en-tpv');
+
+    const nombre = nombreEl ? nombreEl.value.trim() : '';
+    if (!nombre) {
+      alert('Por favor, indica un nombre para la categoría.');
+      if (nombreEl) nombreEl.focus();
+      return;
+    }
+
+    const icono = iconoEl ? iconoEl.value : 'package';
+    const color = (colorEl && colorEl.value) ? colorEl.value : '#1b7a4a';
+    const enTpv = enTpvEl ? enTpvEl.checked : true;
+
+    const categorias = getCategorias();
+    const nuevaCategoria = {
+      id: 'cat_' + Date.now(),
+      nombre: nombre,
+      icono: icono,
+      color: color,
+      enTpv: enTpv
+    };
+
+    categorias.push(nuevaCategoria);
+    saveCategorias(categorias);
+    window.cerrarModalCategoria();
+    renderCategorias();
+    renderProductos();
+  };
+
+  window.guardarProducto = function() {
+    const nombreEl = document.getElementById('prod-nombre');
+    const precioEl = document.getElementById('prod-precio');
+    const categoriaEl = document.getElementById('prod-categoria');
+    const costeEl = document.getElementById('prod-coste');
+    const stockEl = document.getElementById('prod-stock');
+    const ivaEl = document.getElementById('prod-iva');
+    const dispEl = document.getElementById('prod-disponible');
+
+    const nombre = nombreEl ? nombreEl.value.trim() : '';
+    const precioVal = precioEl ? parseFloat(precioEl.value) : NaN;
+
+    if (!nombre) {
+      alert('Por favor, indica el nombre del producto.');
+      if (nombreEl) nombreEl.focus();
+      return;
+    }
+
+    if (isNaN(precioVal) || precioVal < 0) {
+      alert('Por favor, indica un PVP de venta válido.');
+      if (precioEl) {
+        precioEl.focus();
+        precioEl.classList.add('ring-2', 'ring-red-500');
+      }
+      return;
+    }
+
+    const nuevoProd = {
+      id: 'prod_' + Date.now(),
+      nombre: nombre,
+      categoria: categoriaEl ? categoriaEl.value : '',
+      precio: precioVal,
+      coste: costeEl && costeEl.value ? parseFloat(costeEl.value) : 0,
+      stock: stockEl && stockEl.value !== '' ? parseInt(stockEl.value, 10) : 0,
+      iva: ivaEl ? ivaEl.value : '10%',
+      disponible: dispEl ? dispEl.checked : true
+    };
+
+    const productos = getProductos();
+    productos.unshift(nuevoProd);
+    saveProductos(productos);
+    window.cerrarModalProducto();
+    renderCategorias();
+    renderProductos();
+  };
+
+  window.eliminarProducto = function(id) {
+    if (!confirm('¿Seguro que deseas eliminar este artículo del catálogo?')) return;
+    let prods = getProductos();
+    prods = prods.filter(p => p.id !== id);
+    saveProductos(prods);
+    renderCategorias();
+    renderProductos();
+  };
+
+  window.eliminarCategoria = function(e, catNombre) {
+    e.stopPropagation();
+    if (!confirm(`¿Eliminar la categoría "${catNombre}"? Los productos pasarán a quedar sin categoría.`)) return;
+    let cats = getCategorias();
+    cats = cats.filter(c => c.nombre !== catNombre);
+    saveCategorias(cats);
+
+    let prods = getProductos();
+    prods = prods.map(p => {
+      if (p.categoria === catNombre) p.categoria = '';
+      return p;
+    });
+    saveProductos(prods);
+
+    if (activeCategoryFilter === catNombre) activeCategoryFilter = 'all';
+    renderCategorias();
+    renderProductos();
+  };
+
+  window.filterCategory = function(cat) {
+    activeCategoryFilter = cat;
+    renderCategorias();
+    renderProductos();
+  };
+
+  window.onSearchChange = function(val) {
+    searchQuery = (val || '').toLowerCase().trim();
+    renderProductos();
+  };
+
+  function renderCategorias() {
+    const cats = getCategorias();
+    const prods = getProductos();
+    const container = document.getElementById('category-tabs-container');
+    const prodCatSelect = document.getElementById('prod-categoria');
+
+    if (prodCatSelect) {
+      const selectedVal = prodCatSelect.value;
+      prodCatSelect.innerHTML = '<option value="">Sin categoría</option>';
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.nombre;
+        opt.textContent = c.nombre;
+        if (opt.value === selectedVal) opt.selected = true;
+        prodCatSelect.appendChild(opt);
+      });
+    }
+
+    if (container) {
+      let tabsHtml = `
+        <button id="tab-all" onclick="window.filterCategory('all')" type="button" class="px-3.5 py-1.5 rounded-xl ${activeCategoryFilter === 'all' ? 'bg-stone-900 text-white' : 'bg-white border border-stone-200 text-stone-700'} text-xs font-bold whitespace-nowrap shadow-sm transition-colors">
+          Todos (${prods.length})
+        </button>
+      `;
+
+      cats.forEach(c => {
+        const count = prods.filter(p => p.categoria === c.nombre).length;
+        const isActive = activeCategoryFilter === c.nombre;
+        tabsHtml += `
+          <div class="inline-flex items-center rounded-xl ${isActive ? 'bg-[#1b7a4a] text-white' : 'bg-white border border-stone-200 text-stone-700'} shadow-sm text-xs font-semibold whitespace-nowrap pr-1.5 transition-colors">
+            <button onclick="window.filterCategory('${escapeHtml(c.nombre)}')" type="button" class="px-3 py-1.5 flex items-center gap-1.5 focus:outline-none">
+              <span class="w-2 h-2 rounded-full inline-block" style="background-color: ${c.color || '#1b7a4a'}"></span>
+              <span>${escapeHtml(c.nombre)} (${count})</span>
+            </button>
+            <button onclick="window.eliminarCategoria(event, '${escapeHtml(c.nombre)}')" title="Eliminar categoría" type="button" class="p-1 hover:opacity-75 focus:outline-none rounded">
+              <i class="w-3 h-3" data-lucide="x"></i>
+            </button>
+          </div>
+        `;
+      });
+
+      tabsHtml += `
+        <button onclick="window.abrirModalCategoria()" type="button" class="px-3 py-1.5 rounded-xl border border-dashed border-[#1b7a4a] text-[#1b7a4a] bg-stone-50 hover:bg-stone-100 text-xs font-semibold whitespace-nowrap inline-flex items-center gap-1 shadow-sm transition-colors">
+          <i class="w-3.5 h-3.5" data-lucide="folder-plus"></i><span>+ Categoría</span>
+        </button>
+      `;
+
+      container.innerHTML = tabsHtml;
+    }
+  }
+
+  function renderProductos() {
+    const allProds = getProductos();
+    const emptyContainer = document.getElementById('empty-state-container');
+    const listContainer = document.getElementById('product-list-container');
+    const countIndicator = document.getElementById('total-catalog-count');
+
+    if (countIndicator) {
+      countIndicator.textContent = `${allProds.length} ${allProds.length === 1 ? 'Artículo' : 'Artículos'} en Catálogo`;
+    }
+
+    let filtered = allProds;
+    if (activeCategoryFilter !== 'all') {
+      filtered = filtered.filter(p => p.categoria === activeCategoryFilter);
+    }
+    if (searchQuery) {
+      filtered = filtered.filter(p => p.nombre.toLowerCase().includes(searchQuery));
+    }
+
+    if (allProds.length === 0) {
+      if (emptyContainer) emptyContainer.classList.remove('hidden');
+      if (listContainer) {
+        listContainer.classList.add('hidden');
+        listContainer.innerHTML = '';
+      }
+    } else {
+      if (emptyContainer) emptyContainer.classList.add('hidden');
+      if (listContainer) {
+        listContainer.classList.remove('hidden');
+
+        if (filtered.length === 0) {
+          listContainer.innerHTML = `
+            <div class="bg-white rounded-2xl p-6 text-center text-stone-500 text-xs border border-stone-200">
+              No se encontraron artículos con el filtro o búsqueda actual.
+            </div>
+          `;
+        } else {
+          listContainer.innerHTML = filtered.map(p => `
+            <div class="bg-white border border-stone-200 rounded-2xl p-3.5 flex items-center justify-between shadow-sm gap-3 hover:border-stone-300 transition-all">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-11 h-11 rounded-xl bg-stone-100 flex items-center justify-center text-stone-600 flex-shrink-0 border border-stone-200">
+                  <i class="w-5 h-5 text-[#1b7a4a]" data-lucide="coffee"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-bold text-sm text-stone-900 truncate">${escapeHtml(p.nombre)}</h4>
+                    ${p.categoria ? `<span class="px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 text-[10px] font-semibold flex-shrink-0">${escapeHtml(p.categoria)}</span>` : ''}
+                  </div>
+                  <div class="flex items-center gap-3 text-[11px] text-stone-500 mt-0.5">
+                    <span class="font-semibold text-stone-700">Stock: ${p.stock ?? 0}</span>
+                    <span>•</span>
+                    <span>IVA: ${p.iva || '10%'}</span>
+                    ${p.coste ? `<span>• Coste: ${Number(p.coste).toFixed(2)}€</span>` : ''}
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 flex-shrink-0">
+                <div class="text-right">
+                  <span class="font-bold text-sm sm:text-base text-[#1b7a4a] block font-mono">${Number(p.precio).toFixed(2)} €</span>
+                  <span class="text-[10px] text-stone-400">PVP Venta</span>
+                </div>
+                <button onclick="window.eliminarProducto('${p.id}')" title="Eliminar artículo" type="button" class="p-2 rounded-xl bg-stone-50 hover:bg-red-50 text-stone-400 hover:text-red-600 border border-stone-200 transition-colors ml-1">
+                  <i class="w-4 h-4" data-lucide="trash-2"></i>
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCategorias();
+    renderProductos();
+    if (window.lucide) lucide.createIcons();
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+</script>
+</body></html>
