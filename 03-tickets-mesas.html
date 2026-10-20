@@ -1,356 +1,240 @@
 <!DOCTYPE html>
-
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Tickets y Mesas - La Piruleta TPV</title>
-<link href="./manifest.json" rel="manifest"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<style>
-    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tickets y Mesas - La Piruleta TPV</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
     body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
-    /* Scrollbar personalizada sutil */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
   </style>
 </head>
-<body class="bg-[#fff8f5] text-stone-800 antialiased select-none h-screen max-h-screen flex flex-col overflow-hidden">
-<!-- CABECERA SUPERIOR PROFESIONAL TPV COMPACTA -->
-<header class="bg-[#1b7a4a] text-white px-4 py-2 flex items-center justify-between shadow-sm shrink-0">
-<div class="flex items-center gap-3">
-<a class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-100 transition-colors" href="index.html">
-<i class="w-4 h-4" data-lucide="arrow-left"></i>
-</a>
-<div>
-<div class="flex items-center gap-2">
-<h1 class="font-bold text-sm tracking-tight leading-none">Tickets Abiertos y Mesas</h1>
-<span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium" id="badge-contador">0 comandas</span>
-</div>
-<p class="text-[11px] text-emerald-100 mt-0.5" id="resumen-header">0 comandas activas • Total: 0,00 €</p>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 text-white font-bold text-xs transition-colors" href="04-plano-mesas.html">
-<i class="w-4 h-4" data-lucide="layout-grid"></i>
-<span>Ver Plano</span>
-</a>
-<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm transition-colors" href="index.html">
-<i class="w-4 h-4" data-lucide="plus"></i>
-<span>Nueva Venta</span>
-</a>
-</div>
-</header>
-<!-- CONTENIDO PRINCIPAL DINÁMICO -->
-<main class="flex-1 p-4 lg:p-6 max-w-7xl w-full mx-auto flex flex-col min-h-0 overflow-y-auto">
-<!-- ESTADO VACÍO (Por defecto oculto hasta evaluar storage) -->
-<div class="hidden flex-1 flex flex-col justify-center items-center py-10" id="vista-vacia">
-<div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-8 max-w-md w-full text-center space-y-4">
-<div class="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-600 mx-auto">
-<i class="w-8 h-8" data-lucide="receipt"></i>
-</div>
-<div>
-<h2 class="font-bold text-base text-stone-800">No hay tickets abiertos</h2>
-<p class="text-xs text-stone-400 mt-1 max-w-xs mx-auto">Actualmente no hay mesas ocupadas ni comandas pendientes de cobro.</p>
-</div>
-<div class="pt-2 flex flex-col sm:flex-row gap-2.5 justify-center">
-<a class="px-4 py-2.5 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs flex items-center justify-center gap-2 shadow transition-colors" href="index.html">
-<i class="w-4 h-4" data-lucide="plus-circle"></i>
-<span>Abrir nueva comanda</span>
-</a>
-<a class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs flex items-center justify-center gap-2 transition-colors" href="04-plano-mesas.html">
-<i class="w-4 h-4" data-lucide="layout-grid"></i>
-<span>Asignar mesa en plano</span>
-</a>
-</div>
-</div>
-</div>
-<!-- LISTA CON TICKETS ACTIVOS -->
-<div class="hidden flex-col gap-4" id="vista-tickets">
-<div class="flex items-center justify-between pb-2 border-b border-stone-200/80">
-<div>
-<h2 class="text-sm font-bold text-stone-800 flex items-center gap-2">
-<span>Comandas y Tickets en Curso</span>
-<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-[#1b7a4a]" id="tag-cuenta">0</span>
-</h2>
-<p class="text-xs text-stone-400 mt-0.5">Tickets aparcados pendientes de liquidar o añadir consumiciones</p>
-</div>
-<div class="flex items-center gap-2">
-<button class="px-2.5 py-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 text-xs font-semibold flex items-center gap-1.5 transition-colors" onclick="limpiarTodosConfirm()">
-<i class="w-3.5 h-3.5" data-lucide="trash-2"></i>
-<span class="hidden sm:inline">Descartar todos</span>
-</button>
-</div>
-</div>
-<!-- GRID DE TARJETAS DE TICKETS -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-4" id="tickets-grid">
-<!-- Renderizado dinámicamente con JS -->
-</div>
-</div>
-</main>
-<!-- BARRA INFERIOR DE NAVEGACIÓN UNIFICADA (IDÉNTICA A INDEX) -->
-<footer class="bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md shrink-0">
-<div class="flex items-center gap-6">
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="index.html">
-<i class="w-3.5 h-3.5" data-lucide="calculator"></i>
-<span>Ventas TPV</span>
-</a>
-<a class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200" href="03-tickets-mesas.html">
-<i class="w-3.5 h-3.5" data-lucide="receipt"></i>
-<span>Tickets Abiertos</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="04-plano-mesas.html">
-<i class="w-3.5 h-3.5" data-lucide="layout-grid"></i>
-<span>Plano de Mesas</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="05-cierre-caja.html">
-<i class="w-3.5 h-3.5" data-lucide="banknote"></i>
-<span>Caja / Turno</span>
-</a>
-<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="10-catalogo-stock.html">
-<i class="w-3.5 h-3.5" data-lucide="package"></i>
-<span>Catálogo</span>
-</a>
-</div>
-<div class="text-[11px] text-stone-400 flex items-center gap-1.5">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-<span>Terminal Conectada • Venta Directa</span>
-</div>
-</footer>
-<script>
-    const STORAGE_KEY = 'lapiruleta_tickets_pendientes';
+<body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-24">
 
-    function obtenerTickets() {
+  <!-- CABECERA -->
+  <header class="sticky top-0 z-40 bg-[#1b7a4a] text-white px-4 py-2.5 flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="p-1.5 rounded-xl bg-emerald-900/50 hover:bg-emerald-900/80 text-white transition-colors">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+      </a>
+      <div>
+        <h1 class="font-bold text-sm tracking-tight leading-tight">Tickets Abiertos y Mesas</h1>
+        <p id="subtitulo-comandas" class="text-[11px] text-emerald-100 font-medium">0 comandas activas • Total: 0,00 €</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="04-plano-mesas.html" class="px-3 py-1.5 rounded-xl bg-white text-[#1b7a4a] font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-emerald-50 transition-colors">
+        <i data-lucide="layout-grid" class="w-4 h-4"></i>
+        <span>Ver Plano</span>
+      </a>
+      <a href="index.html" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span>Nueva Venta</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="p-4 max-w-4xl mx-auto space-y-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-sm text-stone-900">Comandas y Tickets en Curso</span>
+        <span id="badge-contador" class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">0</span>
+      </div>
+      <button type="button" onclick="descartarTodos()" id="btn-descartar-todos" class="text-xs text-rose-600 hover:text-rose-700 font-bold hidden items-center gap-1">
+        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+        <span>Descartar todos</span>
+      </button>
+    </div>
+
+    <!-- LISTADO DE TICKETS APARCADOS -->
+    <div id="lista-tickets" class="space-y-3">
+    </div>
+  </main>
+
+  <!-- NAVEGACIÓN INFERIOR PERSISTENTE (FOOTER UNIFICADO) -->
+  <footer class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md">
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+        <span>Ventas TPV</span>
+      </a>
+      <a href="03-tickets-mesas.html" class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
+        <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+        <span>Tickets Abiertos</span>
+      </a>
+      <a href="04-plano-mesas.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+        <span>Plano de Mesas</span>
+      </a>
+      <a href="05-cierre-caja.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+        <span>Caja / Turno</span>
+      </a>
+      <a href="10-catalogo-stock.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
+        <i data-lucide="package" class="w-3.5 h-3.5"></i>
+        <span>Catálogo</span>
+      </a>
+    </div>
+    <div class="text-[11px] text-stone-400 flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+      <span>Terminal Conectada • Venta Directa</span>
+    </div>
+  </footer>
+
+  <script>
+    function obtenerTicketsPendientes() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : [];
+        return JSON.parse(localStorage.getItem('lapiruleta_tickets_pendientes') || '[]');
       } catch (e) {
-        console.error('Error al leer tickets de localStorage', e);
         return [];
       }
     }
 
-    function guardarTickets(tickets) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(tickets));
-      } catch (e) {
-        console.error('Error guardando tickets', e);
-      }
-    }
-
-    function formatearTiempo(fechaStr) {
-      if (!fechaStr) return 'Reciente';
-      const f = new Date(fechaStr);
-      if (isNaN(f.getTime())) return fechaStr;
-      
-      const ahora = new Date();
-      const difMin = Math.floor((ahora - f) / 60000);
-      
-      if (difMin < 1) return 'Hace un momento';
-      if (difMin === 1) return 'Hace 1 min';
-      if (difMin < 60) return `Hace ${difMin} min`;
-      const horas = Math.floor(difMin / 60);
-      const minRest = difMin % 60;
-      return `Hace ${horas}h ${minRest}m`;
-    }
-
     function renderizarTickets() {
-      const tickets = obtenerTickets();
-      const vistaVacia = document.getElementById('vista-vacia');
-      const vistaTickets = document.getElementById('vista-tickets');
-      const ticketsGrid = document.getElementById('tickets-grid');
-      const badgeContador = document.getElementById('badge-contador');
-      const resumenHeader = document.getElementById('resumen-header');
-      const tagCuenta = document.getElementById('tag-cuenta');
+      const lista = document.getElementById('lista-tickets');
+      const subtitulo = document.getElementById('subtitulo-comandas');
+      const badge = document.getElementById('badge-contador');
+      const btnDescartar = document.getElementById('btn-descartar-todos');
+      const tickets = obtenerTicketsPendientes();
 
-      const numTickets = tickets.length;
-      let granTotal = 0;
+      badge.textContent = tickets.length;
 
-      tickets.forEach(t => {
-        granTotal += Number(t.total || 0);
-      });
-
-      badgeContador.textContent = `${numTickets} ${numTickets === 1 ? 'comanda' : 'comandas'}`;
-      resumenHeader.textContent = `${numTickets} ${numTickets === 1 ? 'comanda activa' : 'comandas activas'} • Total: ${granTotal.toFixed(2).replace('.', ',')} €`;
-      tagCuenta.textContent = numTickets;
-
-      if (numTickets === 0) {
-        vistaVacia.classList.remove('hidden');
-        vistaTickets.classList.add('hidden');
+      if (tickets.length === 0) {
+        subtitulo.textContent = '0 comandas activas • Total: 0,00 €';
+        btnDescartar.classList.add('hidden');
+        btnDescartar.classList.remove('flex');
+        lista.innerHTML = `
+          <div class="bg-white rounded-3xl border-2 border-dashed border-stone-200 p-10 text-center space-y-4 shadow-xs">
+            <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200/80 mx-auto flex items-center justify-center text-amber-600">
+              <i data-lucide="receipt" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-base text-stone-900">No hay tickets abiertos</h3>
+              <p class="text-xs text-stone-400 mt-1 max-w-sm mx-auto">Actualmente no hay comandas pendientes de cobro ni pedidos aparcados.</p>
+            </div>
+            <div class="pt-2 flex flex-wrap justify-center gap-2">
+              <a href="index.html" class="px-4 py-2.5 rounded-xl bg-[#1b7a4a] text-white text-xs font-bold shadow hover:bg-[#15613b] transition-colors flex items-center gap-1.5">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>Abrir nueva comanda</span>
+              </a>
+              <a href="04-plano-mesas.html" class="px-4 py-2.5 rounded-xl bg-stone-100 text-stone-700 text-xs font-bold hover:bg-stone-200 transition-colors flex items-center gap-1.5">
+                <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                <span>Asignar mesa en plano</span>
+              </a>
+            </div>
+          </div>
+        `;
         lucide.createIcons();
         return;
       }
 
-      vistaVacia.classList.add('hidden');
-      vistaTickets.classList.remove('hidden');
-      vistaTickets.classList.add('flex');
+      btnDescartar.classList.remove('hidden');
+      btnDescartar.classList.add('flex');
 
-      ticketsGrid.innerHTML = '';
+      let sumaTotal = 0;
+      tickets.forEach(t => { sumaTotal += parseFloat(t.total || 0); });
+      subtitulo.textContent = `${tickets.length} comanda${tickets.length > 1 ? 's' : ''} activa${tickets.length > 1 ? 's' : ''} • Total: ${sumaTotal.toFixed(2)} €`;
 
-      tickets.forEach((ticket, index) => {
-        const idTicket = ticket.id || `#T-${String(index + 1).padStart(3, '0')}`;
-        const mesa = ticket.mesa || ticket.ubicacion || 'Barra Principal';
-        const tiempo = formatearTiempo(ticket.fecha || ticket.hora);
-        const totalNum = Number(ticket.total || 0).toFixed(2).replace('.', ',');
-        const items = ticket.items || ticket.lineas || [];
-        const totalItemsCount = items.reduce((acc, item) => acc + (Number(item.cantidad || item.qty || 1)), 0);
-
-        // Preview de artículos
-        let itemsHtml = '';
-        if (items.length > 0) {
-          itemsHtml = items.slice(0, 4).map(item => {
-            const cant = item.cantidad || item.qty || 1;
-            const nom = item.nombre || item.name || 'Artículo';
-            const precio = (Number(item.precio || item.price || 0) * cant).toFixed(2).replace('.', ',');
-            return `
-              <div class="flex items-center justify-between text-xs py-0.5 text-stone-600">
-                <span class="truncate pr-2"><span class="font-bold text-stone-700">${cant}×</span> ${nom}</span>
-                <span class="font-medium shrink-0">${precio} €</span>
-              </div>
-            `;
-          }).join('');
-
-          if (items.length > 4) {
-            itemsHtml += `
-              <div class="text-[11px] text-stone-400 italic pt-0.5">
-                +${items.length - 4} productos más...
-              </div>
-            `;
-          }
-        } else {
-          itemsHtml = `<div class="text-xs text-stone-400 italic">Sin productos desglosados</div>`;
-        }
-
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between overflow-hidden group";
-        
-        card.innerHTML = `
-          <!-- Cabecera de Ticket -->
-          <div class="p-3.5 bg-stone-50/70 border-b border-stone-100 flex items-start justify-between">
-            <div>
-              <div class="flex items-center gap-1.5">
-                <span class="font-black text-xs text-stone-800 tracking-wide">${idTicket}</span>
-                <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded-full font-bold">Abierto</span>
-              </div>
-              <div class="flex items-center gap-1.5 text-xs text-stone-600 font-bold mt-1">
-                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-stone-400"></i>
-                <span class="truncate max-w-[140px]">${mesa}</span>
-              </div>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-stone-400 flex items-center justify-end gap-1">
-                <i data-lucide="clock" class="w-3 h-3"></i>
-                ${tiempo}
-              </span>
-              <span class="text-[11px] text-stone-500 font-medium block mt-1">${totalItemsCount} ud${totalItemsCount === 1 ? '' : 's'}</span>
-            </div>
+      lista.innerHTML = tickets.map(t => {
+        const lineasHtml = (t.lineas || []).map(l => `
+          <div class="flex items-center justify-between text-xs py-0.5">
+            <span class="text-stone-700 font-medium"><strong class="text-stone-900 mr-1">${l.cant}x</strong> ${l.nombre}</span>
+            <span class="text-stone-900 font-bold">${(l.precio * l.cant).toFixed(2)} €</span>
           </div>
+        `).join('');
 
-          <!-- Desglose de artículos -->
-          <div class="p-3.5 flex-1 bg-white flex flex-col justify-between min-h-[95px]">
-            <div class="space-y-1">
-              ${itemsHtml}
-            </div>
-            
-            <div class="mt-3 pt-2.5 border-t border-stone-100 flex items-baseline justify-between">
-              <span class="text-[11px] uppercase tracking-wider font-bold text-stone-400">Total Ticket</span>
-              <span class="text-base font-extrabold text-[#1b7a4a]">${totalNum} €</span>
-            </div>
-          </div>
+        const totalArts = (t.lineas || []).reduce((acc, it) => acc + (parseInt(it.cant, 10) || 1), 0);
 
-          <!-- Botones de Acción TPV -->
-          <div class="p-2.5 bg-stone-50 border-t border-stone-100 grid grid-cols-2 gap-2">
-            <button onclick="recuperarTicketEnVenta(${index})" class="px-2.5 py-2 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors" title="Añadir más productos o modificar comanda en ventas">
-              <i data-lucide="plus" class="w-3.5 h-3.5 text-amber-600"></i>
-              <span>Editar / +</span>
-            </button>
-            <button onclick="cobrarTicketDirecto(${index})" class="px-2.5 py-2 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow transition-colors" title="Cobrar comanda ahora">
-              <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
-              <span>Cobrar</span>
-            </button>
+        return `
+          <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-4 space-y-3 transition-all hover:border-stone-300">
+            <div class="flex items-start justify-between border-b border-stone-100 pb-2.5">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-black text-sm text-stone-900">${t.numero || '#T-001'}</span>
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-100 text-amber-800 uppercase tracking-wider">${t.ubicacion || 'BARRA'}</span>
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-stone-100 text-stone-500">Abierto</span>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] text-stone-400 mt-1">
+                  <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                  <span>${t.hora || 'Hace unos minutos'}</span>
+                  <span>•</span>
+                  <span>${totalArts} artículo${totalArts > 1 ? 's' : ''}</span>
+                </div>
+              </div>
+              <button type="button" onclick="eliminarComanda('${t.id}')" title="Descartar comanda" class="p-1.5 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div class="bg-stone-50/70 rounded-xl p-2.5 space-y-1 divide-y divide-stone-100">
+              ${lineasHtml}
+            </div>
+
+            <div class="flex items-center justify-between pt-1">
+              <div>
+                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-wider block">TOTAL TICKET</span>
+                <span class="text-xl font-black text-[#1b7a4a]">${parseFloat(t.total).toFixed(2)} €</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="recuperarComanda('${t.id}')" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                  <span>Editar / +</span>
+                </button>
+                <button type="button" onclick="cobrarComandaDirecta('${t.id}')" class="px-4 py-2 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white text-xs font-bold flex items-center gap-1.5 shadow transition-colors">
+                  <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                  <span>Cobrar</span>
+                </button>
+              </div>
+            </div>
           </div>
         `;
-        ticketsGrid.appendChild(card);
-      });
+      }).join('');
 
       lucide.createIcons();
     }
 
-    // Cargar en el carrito de index.html y navegar
-    function recuperarTicketEnVenta(index) {
-      const tickets = obtenerTickets();
-      if (!tickets[index]) return;
-      
-      const ticketSeleccionado = tickets[index];
+    // RECUPERAR COMANDA Y CARGARLA LIMPIA EN INDEX.HTML
+    function recuperarComanda(id) {
+      let tickets = obtenerTicketsPendientes();
+      const ticket = tickets.find(t => t.id === id);
+      if (!ticket) return;
 
-      // Guardamos la comanda actual para restaurar en index.html
-      localStorage.setItem('lapiruleta_comanda_activa', JSON.stringify(ticketSeleccionado));
-      localStorage.setItem('lapiruleta_ticket_editando_index', String(index));
-      
-      // Si el ticket tiene carrito normalizado, guardarlo en el carrito de sesión
-      if (ticketSeleccionado.items) {
-        localStorage.setItem('lapiruleta_carrito', JSON.stringify(ticketSeleccionado.items));
-      }
-      if (ticketSeleccionado.mesa) {
-        localStorage.setItem('lapiruleta_mesa_activa', ticketSeleccionado.mesa);
-      }
+      // 1. Quitar el ticket de pendientes para que NO se quede duplicado ni aparcado
+      tickets = tickets.filter(t => t.id !== id);
+      localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(tickets));
 
+      // 2. Guardar el ticket para que index.html lo cargue de inmediato en su mostrador
+      localStorage.setItem('lapiruleta_ticket_activo', JSON.stringify(ticket));
+
+      // 3. Redirigir a la pantalla de cobro/ventas
       window.location.href = 'index.html';
     }
 
-    // Pasar directamente a cobro (02-cobro-pagos.html)
-    function cobrarTicketDirecto(index) {
-      const tickets = obtenerTickets();
-      if (!tickets[index]) return;
-      
-      const ticketSeleccionado = tickets[index];
-      
-      localStorage.setItem('lapiruleta_ticket_a_cobrar', JSON.stringify(ticketSeleccionado));
-      localStorage.setItem('lapiruleta_ticket_editando_index', String(index));
-      
-      // Sincronizar datos clave de cobro
-      if (ticketSeleccionado.items) {
-        localStorage.setItem('lapiruleta_carrito', JSON.stringify(ticketSeleccionado.items));
-      }
-      if (ticketSeleccionado.total) {
-        localStorage.setItem('lapiruleta_total_cobro', String(ticketSeleccionado.total));
-      }
-      if (ticketSeleccionado.mesa) {
-        localStorage.setItem('lapiruleta_mesa_activa', ticketSeleccionado.mesa);
-      }
-
-      window.location.href = '02-cobro-pagos.html';
+    function cobrarComandaDirecta(id) {
+      recuperarComanda(id);
     }
 
-    function limpiarTodosConfirm() {
-      if (confirm('¿Deseas descartar todos los tickets pendientes? Esta acción eliminará todas las comandas en curso.')) {
-        localStorage.removeItem(STORAGE_KEY);
-        renderizarTickets();
-      }
-    }
-
-    // Inicialización y escucha en tiempo real
-    document.addEventListener('DOMContentLoaded', () => {
+    function eliminarComanda(id) {
+      if (!confirm('¿Deseas descartar esta comanda pendiente?')) return;
+      let tickets = obtenerTicketsPendientes();
+      tickets = tickets.filter(t => t.id !== id);
+      localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(tickets));
       renderizarTickets();
-      lucide.createIcons();
-
-      // Sincronizar si cambia en otra pestaña o terminal
-      window.addEventListener('storage', (e) => {
-        if (e.key === STORAGE_KEY || e.key === null) {
-          renderizarTickets();
-        }
-      });
-    });
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(console.warn);
-      });
     }
+
+    function descartarTodos() {
+      if (!confirm('¿Seguro que deseas vaciar todas las comandas pendientes?')) return;
+      localStorage.removeItem('lapiruleta_tickets_pendientes');
+      renderizarTickets();
+    }
+
+    renderizarTickets();
   </script>
-</body></html>
+</body>
+</html>
