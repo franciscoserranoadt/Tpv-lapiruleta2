@@ -53,65 +53,71 @@
 </button>
 </div>
 <!-- Blueprint Canvas -->
-<div class="flex-1 bg-stone-50/50 border-2 border-dashed border-stone-200 rounded-2xl p-4 relative overflow-hidden mt-3 min-h-0">
-<div class="absolute top-2 left-4 text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+<div class="flex-1 bg-stone-50/50 border-2 border-dashed border-stone-200 rounded-2xl p-4 relative overflow-hidden mt-3 min-h-0"><div class="absolute top-2 left-4 text-[10px] font-bold tracking-wider text-stone-400 uppercase">
           🚪 ENTRADA PRINCIPAL • VENTANAL
         </div>
 <!-- Barra -->
-<div class="absolute top-8 left-4 w-20 h-28 bg-stone-100 border border-stone-300 rounded-2xl flex flex-col items-center justify-center text-center p-1">
+<button class="mesa-btn absolute top-8 left-4 w-20 h-28 bg-stone-100 border border-stone-300 rounded-2xl flex flex-col items-center justify-center text-center p-1 hover:border-[#1b7a4a] hover:bg-stone-200 transition-colors shadow-xs cursor-pointer" id="mesa-barra" onclick="seleccionarMesa('Barra Café', 'Rectangular', 1, 'Libre', 'mesa-barra')">
 <i class="w-5 h-5 text-stone-500 mb-1" data-lucide="coffee"></i>
 <span class="text-[10px] font-bold text-stone-600 leading-tight">Barra Café</span>
-</div>
+<span class="text-[9px] text-emerald-700 font-semibold mt-1">Libre</span>
+</button>
 <!-- M1 -->
-<a class="absolute top-8 left-32 w-20 h-20 rounded-2xl bg-white border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:border-[#1b7a4a]" href="index.html">
+<button class="mesa-btn absolute top-8 left-32 w-20 h-20 rounded-2xl bg-white border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:border-[#1b7a4a] cursor-pointer transition-colors" id="mesa-m1" onclick="seleccionarMesa('M1', 'Cuadrada', 2, 'Libre', 'mesa-m1')">
 <span class="font-extrabold text-xs text-emerald-900">M1</span>
 <span class="text-[10px] font-bold text-emerald-700">Libre</span>
 <span class="text-[9px] text-stone-400">2 pax</span>
-</a>
+</button>
 <!-- M2 -->
-<a class="absolute top-8 right-8 w-20 h-20 rounded-2xl bg-white border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:border-[#1b7a4a]" href="index.html">
+<button class="mesa-btn absolute top-8 right-8 w-20 h-20 rounded-2xl bg-white border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:border-[#1b7a4a] cursor-pointer transition-colors" id="mesa-m2" onclick="seleccionarMesa('M2', 'Cuadrada', 4, 'Libre', 'mesa-m2')">
 <span class="font-extrabold text-xs text-emerald-900">M2</span>
 <span class="text-[10px] font-bold text-emerald-700">Libre</span>
 <span class="text-[9px] text-stone-400">4 pax</span>
-</a>
+</button>
 <!-- M3 Redonda -->
-<div class="absolute top-36 left-32 w-24 h-24 rounded-full bg-white border-2 border-[#1b7a4a] ring-4 ring-[#1b7a4a]/20 flex flex-col items-center justify-center p-1 text-center shadow-md">
+<button class="mesa-btn absolute top-36 left-32 w-24 h-24 rounded-full bg-white border-2 border-[#1b7a4a] ring-4 ring-[#1b7a4a]/20 flex flex-col items-center justify-center p-1 text-center shadow-md cursor-pointer transition-colors hover:border-[#15613b]" id="mesa-m3" onclick="seleccionarMesa('M3', 'Redonda', 4, 'Libre', 'mesa-m3')">
 <span class="font-extrabold text-sm text-[#1b7a4a]">M3</span>
 <span class="text-[10px] font-bold text-stone-600">Libre</span>
 <span class="text-[9px] text-stone-400">4 pax</span>
-</div>
+</button>
 <!-- M4 -->
-<a class="absolute top-36 right-8 w-20 h-20 rounded-2xl bg-white border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:border-[#1b7a4a]" href="index.html">
+<button class="mesa-btn absolute top-36 right-8 w-20 h-20 rounded-2xl bg-white border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:border-[#1b7a4a] cursor-pointer transition-colors" id="mesa-m4" onclick="seleccionarMesa('M4', 'Cuadrada', 4, 'Libre', 'mesa-m4')">
 <span class="font-extrabold text-xs text-emerald-900">M4</span>
 <span class="text-[10px] font-bold text-emerald-700">Libre</span>
 <span class="text-[9px] text-stone-400">4 pax</span>
-</a>
+</button>
 <!-- M6 Grande -->
-<div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-52 h-14 rounded-2xl bg-white border-2 border-stone-300 flex items-center justify-between px-3 shadow-xs">
-<div>
+<button class="mesa-btn absolute bottom-4 left-1/2 -translate-x-1/2 w-52 h-14 rounded-2xl bg-white border-2 border-stone-300 hover:border-[#1b7a4a] flex items-center justify-between px-3 shadow-xs cursor-pointer transition-colors" id="mesa-m6" onclick="seleccionarMesa('M6 • Mesa Grande', 'Rectangular', 6, 'Libre', 'mesa-m6')">
+<div class="text-left">
 <span class="font-extrabold text-xs text-stone-800">M6 • Mesa Grande</span>
 <span class="block text-[9px] text-stone-400">Capacidad: 6-8 personas</span>
 </div>
 <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">Libre</span>
-</div>
-</div>
+</button></div>
 </div>
 <!-- Panel de Propiedades Mesa (Columna Derecha 4/12) -->
-<div class="col-span-12 lg:col-span-4 bg-white rounded-2xl border border-stone-200 shadow-sm p-4 flex flex-col justify-between h-full min-h-0">
-<div class="space-y-4">
+<div class="col-span-12 lg:col-span-4 bg-white rounded-2xl border border-stone-200 shadow-sm p-4 flex flex-col justify-between h-full min-h-0"><div class="space-y-4">
+<!-- Banner de asignación pendiente si existe -->
+<div class="hidden p-2.5 bg-amber-500/10 border border-amber-500 rounded-xl flex items-center justify-between text-xs text-amber-800" id="banner-asignar-mesa">
+<div class="flex items-center gap-1.5">
+<i class="w-4 h-4 text-amber-600 shrink-0" data-lucide="alert-circle"></i>
+<span class="font-bold">Asignando pedido pendiente...</span>
+</div>
+<span class="text-[10px] bg-amber-500 text-white font-bold px-1.5 py-0.5 rounded">Pulsa una mesa</span>
+</div>
 <div class="flex items-center justify-between border-b border-stone-100 pb-2">
 <div class="flex items-center gap-2">
 <i class="w-4 h-4 text-[#1b7a4a]" data-lucide="edit-3"></i>
-<h3 class="font-bold text-xs text-stone-900">Propiedades Mesa M3</h3>
+<h3 class="font-bold text-xs text-stone-900" id="prop-mesa-titulo">Propiedades Mesa M3</h3>
 </div>
-<span class="text-[11px] text-stone-400 font-medium">Salón Interior</span>
+<span class="text-[11px] text-stone-400 font-medium" id="prop-mesa-salon">Salón Interior</span>
 </div>
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1.5 uppercase">Forma de la mesa</label>
-<div class="grid grid-cols-3 gap-2 text-center text-xs">
-<button class="py-2 rounded-xl bg-stone-100 font-medium text-stone-700 hover:bg-stone-200">Cuadrada</button>
-<button class="py-2 rounded-xl bg-[#1b7a4a] font-bold text-white shadow-sm">Redonda</button>
-<button class="py-2 rounded-xl bg-stone-100 font-medium text-stone-700 hover:bg-stone-200">Rectáng.</button>
+<div class="grid grid-cols-3 gap-2 text-center text-xs" id="forma-botones">
+<button class="py-2 rounded-xl bg-stone-100 font-medium text-stone-700 hover:bg-stone-200" id="btn-forma-cuadrada" onclick="cambiarForma('Cuadrada')">Cuadrada</button>
+<button class="py-2 rounded-xl bg-[#1b7a4a] font-bold text-white shadow-sm" id="btn-forma-redonda" onclick="cambiarForma('Redonda')">Redonda</button>
+<button class="py-2 rounded-xl bg-stone-100 font-medium text-stone-700 hover:bg-stone-200" id="btn-forma-rectang" onclick="cambiarForma('Rectangular')">Rectáng.</button>
 </div>
 </div>
 <div>
@@ -119,18 +125,180 @@
 <div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200">
 <span class="text-xs font-semibold text-stone-700">Comensales estándar:</span>
 <div class="flex items-center gap-2">
-<button class="w-7 h-7 rounded-lg bg-white border border-stone-200 text-stone-800 font-bold hover:bg-stone-100">-</button>
-<span class="font-bold text-sm px-2">4</span>
-<button class="w-7 h-7 rounded-lg bg-white border border-stone-200 text-stone-800 font-bold hover:bg-stone-100">+</button>
+<button class="w-7 h-7 rounded-lg bg-white border border-stone-200 text-stone-800 font-bold hover:bg-stone-100 active:scale-95" onclick="ajustarComensales(-1)">-</button>
+<span class="font-bold text-sm px-2" id="prop-mesa-comensales">4</span>
+<button class="w-7 h-7 rounded-lg bg-white border border-stone-200 text-stone-800 font-bold hover:bg-stone-100 active:scale-95" onclick="ajustarComensales(1)">+</button>
 </div>
 </div>
 </div>
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1.5 uppercase">Estado Actual</label>
+<div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500" id="prop-mesa-estado-badge"></span>
+<span class="text-xs font-bold text-emerald-800" id="prop-mesa-estado-text">Libre</span>
 </div>
-<a class="w-full py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-center font-bold text-xs rounded-xl shadow transition-colors block" href="index.html">
-        ✓ GUARDAR DISTRIBUCIÓN
-      </a>
+<button class="px-2.5 py-1 bg-white border border-stone-200 hover:bg-stone-100 text-stone-800 text-[11px] font-bold rounded-lg shadow-xs flex items-center gap-1" id="btn-abrir-ticket" onclick="abrirTicketOMesa()">
+<i class="w-3 h-3 text-[#1b7a4a]" data-lucide="shopping-cart"></i>
+<span>Cobrar / Atender</span>
+</button>
 </div>
-</main>
+</div>
+</div>
+<div class="space-y-2 mt-4">
+<div class="hidden p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-[#1b7a4a] text-xs font-bold text-center" id="toast-notificacion">
+  ✓ Distribución guardada con éxito
+</div>
+<button class="w-full py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white text-center font-bold text-xs rounded-xl shadow transition-colors block cursor-pointer active:scale-[0.99]" onclick="guardarDistribucion()">
+  ✓ GUARDAR DISTRIBUCIÓN
+</button>
+</div></div>
+</main><script id="logica-mesas-plano">
+let mesaSeleccionada = {
+  id: 'M3',
+  elementId: 'mesa-m3',
+  forma: 'Redonda',
+  comensales: 4,
+  estado: 'Libre'
+};
+
+function inicializarPlano() {
+  // Comprobar si hay pedido pendiente de asignar desde Ventas (index.html)
+  const asignarMesaData = localStorage.getItem('lapiruleta_asignar_mesa');
+  const banner = document.getElementById('banner-asignar-mesa');
+  if (asignarMesaData && banner) {
+    banner.classList.remove('hidden');
+  }
+
+  // Revisar tickets pendientes para pintar mesas ocupadas
+  try {
+    const tickets = JSON.parse(localStorage.getItem('lapiruleta_tickets_pendientes') || '[]');
+    tickets.forEach(ticket => {
+      const nom = (ticket.mesa || '').toUpperCase();
+      document.querySelectorAll('.mesa-btn').forEach(btn => {
+        const txt = btn.innerText.toUpperCase();
+        if (txt.includes(nom)) {
+          btn.classList.remove('border-emerald-400');
+          btn.classList.add('border-amber-500', 'bg-amber-50/50');
+          const badge = btn.querySelector('.text-emerald-700');
+          if (badge) {
+            badge.textContent = 'Ocupada';
+            badge.className = 'text-[10px] font-bold text-amber-700';
+          }
+        }
+      });
+    });
+  } catch (e) { console.warn(e); }
+}
+
+function seleccionarMesa(nombre, forma, comensales, estado, elementId) {
+  const asignarMesaRaw = localStorage.getItem('lapiruleta_asignar_mesa');
+  if (asignarMesaRaw) {
+    try {
+      const pedido = JSON.parse(asignarMesaRaw);
+      pedido.mesa = nombre;
+      pedido.hora = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      let tickets = JSON.parse(localStorage.getItem('lapiruleta_tickets_pendientes') || '[]');
+      tickets.push(pedido);
+      localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(tickets));
+      localStorage.removeItem('lapiruleta_asignar_mesa');
+      
+      const toast = document.getElementById('toast-notificacion');
+      if (toast) {
+        toast.innerText = '✓ ¡Pedido asignado con éxito a ' + nombre + '! Redirigiendo...';
+        toast.classList.remove('hidden');
+      }
+      setTimeout(() => {
+        window.location.href = '03-tickets-mesas.html';
+      }, 800);
+      return;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  // Actualización de estado local y panel lateral
+  mesaSeleccionada = { id: nombre, elementId: elementId, forma: forma, comensales: comensales, estado: estado };
+  
+  // Reflejar selección visual en el plano
+  document.querySelectorAll('.mesa-btn').forEach(b => {
+    b.classList.remove('ring-4', 'ring-[#1b7a4a]/20', 'border-[#1b7a4a]');
+    if (b.id === 'mesa-m3') {
+      b.classList.add('border-stone-300');
+    }
+  });
+  
+  const el = document.getElementById(elementId);
+  if (el) {
+    el.classList.add('border-[#1b7a4a]', 'ring-4', 'ring-[#1b7a4a]/20');
+  }
+
+  // Actualizar textos en panel
+  const tituloEl = document.getElementById('prop-mesa-titulo');
+  if (tituloEl) tituloEl.textContent = 'Propiedades ' + nombre;
+
+  const comensalesEl = document.getElementById('prop-mesa-comensales');
+  if (comensalesEl) comensalesEl.textContent = comensales;
+
+  cambiarFormaUI(forma);
+}
+
+function cambiarForma(forma) {
+  mesaSeleccionada.forma = forma;
+  cambiarFormaUI(forma);
+}
+
+function cambiarFormaUI(forma) {
+  const btnCuad = document.getElementById('btn-forma-cuadrada');
+  const btnRed = document.getElementById('btn-forma-redonda');
+  const btnRect = document.getElementById('btn-forma-rectang');
+
+  [btnCuad, btnRed, btnRect].forEach(btn => {
+    if (btn) {
+      btn.className = 'py-2 rounded-xl bg-stone-100 font-medium text-stone-700 hover:bg-stone-200 cursor-pointer';
+    }
+  });
+
+  if (forma === 'Cuadrada' && btnCuad) {
+    btnCuad.className = 'py-2 rounded-xl bg-[#1b7a4a] font-bold text-white shadow-sm cursor-pointer';
+  } else if (forma === 'Redonda' && btnRed) {
+    btnRed.className = 'py-2 rounded-xl bg-[#1b7a4a] font-bold text-white shadow-sm cursor-pointer';
+  } else if (forma === 'Rectangular' && btnRect) {
+    btnRect.className = 'py-2 rounded-xl bg-[#1b7a4a] font-bold text-white shadow-sm cursor-pointer';
+  }
+}
+
+function ajustarComensales(delta) {
+  let act = parseInt(document.getElementById('prop-mesa-comensales').textContent || '4', 10);
+  act = Math.max(1, Math.min(20, act + delta));
+  document.getElementById('prop-mesa-comensales').textContent = act;
+  mesaSeleccionada.comensales = act;
+}
+
+function guardarDistribucion() {
+  const toast = document.getElementById('toast-notificacion');
+  if (toast) {
+    toast.innerText = '✓ Distribución y mesa ' + mesaSeleccionada.id + ' guardada';
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 2500);
+  }
+}
+
+function abrirTicketOMesa() {
+  sessionStorage.setItem('lapiruleta_mesa_activa', mesaSeleccionada.id);
+  window.location.href = 'index.html?mesa=' + encodeURIComponent(mesaSeleccionada.id);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  inicializarPlano();
+  if (window.lucide) { window.lucide.createIcons(); }
+});
+setTimeout(() => {
+  inicializarPlano();
+  if (window.lucide) { window.lucide.createIcons(); }
+}, 100);
+</script>
 <!-- BARRA INFERIOR DE NAVEGACIÓN UNIFICADA (IDÉNTICA A INDEX) -->
 <footer class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md">
 <div class="flex items-center gap-6">
