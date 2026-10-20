@@ -579,28 +579,26 @@
     renderizarTicket();
     lucide.createIcons();
 
-    // AUTO-ACTUALIZACIÓN AUTOMÁTICA EN SEGUNDO PLANO (ANTI-CACHÉ PC Y APP)
+    // REGISTRO LIMPIO Y ESTABLE DE SERVICE WORKER (SIN BUCLE DE RECARGA)
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js?t=' + Date.now()).then((reg) => {
-        // Obliga a comprobar si hay una versión nueva en GitHub cada vez que se carga
-        reg.update();
-
-        // Si detecta un nuevo Service Worker en GitHub, recarga al instante
-        reg.addEventListener('updatefound', () => {
-          const nuevoWorker = reg.installing;
-          nuevoWorker.addEventListener('statechange', () => {
-            if (nuevoWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('[TPV] Nueva versión detectada en GitHub. Actualizando automáticamente...');
-              window.location.reload();
-            }
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => {
+            // Comprobación manual controlada solo si hay un nuevo worker esperando
+            reg.addEventListener('updatefound', () => {
+              const nuevoWorker = reg.installing;
+              if (nuevoWorker) {
+                nuevoWorker.addEventListener('statechange', () => {
+                  if (nuevoWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('Nueva versión disponible instalada.');
+                  }
+                });
+              }
+            });
+          })
+          .catch((err) => {
+            console.warn('Error registrando Service Worker:', err);
           });
-        });
-      }).catch((err) => {
-        console.warn('Error registrando Service Worker:', err);
-      });
-
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        window.location.reload();
       });
     }
   </script>
