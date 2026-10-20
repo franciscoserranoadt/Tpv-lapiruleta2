@@ -1,246 +1,842 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>TPV Ventas - La Piruleta</title>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+<html class="h-full" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>LA PIRULETA • TPV Táctil Principal</title>
+<!-- Google Fonts: Epilogue -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              DEFAULT: '#1b7a4a',
+              dark: '#15613b',
+              light: '#239c5f',
+              surface: '#eaf5ee'
+            },
+            cream: {
+              DEFAULT: '#fff8f5',
+              card: '#ffffff',
+              border: '#ede3dc'
+            },
+            warmAmber: {
+              DEFAULT: '#e07a5f',
+              hover: '#cf6b50',
+              golden: '#d97706'
+            }
+          },
+          fontFamily: {
+            sans: ['Epilogue', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles for TPV Precision -->
+<style data-purpose="base-layout">
+    body {
+      font-family: 'Epilogue', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      background-color: #f7f1ec;
+    }
+    /* Estilos de scroll personalizado para el ticket táctil */
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #f1ede9;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
   </style>
+<style data-purpose="touch-optimizations">
+    /* Respuesta táctil instantánea y sin rebote */
+    button, .tap-card {
+      touch-action: manipulation;
+      transition: all 0.08s ease-in-out;
+    }
+    button:active, .tap-card:active {
+      transform: scale(0.97);
+    }
+  </style>
+<!-- END: Custom Styles -->
 </head>
-<body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-28">
+<body class="h-full flex flex-col overflow-hidden text-slate-800 antialiased bg-[#f7f2ed]">
+<!-- BEGIN: TopBar -->
+<header class="h-14 bg-forest text-white px-4 flex items-center justify-between shadow-md select-none shrink-0 border-b border-forest-dark" data-purpose="tpv-top-header">
+<!-- Identidad de Marca y Conexión -->
+<div class="flex items-center space-x-3">
+<div class="w-9 h-9 rounded-xl bg-white text-forest flex items-center justify-center font-bold text-lg shadow-sm border border-forest-surface">
+<span>LP</span>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<h1 class="font-bold text-base tracking-tight leading-none text-white">LA PIRULETA</h1>
+<span class="text-xs bg-forest-dark text-emerald-200 px-2 py-0.5 rounded-full font-medium border border-forest-light/40">Terminal Táctil v6.5</span>
+</div>
+<div class="flex items-center space-x-3 text-xs text-emerald-100/90 mt-0.5">
+<span class="inline-flex items-center">
+<span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+            Cloud Conectado
+          </span>
+<span>•</span>
+<span>Caja 1 • Turno Abierto</span>
+<span>•</span>
+<span>Tarifa Estándar</span>
+</div>
+</div>
+</div>
+<!-- Acciones Rápidas y Cajero -->
+<div class="flex items-center space-x-2">
+<!-- Info Cajero Activo -->
+<div class="bg-forest-dark/60 hover:bg-forest-dark border border-forest-light/30 px-3 py-1.5 rounded-xl flex items-center space-x-2 text-xs cursor-pointer mr-2">
+<svg class="h-4 w-4 text-emerald-300" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" fill-rule="evenodd"></path>
+</svg>
+<span class="font-medium text-white">Paco (01 - Mostrador)</span>
+</div>
+<!-- Botón Mesas Rápido -->
+<button class="bg-forest-dark hover:bg-forest-dark/80 px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 border border-forest-light/40 shadow-sm" onclick="openModal('mesasModal')">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Mesas</span>
+</button>
+<!-- Botón Tickets Pendientes -->
+<button class="bg-warmAmber hover:bg-warmAmber-hover text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 shadow-sm" onclick="openModal('pendientesModal')">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Pendientes</span>
+<span class="bg-white text-warmAmber font-bold text-[10px] px-1.5 py-0.2 rounded-full ml-1" id="badge-pendientes">0</span>
+</button>
+<!-- Ajustes Rápidos -->
+<button class="bg-forest-dark hover:bg-forest-dark/80 p-2 rounded-xl text-white border border-forest-light/40" onclick="openModal('configModal')" title="Ajustes">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: TopBar -->
+<!-- BEGIN: MainContentArea (2 Column Layout) -->
+<main class="flex-1 flex overflow-hidden p-2 gap-2" data-purpose="tpv-split-screen">
+<!-- BEGIN: LeftTicketAndCheckoutSection -->
+<section class="w-[440px] flex flex-col bg-white rounded-2xl border border-stone-200/90 shadow-sm overflow-hidden shrink-0" data-purpose="ticket-and-payment-panel">
+<!-- Cabecera de Comanda / Ticket Activo -->
+<div class="px-3.5 py-2.5 bg-[#fbf9f6] border-b border-stone-200 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-forest animate-pulse"></span>
+<div>
+<h2 class="text-sm font-bold text-slate-800 tracking-tight flex items-center gap-1.5" id="comanda-title">
+              BARRA <span class="text-xs font-semibold text-forest bg-forest-surface px-1.5 py-0.5 rounded border border-forest/20">#T-001</span>
+</h2>
+<p class="text-[11px] text-slate-500 font-medium" id="comanda-sub">Cliente General</p>
+</div>
+</div>
+<!-- Botón Limpiar Ticket -->
+<button class="px-2.5 py-1.5 text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl flex items-center space-x-1" id="btn-limpiar" onclick="clearTicket()">
+<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Limpiar</span>
+</button>
+</div>
+<!-- Encabezados de Tabla del Ticket -->
+<div class="grid grid-cols-12 px-3.5 py-1.5 text-[11px] font-bold text-slate-600 bg-[#f4ece4] border-b border-stone-200 uppercase tracking-wider">
+<div class="col-span-6">ARTÍCULO</div>
+<div class="col-span-2 text-center">CANT</div>
+<div class="col-span-2 text-right">PRECIO</div>
+<div class="col-span-2 text-right">TOTAL</div>
+</div>
+<!-- Lista Scrollable de Artículos del Ticket -->
+<div class="flex-1 overflow-y-auto custom-scroll p-1 divide-y divide-stone-100 bg-white" id="ticket-items-container">
+<!-- Ticket Vacío Placeholder (Default) -->
+<div class="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400" id="empty-ticket-placeholder">
+<div class="w-16 h-16 rounded-2xl bg-amber-50 text-amber-700/70 flex items-center justify-center mb-3 border border-amber-200/60 shadow-inner">
+<svg class="h-8 w-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<p class="font-bold text-slate-700 text-sm">Ticket vacío</p>
+<p class="text-xs text-slate-600 mt-1 max-w-[200px]">Toca los productos de la derecha para sumar a la venta actual.</p>
+</div>
+</div>
+<!-- Desglose y Total a Pagar -->
+<div class="bg-amber-50/50 border-t border-stone-200 px-3.5 py-2.5">
+<div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+<span>Base imponible: <strong class="font-semibold text-slate-700" id="subtotal-display">0.00 €</strong></span>
+<span>IVA inc. (10%): <strong class="font-semibold text-slate-700" id="iva-display">0.00 €</strong></span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<span class="text-xs font-bold text-slate-700 uppercase tracking-wide">TOTAL A PAGAR</span>
+<span class="text-2xl font-black text-forest tracking-tight" id="total-display">0.00 €</span>
+</div>
+</div>
+<!-- Teclado Numérico y Acciones de Comanda -->
+<div class="p-2 bg-[#f8f5f2] border-t border-stone-200">
+<div class="grid grid-cols-4 gap-1.5">
+<!-- Botones Numéricos Fila 1 -->
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('7')">7</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('8')">8</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('9')">9</button>
+<!-- Botón Dejar Pendiente / Guardar -->
+<button class="row-span-2 bg-[#e07a5f] hover:bg-[#d0694e] text-white rounded-lg flex flex-col items-center justify-center p-1 shadow-sm font-semibold text-xs text-center border border-amber-700/20" onclick="dejarPendiente()">
+<svg class="h-5 w-5 mb-1" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="leading-tight">Dejar<br/>Pendiente</span>
+</button>
+<!-- Botones Numéricos Fila 2 -->
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('4')">4</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('5')">5</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('6')">6</button>
+<!-- Botones Numéricos Fila 3 -->
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('1')">1</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('2')">2</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('3')">3</button>
+<!-- Botón Asignar a Mesa -->
+<button class="row-span-2 bg-[#f0ede6] hover:bg-stone-200 text-slate-700 rounded-lg flex flex-col items-center justify-center p-1 shadow-sm font-semibold text-xs text-center border border-stone-300" onclick="openModal('mesasModal')">
+<svg class="h-5 w-5 mb-1 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="leading-tight">Asignar<br/>a Mesa</span>
+</button>
+<!-- Botones Numéricos Fila 4 -->
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress('0')">0</button>
+<button class="h-10 bg-white hover:bg-slate-100 rounded-lg font-bold text-slate-700 shadow-sm border border-stone-200 text-base" onclick="keypadPress(',')">,</button>
+<button class="h-10 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg font-black shadow-sm border border-rose-200 text-base" onclick="keypadClear()">C</button>
+</div>
+</div>
+<!-- Barra de Cobro Inmediato (Efectivo, Tarjeta, Bizum) -->
+<div class="p-2.5 bg-stone-100 border-t border-stone-200 grid grid-cols-3 gap-2">
+<button class="h-12 bg-[#2d6a4f] hover:bg-[#245741] text-white rounded-xl font-bold text-xs flex flex-col items-center justify-center shadow-sm border-b-2 border-[#1c4432] active:translate-y-0.5" onclick="cobrar('EFECTIVO')">
+<svg class="h-4 w-4 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>EFECTIVO</span>
+</button>
+<button class="h-12 bg-[#1f5f8b] hover:bg-[#184d72] text-white rounded-xl font-bold text-xs flex flex-col items-center justify-center shadow-sm border-b-2 border-[#133c59] active:translate-y-0.5" onclick="cobrar('TARJETA')">
+<svg class="h-4 w-4 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>TARJETA</span>
+</button>
+<button class="h-12 bg-[#00897b] hover:bg-[#007367] text-white rounded-xl font-bold text-xs flex flex-col items-center justify-center shadow-sm border-b-2 border-[#005a51] active:translate-y-0.5" onclick="cobrar('BIZUM')">
+<svg class="h-4 w-4 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>BIZUM</span>
+</button>
+</div>
+</section>
+<!-- END: LeftTicketAndCheckoutSection -->
+<!-- BEGIN: RightCatalogProductsSection -->
+<section class="flex-1 flex flex-col bg-white rounded-2xl border border-stone-200/90 shadow-sm overflow-hidden" data-purpose="product-catalog-grid">
+<!-- Pestañas de Categorías Rápidas -->
+<div class="bg-[#fbf9f6] border-b border-stone-200 p-2 overflow-x-auto custom-scroll shrink-0">
+<div class="flex items-center space-x-2" id="categories-bar">
+<!-- Generadas dinámicamente con JavaScript -->
+</div>
+</div>
+<!-- Cuadrícula Táctil de Productos -->
+<div class="flex-1 overflow-y-auto custom-scroll p-3.5 bg-[#fcfaf7]">
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-3" id="products-grid">
+<!-- Render dinámico de productos -->
+</div>
+</div>
+<!-- Barra de Estado / Resumen de Catálogo -->
+<div class="px-4 py-2 bg-[#f8f5f2] border-t border-stone-200 flex items-center justify-between text-xs text-slate-500 font-medium shrink-0">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-forest"></span>
+<span id="catalog-summary-text">Cargando productos...</span>
+</div>
+<div class="flex items-center space-x-3">
+<span class="text-slate-400">Toca un producto para añadir directo al ticket</span>
+<button class="text-forest hover:text-forest-dark font-bold underline text-xs" onclick="openModal('quickAddModal')">+ Crear Rápido</button>
+</div>
+</div>
+</section>
+<!-- END: RightCatalogProductsSection -->
+</main>
+<!-- END: MainContentArea -->
+<!-- BEGIN: BottomNavigationBar -->
+<footer class="h-12 bg-white border-t border-stone-200 px-4 flex items-center justify-between select-none shrink-0" data-purpose="bottom-nav">
+<nav class="flex items-center space-x-1">
+<a class="px-3.5 py-1.5 rounded-xl bg-forest-surface text-forest font-bold text-xs flex items-center space-x-1.5 border border-forest/20" href="#">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Ventas TPV</span>
+</a>
+<button class="px-3.5 py-1.5 rounded-xl text-slate-600 hover:bg-stone-100 font-medium text-xs flex items-center space-x-1.5" onclick="openModal('pendientesModal')">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Tickets Abiertos</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-xl text-slate-600 hover:bg-stone-100 font-medium text-xs flex items-center space-x-1.5" onclick="openModal('mesasModal')">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Plano de Mesas</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-xl text-slate-600 hover:bg-stone-100 font-medium text-xs flex items-center space-x-1.5" onclick="openModal('cajaModal')">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Caja / Turno</span>
+</button>
+</nav>
+<div class="text-[11px] text-slate-400 font-medium flex items-center space-x-2">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>Terminal Conectada • Venta Directa</span>
+</div>
+</footer>
+<!-- END: BottomNavigationBar -->
+<!-- BEGIN: Modals -->
+<!-- Modal: Mesas -->
+<div class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" id="mesasModal">
+<div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl border border-stone-200">
+<div class="flex justify-between items-center pb-3 border-b border-stone-200">
+<h3 class="font-bold text-base text-slate-800">Plano de Mesas &amp; Zonas</h3>
+<button class="text-slate-400 hover:text-slate-600 font-bold text-lg" onclick="closeModal('mesasModal')">×</button>
+</div>
+<div class="py-4">
+<p class="text-xs text-slate-500 mb-3 font-medium">Selecciona una mesa para vincular la comanda activa:</p>
+<div class="grid grid-cols-4 gap-2.5">
+<button class="p-3 rounded-xl border border-forest bg-forest-surface font-bold text-xs text-forest text-center" onclick="seleccionarMesa('Barra')">BARRA (Ppal)</button>
+<button class="p-3 rounded-xl border border-stone-200 hover:border-forest text-xs font-semibold text-slate-700 text-center" onclick="seleccionarMesa('Mesa 1')">Mesa 1</button>
+<button class="p-3 rounded-xl border border-stone-200 hover:border-forest text-xs font-semibold text-slate-700 text-center" onclick="seleccionarMesa('Mesa 2')">Mesa 2</button>
+<button class="p-3 rounded-xl border border-stone-200 hover:border-forest text-xs font-semibold text-slate-700 text-center" onclick="seleccionarMesa('Mesa 3')">Mesa 3</button>
+<button class="p-3 rounded-xl border border-stone-200 hover:border-forest text-xs font-semibold text-slate-700 text-center" onclick="seleccionarMesa('Terraza 1')">Terraza 1</button>
+<button class="p-3 rounded-xl border border-stone-200 hover:border-forest text-xs font-semibold text-slate-700 text-center" onclick="seleccionarMesa('Terraza 2')">Terraza 2</button>
+<button class="p-3 rounded-xl border border-stone-200 hover:border-forest text-xs font-semibold text-slate-700 text-center" onclick="seleccionarMesa('Terraza 3')">Terraza 3</button>
+<button class="p-3 rounded-xl border border-amber-300 bg-amber-50 text-amber-800 font-bold text-xs text-center" onclick="seleccionarMesa('Para Llevar')">Para Llevar</button>
+</div>
+</div>
+<div class="pt-3 border-t border-stone-200 flex justify-end">
+<button class="px-4 py-2 bg-stone-100 hover:bg-stone-200 rounded-xl text-xs font-bold text-slate-700" onclick="closeModal('mesasModal')">Cerrar</button>
+</div>
+</div>
+</div>
+<!-- Modal: Tickets Pendientes -->
+<div class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" id="pendientesModal">
+<div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-2xl border border-stone-200">
+<div class="flex justify-between items-center pb-3 border-b border-stone-200">
+<h3 class="font-bold text-base text-slate-800">Comandas y Tickets Pendientes</h3>
+<button class="text-slate-400 hover:text-slate-600 font-bold text-lg" onclick="closeModal('pendientesModal')">×</button>
+</div>
+<div class="py-4 max-h-72 overflow-y-auto space-y-2" id="lista-pendientes">
+<!-- Render dinámico de tickets pendientes -->
+</div>
+<div class="pt-3 border-t border-stone-200 flex justify-end">
+<button class="px-4 py-2 bg-stone-100 hover:bg-stone-200 rounded-xl text-xs font-bold text-slate-700" onclick="closeModal('pendientesModal')">Cerrar</button>
+</div>
+</div>
+</div>
+<!-- Modal: Cobro Exitoso / Ticket Finalizado -->
+<div class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" id="successModal">
+<div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-stone-200 text-center">
+<div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+<svg class="h-8 w-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<h3 class="font-bold text-lg text-slate-800">¡Cobro Completado!</h3>
+<p class="text-xs text-slate-500 mt-1 mb-4" id="successModalMessage">Venta registrada en caja satisfactoriamente.</p>
+<div class="bg-stone-50 p-3 rounded-xl text-left text-xs mb-4 border border-stone-200 font-mono">
+<div class="flex justify-between"><span>Método:</span> <strong id="successMetodo">-</strong></div>
+<div class="flex justify-between"><span>Total:</span> <strong id="successTotal">-</strong></div>
+</div>
+<button class="w-full py-2.5 bg-forest hover:bg-forest-dark text-white rounded-xl text-xs font-bold shadow-md" onclick="closeModal('successModal')">
+        Nuevo Ticket
+      </button>
+</div>
+</div>
+<!-- Modal: Crear Producto Rápido -->
+<div class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" id="quickAddModal">
+<div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl border border-stone-200">
+<div class="flex justify-between items-center pb-3 border-b border-stone-200">
+<h3 class="font-bold text-base text-slate-800">Añadir Producto Rápido</h3>
+<button class="text-slate-400 hover:text-slate-600 font-bold text-lg" onclick="closeModal('quickAddModal')">×</button>
+</div>
+<form class="py-4 space-y-3" onsubmit="handleQuickAddProduct(event)">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Nombre del Producto</label>
+<input class="w-full text-xs rounded-xl border-stone-300 focus:border-forest focus:ring-forest" id="quick-prod-name" placeholder="Ej. Tostada con Tomate" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Precio (€)</label>
+<input class="w-full text-xs rounded-xl border-stone-300 focus:border-forest focus:ring-forest" id="quick-prod-price" placeholder="2.50" required="" step="0.05" type="number"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Categoría</label>
+<select class="w-full text-xs rounded-xl border-stone-300 focus:border-forest focus:ring-forest" id="quick-prod-cat">
+<option value="cafes">Cafés</option>
+<option value="pan">Pan &amp; Bollería</option>
+<option value="desayunos">Desayunos</option>
+<option value="tartas">Tartas</option>
+</select>
+</div>
+</div>
+<div class="pt-2 flex justify-end space-x-2">
+<button class="px-3 py-2 bg-stone-100 rounded-xl text-xs font-semibold text-slate-600" onclick="closeModal('quickAddModal')" type="button">Cancelar</button>
+<button class="px-4 py-2 bg-forest text-white rounded-xl text-xs font-bold hover:bg-forest-dark" type="submit">Guardar Producto</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Modal: Ajustes / Configuración -->
+<div class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" id="configModal">
+<div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl border border-stone-200">
+<div class="flex justify-between items-center pb-3 border-b border-stone-200">
+<h3 class="font-bold text-base text-slate-800">Ajustes de Terminal</h3>
+<button class="text-slate-400 hover:text-slate-600 font-bold text-lg" onclick="closeModal('configModal')">×</button>
+</div>
+<div class="py-4 space-y-3 text-xs">
+<div class="flex items-center justify-between">
+<span class="font-medium text-slate-700">Impresión automática de ticket</span>
+<input checked="" class="rounded text-forest focus:ring-forest" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-medium text-slate-700">Sonido al añadir producto</span>
+<input checked="" class="rounded text-forest focus:ring-forest" type="checkbox"/>
+</div>
+<div class="pt-2">
+<button class="w-full py-2 bg-rose-50 text-rose-700 font-semibold rounded-xl border border-rose-200 hover:bg-rose-100" onclick="resetDefaults()">Restablecer Productos de Fábrica</button>
+</div>
+</div>
+<div class="pt-3 border-t border-stone-200 flex justify-end">
+<button class="px-4 py-2 bg-forest text-white rounded-xl text-xs font-bold" onclick="closeModal('configModal')">Aceptar</button>
+</div>
+</div>
+</div>
+<!-- END: Modals -->
+<!-- BEGIN: TPV Interactive Logic JavaScript -->
+<script data-purpose="tpv-core-script">
+    // Catálogo inicial de muestra basado en la referencia y la estética de La Piruleta
+    const DEFAULT_CATEGORIES = [
+      { id: 'all', name: '⭐ FAVORITOS / TODOS', icon: '⭐' },
+      { id: 'cafes', name: '☕ Cafés', icon: '☕' },
+      { id: 'pan', name: '🥖 Pan & Bollería', icon: '🥖' },
+      { id: 'desayunos', name: '🥪 Desayunos', icon: '🥪' },
+      { id: 'tartas', name: '🍰 Tartas', icon: '🍰' }
+    ];
 
-  <!-- CABECERA PERSISTENTE TPV -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center justify-between shadow-sm">
-    <div class="flex items-center gap-3">
-      <a href="03-tickets-mesas.html" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700">
-        <i data-lucide="menu" class="w-5 h-5"></i>
-      </a>
-      <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="font-bold text-sm text-stone-900">Caja 1 • Turno Abierto</span>
-      </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <a href="13-config-impresoras.html" class="p-2 rounded-xl bg-stone-100 text-stone-700 hover:bg-stone-200">
-        <i data-lucide="printer" class="w-5 h-5"></i>
-      </a>
-      <div class="w-8 h-8 rounded-full bg-[#1b7a4a] text-white flex items-center justify-center font-bold text-xs shadow-sm">LP</div>
-    </div>
-  </header>
+    const DEFAULT_PRODUCTS = [
+      { id: 'p1', name: 'Flat White Doble', price: 2.80, cat: 'cafes', icon: '☕', color: '#eef2f6' },
+      { id: 'p2', name: 'Cappuccino Avena', price: 2.90, cat: 'cafes', icon: '🥛', color: '#eef2f6' },
+      { id: 'p3', name: 'Cold Brew Natural', price: 3.20, cat: 'cafes', icon: '🧊', color: '#eef2f6' },
+      { id: 'p4', name: 'Café con Leche', price: 1.60, cat: 'cafes', icon: '☕', color: '#eef2f6' },
+      { id: 'p5', name: 'Barra Rústica Tradicional', price: 1.30, cat: 'pan', icon: '🥖', color: '#fef3c7' },
+      { id: 'p6', name: 'Croissant Mantequilla', price: 1.80, cat: 'pan', icon: '🥐', color: '#fef3c7' },
+      { id: 'p7', name: 'Napolitana Chocolate', price: 2.20, cat: 'pan', icon: '🍫', color: '#fef3c7' },
+      { id: 'p8', name: 'Tostada Tomate y Aceite', price: 2.60, cat: 'desayunos', icon: '🍞', color: '#dcfce7' },
+      { id: 'p9', name: 'Tostada Jamón Ibérico', price: 4.20, cat: 'desayunos', icon: '🥓', color: '#dcfce7' },
+      { id: 'p10', name: 'Tarta de Queso Fluida', price: 4.50, cat: 'tartas', icon: '🍰', color: '#fce7f3' },
+      { id: 'p11', name: 'Zumo Naranja Natural', price: 2.80, cat: 'desayunos', icon: '🍊', color: '#fed7aa' }
+    ];
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="p-4 max-w-lg mx-auto space-y-4">
-    <!-- Buscador táctil -->
-    <div class="relative">
-      <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-stone-400"></i>
-      <input type="text" id="busqueda-venta" oninput="renderizarGridVentas()" placeholder="Buscar producto o código..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]">
-    </div>
+    // Estado de la aplicación
+    let currentTicket = [];
+    let currentCategory = 'all';
+    let currentMesa = 'BARRA';
+    let pendingTickets = [];
 
-    <!-- Pestañas de categorías dinámicas sincronizadas con localStorage -->
-    <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none items-center" id="categorias-ventas">
-      <!-- Se llena dinámicamente con las categorías guardadas -->
-    </div>
+    // Inicialización al cargar la ventana
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCatalog();
+      loadPendingTickets();
+      renderCategories();
+      renderProducts();
+      updateTicketView();
+    });
 
-    <!-- Grid de productos táctiles para venta directa -->
-    <div id="grid-productos" class="grid grid-cols-2 gap-3">
-      <!-- Se renderiza desde localStorage -->
-    </div>
-
-    <!-- Estado si aún no hay productos creados -->
-    <div id="sin-productos-aviso" class="bg-white border-2 border-dashed border-stone-200 rounded-3xl p-8 text-center space-y-3">
-      <div class="w-14 h-14 mx-auto bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-center text-stone-400">
-        <i data-lucide="shopping-bag" class="w-7 h-7 text-[#1b7a4a]"></i>
-      </div>
-      <h3 class="font-bold text-sm text-stone-900">Catálogo limpio y listo</h3>
-      <p class="text-xs text-stone-500 max-w-xs mx-auto">No hay artículos registrados. Empieza añadiendo los artículos de tu cafetería en Catálogo.</p>
-      <a href="10-catalogo-stock.html" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#1b7a4a] text-white rounded-xl text-xs font-bold shadow hover:bg-[#15613b] transition-colors">
-        <i data-lucide="plus" class="w-4 h-4"></i>
-        <span>Crear mis productos en Catálogo</span>
-      </a>
-    </div>
-  </main>
-
-  <!-- BARRA FLOTANTE DE TICKET Y COBRO ACTIVO -->
-  <div class="fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur border-t border-stone-200 p-3 shadow-lg">
-    <div class="max-w-lg mx-auto flex items-center gap-3">
-      <div class="flex-1 bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 flex items-center justify-between">
-        <div class="flex items-center gap-1.5 text-stone-600 text-xs">
-          <i data-lucide="receipt" class="w-4 h-4 text-stone-400"></i>
-          <span id="ticket-badge">Ticket vacío • 0 arts.</span>
-        </div>
-        <button onclick="vaciarTicket()" id="btn-vaciar" class="text-[10px] text-stone-400 hover:text-rose-600 hidden font-semibold">Vaciar</button>
-      </div>
-      <a href="02-cobro-pagos.html" id="btn-cobrar" class="px-5 py-2.5 rounded-xl bg-stone-300 text-stone-500 font-bold text-xs flex items-center gap-2 pointer-events-none transition-colors">
-        <span>COBRAR</span>
-        <span id="total-cobrar">0,00 €</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- NAVEGACIÓN INFERIOR (TABS PERSISTENTES) -->
-  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-3 py-2 flex items-center justify-around shadow-lg">
-    <a href="index.html" class="flex flex-col items-center gap-0.5 text-[#1b7a4a]">
-      <i data-lucide="calculator" class="w-5 h-5"></i>
-      <span class="text-[10px] font-bold">Ventas</span>
-    </a>
-    <a href="03-tickets-mesas.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="receipt" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Tickets</span>
-    </a>
-    <a href="04-plano-mesas.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="layout-grid" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Mesas</span>
-    </a>
-    <a href="10-catalogo-stock.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="package" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Catálogo</span>
-    </a>
-    <a href="05-cierre-caja.html" class="flex flex-col items-center gap-0.5 text-stone-400 hover:text-stone-700">
-      <i data-lucide="banknote" class="w-5 h-5"></i>
-      <span class="text-[10px] font-medium">Caja</span>
-    </a>
-  </nav>
-
-  <script>
-    let categoriaSeleccionada = 'Todos';
-    let cesta = [];
-
-    function obtenerCategorias() {
-      return JSON.parse(localStorage.getItem('lapiruleta_categorias') || '[]');
+    // Carga desde localStorage o por defecto
+    function loadCatalog() {
+      if (!localStorage.getItem('lapiruleta_productos')) {
+        localStorage.setItem('lapiruleta_productos', JSON.stringify(DEFAULT_PRODUCTS));
+      }
+      if (!localStorage.getItem('lapiruleta_categorias')) {
+        localStorage.setItem('lapiruleta_categorias', JSON.stringify(DEFAULT_CATEGORIES));
+      }
     }
 
-    function obtenerProductos() {
+    function getProducts() {
       return JSON.parse(localStorage.getItem('lapiruleta_productos') || '[]');
     }
 
-    function renderizarCategoriasVentas() {
-      const contenedor = document.getElementById('categorias-ventas');
-      const cats = obtenerCategorias();
-      const prods = obtenerProductos();
+    function getCategories() {
+      return JSON.parse(localStorage.getItem('lapiruleta_categorias') || '[]');
+    }
 
-      let html = `
-        <button onclick="filtrarVenta('Todos')" class="px-3.5 py-1.5 rounded-xl ${categoriaSeleccionada === 'Todos' ? 'bg-stone-900 text-white' : 'bg-white border border-stone-200 text-stone-600'} text-xs font-bold whitespace-nowrap shadow-sm">
-          Todos (${prods.length})
-        </button>
-      `;
+    function loadPendingTickets() {
+      const saved = localStorage.getItem('lapiruleta_pendientes');
+      pendingTickets = saved ? JSON.parse(saved) : [];
+      updatePendingBadge();
+    }
 
-      cats.forEach(c => {
-        const activa = categoriaSeleccionada === c.nombre;
-        html += `
-          <button onclick="filtrarVenta('${c.nombre}')" class="px-3.5 py-1.5 rounded-xl ${activa ? 'bg-[#1b7a4a] text-white shadow' : 'bg-white border border-stone-200 text-stone-600'} text-xs font-bold whitespace-nowrap flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full" style="background-color: ${c.color}"></span>
-            <span>${c.nombre}</span>
+    function savePendingTickets() {
+      localStorage.setItem('lapiruleta_pendientes', JSON.stringify(pendingTickets));
+      updatePendingBadge();
+    }
+
+    function updatePendingBadge() {
+      const badge = document.getElementById('badge-pendientes');
+      if (badge) badge.innerText = pendingTickets.length;
+    }
+
+    // Render de Categorías
+    function renderCategories() {
+      const container = document.getElementById('categories-bar');
+      if (!container) return;
+      const cats = getCategories();
+
+      container.innerHTML = cats.map(cat => {
+        const isActive = cat.id === currentCategory;
+        const activeClasses = isActive 
+          ? 'bg-forest text-white shadow-sm border-forest' 
+          : 'bg-white text-slate-700 hover:bg-stone-100 border-stone-200';
+        return `
+          <button onclick="selectCategory('${cat.id}')" 
+            class="px-3 py-1.5 rounded-xl font-bold text-xs whitespace-nowrap border ${activeClasses} transition-all duration-150 flex items-center space-x-1">
+            <span>${cat.name}</span>
           </button>
         `;
-      });
-
-      html += `
-        <a href="10-catalogo-stock.html" class="px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-[#1b7a4a] text-xs font-bold whitespace-nowrap flex items-center gap-1">
-          <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-          <span>Añadir categorías</span>
-        </a>
-      `;
-
-      contenedor.innerHTML = html;
-      lucide.createIcons();
+      }).join('');
     }
 
-    function filtrarVenta(cat) {
-      categoriaSeleccionada = cat;
-      renderizarCategoriasVentas();
-      renderizarGridVentas();
+    function selectCategory(catId) {
+      currentCategory = catId;
+      renderCategories();
+      renderProducts();
     }
 
-    function renderizarGridVentas() {
-      const grid = document.getElementById('grid-productos');
-      const aviso = document.getElementById('sin-productos-aviso');
-      const query = (document.getElementById('busqueda-venta').value || '').toLowerCase();
+    // Render de Productos en Cuadrícula Táctil
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const summaryText = document.getElementById('catalog-summary-text');
+      if (!grid) return;
 
-      let prods = obtenerProductos();
+      const products = getProducts();
+      const filtered = currentCategory === 'all' 
+        ? products 
+        : products.filter(p => p.cat === currentCategory);
 
-      if (prods.length === 0) {
-        grid.classList.add('hidden');
-        aviso.classList.remove('hidden');
+      if (summaryText) {
+        summaryText.innerText = `${filtered.length} productos disponibles`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400">
+            <p class="font-medium text-xs">No hay productos en esta categoría.</p>
+          </div>
+        `;
         return;
       }
 
-      grid.classList.remove('hidden');
-      aviso.classList.add('hidden');
+      grid.innerHTML = filtered.map(p => `
+        <div onclick="addProductToTicket('${p.id}')" 
+          class="tap-card bg-white rounded-2xl border border-stone-200/90 hover:border-forest/50 hover:shadow-md p-3 flex flex-col justify-between items-center text-center cursor-pointer min-h-[125px] relative group select-none shadow-sm">
+          
+          <!-- Badge de Precio Superior -->
+          <span class="absolute top-2 right-2 bg-stone-100 group-hover:bg-forest-surface text-slate-800 group-hover:text-forest text-[11px] font-bold px-2 py-0.5 rounded-full border border-stone-200 group-hover:border-forest/20">
+            ${p.price.toFixed(2)} €
+          </span>
 
-      if (categoriaSeleccionada !== 'Todos') {
-        prods = prods.filter(p => p.categoria === categoriaSeleccionada);
-      }
-      if (query) {
-        prods = prods.filter(p => p.nombre.toLowerCase().includes(query));
-      }
-
-      if (prods.length === 0) {
-        grid.innerHTML = `<div class="col-span-2 text-center py-8 text-stone-400 text-xs">No hay productos en esta selección.</div>`;
-        return;
-      }
-
-      grid.innerHTML = prods.map(p => `
-        <button onclick="agregarAlTicket('${p.id}')" class="bg-white p-3.5 rounded-2xl border border-stone-200 shadow-sm text-left flex flex-col justify-between hover:border-[#1b7a4a] active:scale-95 transition-transform min-h-[92px]">
-          <div>
-            <span class="text-[10px] text-stone-400 font-semibold uppercase tracking-wider">${p.categoria}</span>
-            <h4 class="font-bold text-sm text-stone-900 leading-snug line-clamp-2">${p.nombre}</h4>
+          <!-- Icono / Imagen Táctil -->
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl my-auto transition-transform group-hover:scale-110" style="background-color: ${p.color || '#f4f4f5'}">
+            ${p.icon || '☕'}
           </div>
-          <div class="flex items-center justify-between pt-2">
-            <span class="text-sm font-extrabold text-[#1b7a4a]">${p.precio} €</span>
-            <span class="w-6 h-6 rounded-lg bg-emerald-50 text-[#1b7a4a] flex items-center justify-center font-bold text-xs">+</span>
-          </div>
-        </button>
+
+          <!-- Nombre del Producto -->
+          <h4 class="font-bold text-xs text-slate-800 leading-tight mt-1 line-clamp-2 w-full">
+            ${p.name}
+          </h4>
+        </div>
       `).join('');
     }
 
-    function agregarAlTicket(id) {
-      const prod = obtenerProductos().find(p => p.id === id);
+    // Lógica del Ticket: Añadir, Incrementar, Reducir, Eliminar
+    function addProductToTicket(productId) {
+      const products = getProducts();
+      const prod = products.find(p => p.id === productId);
       if (!prod) return;
-      cesta.push(prod);
-      actualizarTicketBar();
-    }
 
-    function vaciarTicket() {
-      cesta = [];
-      actualizarTicketBar();
-    }
+      const existingIndex = currentTicket.findIndex(item => item.id === productId);
 
-    function actualizarTicketBar() {
-      const badge = document.getElementById('ticket-badge');
-      const btnVaciar = document.getElementById('btn-vaciar');
-      const btnCobrar = document.getElementById('btn-cobrar');
-      const totalSpan = document.getElementById('total-cobrar');
-
-      const count = cesta.length;
-      const total = cesta.reduce((acc, p) => acc + parseFloat(p.precio), 0);
-
-      if (count === 0) {
-        badge.textContent = 'Ticket vacío • 0 arts.';
-        btnVaciar.classList.add('hidden');
-        btnCobrar.classList.remove('bg-[#1b7a4a]', 'text-white', 'pointer-events-auto', 'shadow');
-        btnCobrar.classList.add('bg-stone-300', 'text-stone-500', 'pointer-events-none');
-        totalSpan.textContent = '0,00 €';
+      if (existingIndex > -1) {
+        currentTicket[existingIndex].qty += 1;
       } else {
-        badge.textContent = `Ticket activo • ${count} ${count === 1 ? 'art.' : 'arts.'}`;
-        btnVaciar.classList.remove('hidden');
-        btnCobrar.classList.remove('bg-stone-300', 'text-stone-500', 'pointer-events-none');
-        btnCobrar.classList.add('bg-[#1b7a4a]', 'text-white', 'pointer-events-auto', 'shadow');
-        totalSpan.textContent = `${total.toFixed(2)} €`;
+        currentTicket.push({
+          id: prod.id,
+          name: prod.name,
+          price: prod.price,
+          qty: 1
+        });
+      }
+
+      updateTicketView();
+    }
+
+    function changeQty(index, delta) {
+      if (currentTicket[index]) {
+        currentTicket[index].qty += delta;
+        if (currentTicket[index].qty <= 0) {
+          currentTicket.splice(index, 1);
+        }
+      }
+      updateTicketView();
+    }
+
+    function removeItem(index) {
+      currentTicket.splice(index, 1);
+      updateTicketView();
+    }
+
+    function clearTicket() {
+      if (currentTicket.length === 0) return;
+      currentTicket = [];
+      updateTicketView();
+    }
+
+    // Actualización de la Vista de Ticket
+    function updateTicketView() {
+      const container = document.getElementById('ticket-items-container');
+      const totalDisplay = document.getElementById('total-display');
+      const subtotalDisplay = document.getElementById('subtotal-display');
+      const ivaDisplay = document.getElementById('iva-display');
+
+      if (currentTicket.length === 0) {
+        container.innerHTML = `
+          <div id="empty-ticket-placeholder" class="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
+            <div class="w-16 h-16 rounded-2xl bg-amber-50 text-amber-700/70 flex items-center justify-center mb-3 border border-amber-200/60 shadow-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <p class="font-bold text-slate-700 text-sm">Ticket vacío</p>
+            <p class="text-xs text-slate-600 mt-1 max-w-[200px]">Toca los productos de la derecha para sumar a la venta actual.</p>
+          </div>
+        `;
+        if (totalDisplay) totalDisplay.innerText = '0.00 €';
+        if (subtotalDisplay) subtotalDisplay.innerText = '0.00 €';
+        if (ivaDisplay) ivaDisplay.innerText = '0.00 €';
+        return;
+      }
+
+      let total = 0;
+
+      container.innerHTML = currentTicket.map((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        return `
+          <div class="grid grid-cols-12 px-3 py-2 text-xs items-center hover:bg-stone-50 select-none">
+            <div class="col-span-6 font-semibold text-slate-800 pr-1 truncate">
+              ${item.name}
+            </div>
+            <div class="col-span-2 flex items-center justify-center space-x-1">
+              <button onclick="changeQty(${index}, -1)" class="w-5 h-5 rounded bg-stone-100 hover:bg-stone-200 text-slate-700 font-bold flex items-center justify-center">-</button>
+              <span class="font-bold text-slate-800 w-4 text-center">${item.qty}</span>
+              <button onclick="changeQty(${index}, 1)" class="w-5 h-5 rounded bg-stone-100 hover:bg-stone-200 text-slate-700 font-bold flex items-center justify-center">+</button>
+            </div>
+            <div class="col-span-2 text-right font-medium text-slate-500">
+              ${item.price.toFixed(2)}
+            </div>
+            <div class="col-span-2 text-right font-bold text-forest">
+              ${itemTotal.toFixed(2)} €
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const iva = total * 0.10;
+      const subtotal = total - iva;
+
+      if (totalDisplay) totalDisplay.innerText = `${total.toFixed(2)} €`;
+      if (subtotalDisplay) subtotalDisplay.innerText = `${subtotal.toFixed(2)} €`;
+      if (ivaDisplay) ivaDisplay.innerText = `${iva.toFixed(2)} €`;
+    }
+
+    // Teclado numérico táctil interactivo
+    function keypadPress(key) {
+      if (currentTicket.length === 0) return;
+      const lastItem = currentTicket[currentTicket.length - 1];
+      let currentVal = String(lastItem.qty);
+      if (currentVal === '1') currentVal = '';
+      lastItem.qty = parseInt(currentVal + key) || 1;
+      updateTicketView();
+    }
+
+    function keypadClear() {
+      if (currentTicket.length > 0) {
+        currentTicket.pop();
+        updateTicketView();
       }
     }
 
-    // Inicializar al cargar
-    renderizarCategoriasVentas();
-    renderizarGridVentas();
-    lucide.createIcons();
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+    // Asignar Mesa
+    function seleccionarMesa(nombre) {
+      currentMesa = nombre;
+      const titleElem = document.getElementById('comanda-title');
+      const subElem = document.getElementById('comanda-sub');
+      if (titleElem) {
+        titleElem.innerHTML = `${nombre.toUpperCase()} <span class="text-xs font-semibold text-forest bg-forest-surface px-1.5 py-0.5 rounded border border-forest/20">#T-${Math.floor(100 + Math.random() * 900)}</span>`;
+      }
+      if (subElem) {
+        subElem.innerText = nombre === 'Barra' ? 'Cliente General' : `Servicio en ${nombre}`;
+      }
+      closeModal('mesasModal');
+    }
+
+    // Dejar Ticket Pendiente
+    function dejarPendiente() {
+      if (currentTicket.length === 0) {
+        alert('El ticket está vacío.');
+        return;
+      }
+
+      const total = currentTicket.reduce((acc, it) => acc + (it.price * it.qty), 0);
+      const ticketToSave = {
+        id: Date.now(),
+        mesa: currentMesa,
+        fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        items: [...currentTicket],
+        total: total
+      };
+
+      pendingTickets.push(ticketToSave);
+      savePendingTickets();
+      currentTicket = [];
+      updateTicketView();
+      alert(`Comanda guardada como pendiente para ${currentMesa}`);
+    }
+
+    // Abrir Modal de Pendientes y renderizar
+    function renderPendingList() {
+      const container = document.getElementById('lista-pendientes');
+      if (!container) return;
+
+      if (pendingTickets.length === 0) {
+        container.innerHTML = '<p class="text-center text-xs text-slate-400 py-6">No hay tickets pendientes.</p>';
+        return;
+      }
+
+      container.innerHTML = pendingTickets.map((t, idx) => `
+        <div class="p-3 bg-stone-50 border border-stone-200 rounded-xl flex items-center justify-between">
+          <div>
+            <div class="font-bold text-xs text-slate-800">${t.mesa} - ${t.fecha}</div>
+            <div class="text-[11px] text-slate-500">${t.items.length} artículos • <strong>${t.total.toFixed(2)} €</strong></div>
+          </div>
+          <div class="flex space-x-2">
+            <button onclick="recuperarTicket(${idx})" class="px-2.5 py-1.5 bg-forest text-white rounded-lg text-xs font-bold hover:bg-forest-dark">Recuperar</button>
+            <button onclick="eliminarPendiente(${idx})" class="px-2 py-1.5 text-rose-600 hover:bg-rose-50 rounded-lg text-xs font-bold">&times;</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function recuperarTicket(index) {
+      const ticket = pendingTickets[index];
+      currentTicket = [...ticket.items];
+      seleccionarMesa(ticket.mesa);
+      pendingTickets.splice(index, 1);
+      savePendingTickets();
+      closeModal('pendientesModal');
+      updateTicketView();
+    }
+
+    function eliminarPendiente(index) {
+      pendingTickets.splice(index, 1);
+      savePendingTickets();
+      renderPendingList();
+    }
+
+    // Cobrar Ticket
+    function cobrar(metodo) {
+      if (currentTicket.length === 0) {
+        alert('Añada al menos un artículo para cobrar.');
+        return;
+      }
+
+      const total = currentTicket.reduce((acc, it) => acc + (it.price * it.qty), 0);
+      document.getElementById('successMetodo').innerText = metodo;
+      document.getElementById('successTotal').innerText = `${total.toFixed(2)} €`;
+
+      currentTicket = [];
+      updateTicketView();
+      openModal('successModal');
+    }
+
+    // Modal Helpers
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('hidden');
+        if (id === 'pendientesModal') renderPendingList();
+      }
+    }
+
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    }
+
+    // Quick Add Product Form
+    function handleQuickAddProduct(e) {
+      e.preventDefault();
+      const name = document.getElementById('quick-prod-name').value;
+      const price = parseFloat(document.getElementById('quick-prod-price').value) || 0;
+      const cat = document.getElementById('quick-prod-cat').value;
+
+      const newProduct = {
+        id: 'custom_' + Date.now(),
+        name: name,
+        price: price,
+        cat: cat,
+        icon: cat === 'cafes' ? '☕' : (cat === 'pan' ? '🥐' : '🥪'),
+        color: '#fef3c7'
+      };
+
+      const products = getProducts();
+      products.push(newProduct);
+      localStorage.setItem('lapiruleta_productos', JSON.stringify(products));
+
+      closeModal('quickAddModal');
+      renderProducts();
+      document.getElementById('quick-prod-name').value = '';
+      document.getElementById('quick-prod-price').value = '';
+    }
+
+    // Restablecer catálogo
+    function resetDefaults() {
+      if (confirm('¿Restablecer el catálogo inicial de La Piruleta?')) {
+        localStorage.setItem('lapiruleta_productos', JSON.stringify(DEFAULT_PRODUCTS));
+        localStorage.setItem('lapiruleta_categorias', JSON.stringify(DEFAULT_CATEGORIES));
+        closeModal('configModal');
+        renderCategories();
+        renderProducts();
+      }
+    }
   </script>
-</body>
-</html>
+<!-- END: TPV Interactive Logic JavaScript -->
+</body></html>
