@@ -38,7 +38,7 @@
 <!-- CABECERA SUPERIOR TPV -->
 <header class="sticky top-0 z-40 bg-[#1b7a4a] text-white px-3 sm:px-4 py-2 flex items-center justify-between shadow-sm">
 <div class="flex items-center gap-2.5">
-<div class="w-8 h-8 rounded-xl bg-white text-[#1b7a4a] flex items-center justify-center font-black text-xs shadow-xs">
+<div class="w-8 h-8 rounded-xl bg-white text-[#1b7a4a] flex items-center justify-center font-black text-xs shadow-xs" id="header-avatar-logo">
         LP
       </div>
 <div>
@@ -249,7 +249,7 @@
 <div class="w-[320px] bg-white text-stone-900 font-ticket p-4 sm:p-5 rounded-sm shadow-xl text-[11px] leading-tight select-text transition-all duration-200" id="contenedor-ticket-papel">
 <!-- Cabecera del ticket impreso -->
 <div class="text-center space-y-1 border-b border-dashed border-stone-400 pb-3">
-<div class="w-9 h-9 mx-auto rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-xs mb-1">
+<div class="w-9 h-9 mx-auto rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-xs mb-1" id="tpk-logo-badge">
               LP
             </div>
 <div class="font-bold text-sm uppercase tracking-wider text-stone-950" id="tpk-nombre-negocio">LA PIRULETA</div>
@@ -257,7 +257,7 @@
 <div class="text-[10px] font-bold" id="tpk-cif">CIF: B-12345678</div>
 <div class="text-[10px] text-stone-600" id="tpk-direccion">C/ Mayor 24, 28013 Madrid</div>
 <div class="text-[10px] text-stone-600" id="tpk-telefono">Tel: 910 00 00 00</div>
-<div class="text-[10px] italic text-stone-500 pt-1 border-t border-stone-200 mt-1" id="tpk-encabezado">
+<div class="text-[10px] italic text-stone-500 pt-1 border-t border-stone-200 mt-1 whitespace-pre-line" id="tpk-encabezado">
               ¡Bienvenidos a La Piruleta!
             </div>
 </div>
@@ -383,25 +383,25 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-nombre-comercial">Nombre Comercial *</label>
-<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-nombre-comercial" placeholder="Ej: LA PIRULETA" type="text"/>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-nombre-comercial" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: LA PIRULETA" type="text"/>
 </div>
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-cif-nif">NIF / CIF *</label>
-<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-cif-nif" placeholder="Ej: B-12345678" type="text"/>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-cif-nif" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: B-12345678" type="text"/>
 </div>
 </div>
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-razon-social">Razón Social / Titular Fiscal</label>
-<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-razon-social" placeholder="Ej: Panadería y Cafetería La Piruleta S.L." type="text"/>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-razon-social" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: Panadería y Cafetería La Piruleta S.L." type="text"/>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
 <div class="sm:col-span-2">
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-direccion">Dirección Completa</label>
-<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-direccion" placeholder="Ej: Calle Mayor 24, 28013 Madrid" type="text"/>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-direccion" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: Calle Mayor 24, 28013 Madrid" type="text"/>
 </div>
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-telefono">Teléfono</label>
-<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-telefono" placeholder="Ej: 910 00 00 00" type="text"/>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-telefono" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: 910 00 00 00" type="text"/>
 </div>
 </div>
 </div>
@@ -418,21 +418,21 @@
 </div>
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-ticket-encabezado">Texto de Encabezado / Saludo</label>
-<textarea class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-encabezado" placeholder="Ej: ¡Bienvenidos a La Piruleta! Especialistas en pan artesanal y café de origen." rows="2"></textarea>
+<textarea class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-encabezado" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: ¡Bienvenidos a La Piruleta! Especialistas en pan artesanal y café de origen." rows="2"></textarea>
 </div>
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-ticket-pie">Pie de Ticket / Despedida &amp; Redes</label>
-<textarea class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-pie" placeholder="Ej: ¡Gracias por su visita! Síguenos en @lapiruleta • Conserve su ticket para cambios o devoluciones." rows="2"></textarea>
+<textarea class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-pie" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: ¡Gracias por su visita! Síguenos en @lapiruleta • Conserve su ticket para cambios o devoluciones." rows="2"></textarea>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
 <div>
 <label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-ticket-serie">Serie / Prefijo Factura Simplificada</label>
-<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-serie" placeholder="Ej: T- o 2026-" type="text"/>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-serie" oninput="actualizarTicketEnTiempoReal()" placeholder="Ej: T- o 2026-" type="text"/>
 </div>
 <div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200 self-end">
 <span class="text-[11px] font-bold text-stone-700">Desglose IVA en ticket:</span>
 <label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" id="cfg-mostrar-iva" type="checkbox"/>
+<input checked="" class="sr-only peer" id="cfg-mostrar-iva" onchange="actualizarTicketEnTiempoReal()" type="checkbox"/>
 <div class="w-9 h-5 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1b7a4a]"></div>
 </label>
 </div>
@@ -589,7 +589,95 @@
         if (elNombre && aj.nombreComercial) {
           elNombre.textContent = aj.nombreComercial;
         }
+
+        // Actualizar iniciales de logo si procede
+        const badgeLogo = document.getElementById('header-avatar-logo');
+        const tpkBadge = document.getElementById('tpk-logo-badge');
+        if (aj.nombreComercial) {
+          const palabras = aj.nombreComercial.trim().split(/\s+/);
+          let iniciales = 'LP';
+          if (palabras.length === 1) {
+            iniciales = palabras[0].substring(0, 2).toUpperCase();
+          } else if (palabras.length > 1) {
+            iniciales = (palabras[0][0] + palabras[1][0]).toUpperCase();
+          }
+          if (badgeLogo) badgeLogo.textContent = iniciales;
+          if (tpkBadge) tpkBadge.textContent = iniciales;
+        }
+
+        // Asegurar que si el ticket actual tiene el prefijo por defecto, adopte la serie configurada
+        if (ticketActivo && (!ticketActivo.lineas || ticketActivo.lineas.length === 0)) {
+          const serie = aj.serie || 'T-';
+          const matchNum = ticketActivo.numero ? ticketActivo.numero.match(/\d+$/) : null;
+          const digitos = matchNum ? matchNum[0] : '001';
+          ticketActivo.numero = '#' + (serie.endsWith('-') ? serie : serie + '-') + digitos;
+          const elTicketNum = document.getElementById('ticket-numero');
+          if (elTicketNum) elTicketNum.textContent = ticketActivo.numero;
+        }
+
+        // Actualizar también en el ticket térmico físico directamente
+        reflejarAjustesEnTicketPapel(aj);
       } catch (e) {}
+    }
+
+    /* Reflejo fiel e inmediato de ajustes en las etiquetas del ticket físico */
+    function reflejarAjustesEnTicketPapel(ajustes = null) {
+      const aj = ajustes || obtenerAjustesGuardados();
+      const setTxt = (id, txt) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = (txt !== undefined && txt !== null) ? txt : '';
+      };
+
+      setTxt('tpk-nombre-negocio', aj.nombreComercial || 'LA PIRULETA');
+      setTxt('tpk-razon-social', aj.razonSocial || '');
+      setTxt('tpk-cif', aj.cif ? (aj.cif.toUpperCase().includes('CIF') || aj.cif.toUpperCase().includes('NIF') ? aj.cif : 'CIF: ' + aj.cif) : 'CIF: -');
+      setTxt('tpk-direccion', aj.direccion || '');
+      setTxt('tpk-telefono', aj.telefono ? (aj.telefono.startsWith('Tel') ? aj.telefono : 'Tel: ' + aj.telefono) : '');
+      setTxt('tpk-encabezado', aj.encabezado || '');
+      setTxt('tpk-pie', aj.pie || '');
+
+      const bloqueIva = document.getElementById('tpk-bloque-iva');
+      if (bloqueIva) {
+        bloqueIva.style.display = aj.mostrarIva !== false ? 'block' : 'none';
+      }
+
+      // Actualizar número si el ticket activo usa la serie
+      const tpkTicketNum = document.getElementById('tpk-ticket-num');
+      if (tpkTicketNum && ticketActivo && ticketActivo.numero) {
+        tpkTicketNum.textContent = ticketActivo.numero;
+      }
+    }
+
+    /* REACTIVIDAD EN TIEMPO REAL AL ESCRIBIR EN EL MODAL DE AJUSTES */
+    function actualizarTicketEnTiempoReal() {
+      try {
+        const leer = (id, def = '') => {
+          const el = document.getElementById(id);
+          return el ? el.value : def;
+        };
+
+        const chk = document.getElementById('cfg-mostrar-iva');
+        const ajustesEnEdicion = {
+          nombreComercial: leer('cfg-nombre-comercial', 'LA PIRULETA'),
+          razonSocial: leer('cfg-razon-social'),
+          cif: leer('cfg-cif-nif'),
+          direccion: leer('cfg-direccion'),
+          telefono: leer('cfg-telefono'),
+          encabezado: leer('cfg-ticket-encabezado'),
+          pie: leer('cfg-ticket-pie'),
+          serie: leer('cfg-ticket-serie', 'T-'),
+          mostrarIva: chk ? chk.checked : true
+        };
+
+        reflejarAjustesEnTicketPapel(ajustesEnEdicion);
+
+        const elHeader = document.getElementById('header-nombre-negocio');
+        if (elHeader && ajustesEnEdicion.nombreComercial.trim()) {
+          elHeader.textContent = ajustesEnEdicion.nombreComercial;
+        }
+      } catch (err) {
+        console.error('Error actualizando ticket en tiempo real:', err);
+      }
     }
 
     /* =====================================================================
@@ -624,22 +712,15 @@
       modal.style.display = 'flex';
       modal.classList.remove('hidden');
 
-      // 2. Cargar datos del ticket con protección ante nulos
+      // 2. Cargar datos del ticket con protección ante nulos y reflejar ajustes fiscales fieles
       try {
         const aj = obtenerAjustesGuardados();
+        reflejarAjustesEnTicketPapel(aj);
         
         const setTxt = (id, txt) => {
           const el = document.getElementById(id);
           if (el) el.textContent = txt || '';
         };
-
-        setTxt('tpk-nombre-negocio', aj.nombreComercial || 'LA PIRULETA');
-        setTxt('tpk-razon-social', aj.razonSocial || 'Cafetería & Panadería S.L.');
-        setTxt('tpk-cif', 'CIF / NIF: ' + (aj.cif || 'B-12345678'));
-        setTxt('tpk-direccion', aj.direccion || 'C/ Mayor 24, 28013 Madrid');
-        setTxt('tpk-telefono', 'Tel: ' + (aj.telefono || '910 00 00 00'));
-        setTxt('tpk-encabezado', aj.encabezado || '¡Bienvenidos a La Piruleta!');
-        setTxt('tpk-pie', aj.pie || '¡Gracias por su visita!');
 
         // Determinar qué ticket visualizar: PRIORIDAD ABSOLUTA AL TICKET ACTUALMENTE ABIERTO EN LA VENTA
         let ticket = ticketPersonalizado;
@@ -672,8 +753,8 @@
         // Desglose fiscal de IVA
         const base = Math.round((totalNum / 1.10) * 100) / 100;
         const cuota = Math.round((totalNum - base) * 100) / 100;
-        setTxt('tpk-base-imp', base.toFixed(2) + ' €');
-        setTxt('tpk-cuota-iva', cuota.toFixed(2) + ' €');
+        setTxt('tpk-base-imp', base.toFixed(2).replace('.', ',') + ' €');
+        setTxt('tpk-cuota-iva', cuota.toFixed(2).replace('.', ',') + ' €');
 
         const bloqueIva = document.getElementById('tpk-bloque-iva');
         if (bloqueIva) {
@@ -689,7 +770,7 @@
               return `
                 <div class="flex justify-between items-baseline gap-1">
                   <span class="truncate">${cant}x ${l.nombre}</span>
-                  <span class="shrink-0 font-bold">${parseFloat(l.total).toFixed(2)} €</span>
+                  <span class="shrink-0 font-bold">${parseFloat(l.total).toFixed(2).replace('.', ',')} €</span>
                 </div>
               `;
             }).join('');
@@ -735,6 +816,7 @@
     window.cerrarModalTicketTermico = cerrarModalTicketTermico;
     window.cambiarAnchoPapel = cambiarAnchoPapel;
     window.imprimirTicketFisico = imprimirTicketFisico;
+    window.actualizarTicketEnTiempoReal = actualizarTicketEnTiempoReal;
 
     /* =====================================================================
        CONTROL MODAL AJUSTES GENERALES
@@ -786,6 +868,7 @@
 
         const nombre = leer('cfg-nombre-comercial', 'LA PIRULETA') || 'LA PIRULETA';
         const chk = document.getElementById('cfg-mostrar-iva');
+        const serieLimpia = leer('cfg-ticket-serie', 'T-') || 'T-';
 
         const nuevosAjustes = {
           nombreComercial: nombre,
@@ -795,12 +878,22 @@
           telefono: leer('cfg-telefono'),
           encabezado: leer('cfg-ticket-encabezado'),
           pie: leer('cfg-ticket-pie'),
-          serie: leer('cfg-ticket-serie', 'T-') || 'T-',
+          serie: serieLimpia,
           mostrarIva: chk ? chk.checked : true
         };
 
         localStorage.setItem('lapiruleta_ajustes_generales', JSON.stringify(nuevosAjustes));
+        
+        // Actualizar ticket activo actual con la nueva serie si no tiene líneas aún
+        if (ticketActivo && (!ticketActivo.lineas || ticketActivo.lineas.length === 0)) {
+          const matchNum = ticketActivo.numero ? ticketActivo.numero.match(/\d+$/) : null;
+          const digitos = matchNum ? matchNum[0] : '001';
+          const pref = serieLimpia.endsWith('-') ? serieLimpia : (serieLimpia + '-');
+          ticketActivo.numero = '#' + pref + digitos;
+        }
+
         aplicarAjustesEnInterfaz();
+        reflejarAjustesEnTicketPapel(nuevosAjustes);
         cerrarModalAjustesGenerales();
 
         mostrarNotificacion('¡Ajustes del negocio y ticket guardados con éxito!');
@@ -1133,9 +1226,10 @@
 
       const aj = obtenerAjustesGuardados();
       const serie = aj.serie || 'T-';
+      const pref = serie.endsWith('-') ? serie : (serie + '-');
       ticketActivo = {
         id: null,
-        numero: '#' + serie + String(Math.floor(Math.random() * 800) + 100),
+        numero: '#' + pref + String(Math.floor(Math.random() * 800) + 100),
         mesa: 'BARRA',
         lineas: []
       };
@@ -1166,10 +1260,11 @@
 
       const aj = obtenerAjustesGuardados();
       const serie = aj.serie || 'T-';
+      const pref = serie.endsWith('-') ? serie : (serie + '-');
 
       const ticketAPaparcar = {
         id: ticketActivo.id || ('t_' + Date.now()),
-        numero: ticketActivo.numero || ('#' + serie + String(pendientes.length + 1).padStart(3, '0')),
+        numero: ticketActivo.numero || ('#' + pref + String(pendientes.length + 1).padStart(3, '0')),
         mesa: ticketActivo.mesa || 'BARRA',
         ubicacion: ticketActivo.mesa || 'BARRA',
         hora: horaStr,
