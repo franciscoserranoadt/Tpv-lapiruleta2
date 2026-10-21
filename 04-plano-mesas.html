@@ -15,6 +15,16 @@
     .scrollbar-none::-webkit-scrollbar { display: none; }
     .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
     .pb-safe { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+    .mesa-arrastrable {
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: grab;
+    }
+    .mesa-arrastrable:active {
+      cursor: grabbing;
+      z-index: 30 !important;
+    }
   </style>
 </head>
 <body class="bg-[#fff8f5] text-stone-800 antialiased select-none min-h-screen pb-safe">
@@ -30,7 +40,7 @@
           <h1 class="font-extrabold text-sm tracking-tight leading-tight">Plano de Mesas y Sala</h1>
           <span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium">Terminal Táctil v6.5</span>
         </div>
-        <p id="header-subtitulo" class="text-[11px] text-emerald-100 font-medium">Salón Principal • Toca una mesa para seleccionarla</p>
+        <p id="header-subtitulo" class="text-[11px] text-emerald-100 font-medium">Arrastra las mesas para colocarlas a tu gusto • Toca para abrir/asignar</p>
       </div>
     </div>
     <div class="flex items-center gap-2">
@@ -38,7 +48,7 @@
         ASIGNANDO PEDIDO
       </span>
       <span id="badge-modo-normal" class="px-2.5 py-1 bg-emerald-800 text-emerald-100 text-xs font-extrabold rounded-xl shadow-xs">
-        MODO SALA
+        MODO SALA INTERACTIVO
       </span>
     </div>
   </header>
@@ -57,7 +67,7 @@
   <!-- CONTENEDOR PRINCIPAL -->
   <main class="p-3 sm:p-4 max-w-5xl mx-auto space-y-4">
     
-    <!-- Selector Zonas -->
+    <!-- Selector Zonas y botón reset distribución -->
     <div class="flex items-center justify-between gap-2">
       <div class="flex gap-2">
         <button type="button" class="px-4 py-1.5 bg-[#1b7a4a] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
@@ -67,59 +77,67 @@
           Terraza (4)
         </button>
       </div>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="restablecerPosiciones()" class="text-xs text-stone-500 hover:text-stone-800 font-semibold px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 transition-colors flex items-center gap-1" title="Restablecer posiciones originales">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Reubicar por defecto</span>
+        </button>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
       
-      <!-- BLUEPRINT DE SALA INTERACTIVO -->
-      <div class="lg:col-span-8 bg-white border-2 border-dashed border-stone-200 rounded-3xl p-4 min-h-[390px] relative overflow-hidden shadow-inner">
-        <div class="absolute top-2.5 left-4 text-[10px] font-bold tracking-wider text-stone-400 uppercase flex items-center gap-1.5">
+      <!-- BLUEPRINT DE SALA INTERACTIVO CON DRAG & DROP -->
+      <div id="plano-contenedor" class="lg:col-span-8 bg-white border-2 border-dashed border-stone-200 rounded-3xl p-4 min-h-[460px] h-[500px] relative overflow-hidden shadow-inner select-none">
+        <div class="absolute top-2.5 left-4 text-[10px] font-bold tracking-wider text-stone-400 uppercase flex items-center gap-1.5 pointer-events-none">
           <span>🚪 Entrada Principal • Ventanal</span>
+          <span class="text-stone-300">•</span>
+          <span class="text-emerald-700/80 font-bold lowercase">✋ Arrastra cualquier mesa para moverla</span>
         </div>
 
-        <!-- Barra de Servicio -->
-        <button type="button" onclick="interactuarMesa('Barra Café')" id="mesa-barra" class="cursor-pointer absolute top-10 left-3 w-20 h-32 bg-stone-50 hover:bg-emerald-50/50 border-2 border-stone-300 hover:border-[#1b7a4a] rounded-2xl flex flex-col items-center justify-center text-center p-1 shadow-2xs active:scale-95 transition-all">
-          <i data-lucide="coffee" class="w-5 h-5 text-stone-500 mb-1"></i>
-          <span class="text-[10px] font-bold text-stone-700 leading-tight">Barra Café</span>
-          <span class="text-[9px] text-emerald-700 font-bold mt-1" id="estado-barra">Libre</span>
-        </button>
+        <!-- Barra de Servicio (Mesa / Puesto) -->
+        <div id="mesa-barra" data-mesa="Barra Café" class="mesa-arrastrable absolute w-20 h-32 bg-stone-50 hover:bg-emerald-50/50 border-2 border-stone-300 hover:border-[#1b7a4a] rounded-2xl flex flex-col items-center justify-center text-center p-1 shadow-2xs active:scale-95 transition-shadow">
+          <i data-lucide="coffee" class="w-5 h-5 text-stone-500 mb-1 pointer-events-none"></i>
+          <span class="text-[10px] font-bold text-stone-700 leading-tight pointer-events-none">Barra Café</span>
+          <span class="text-[9px] text-emerald-700 font-bold mt-1 pointer-events-none" id="estado-barra">Libre</span>
+        </div>
 
         <!-- Mesa 1 -->
-        <button type="button" onclick="interactuarMesa('M1')" id="mesa-M1" class="cursor-pointer absolute top-12 left-28 w-20 h-20 rounded-2xl bg-emerald-50/60 border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:scale-105 active:scale-95 transition-transform">
-          <span class="font-extrabold text-sm text-stone-900">M1</span>
-          <span class="text-[10px] font-bold text-emerald-700" id="estado-M1">Libre</span>
-          <span class="text-[9px] text-stone-400">2 pax</span>
-        </button>
+        <div id="mesa-M1" data-mesa="M1" class="mesa-arrastrable absolute w-20 h-20 rounded-2xl bg-emerald-50/70 border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs active:scale-95 transition-shadow">
+          <span class="font-extrabold text-sm text-stone-900 pointer-events-none">M1</span>
+          <span class="text-[10px] font-bold text-emerald-700 pointer-events-none" id="estado-M1">Libre</span>
+          <span class="text-[9px] text-stone-400 pointer-events-none">2 pax</span>
+        </div>
 
         <!-- Mesa 2 -->
-        <button type="button" onclick="interactuarMesa('M2')" id="mesa-M2" class="cursor-pointer absolute top-12 right-6 w-20 h-20 rounded-2xl bg-emerald-50/60 border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:scale-105 active:scale-95 transition-transform">
-          <span class="font-extrabold text-sm text-stone-900">M2</span>
-          <span class="text-[10px] font-bold text-emerald-700" id="estado-M2">Libre</span>
-          <span class="text-[9px] text-stone-400">4 pax</span>
-        </button>
+        <div id="mesa-M2" data-mesa="M2" class="mesa-arrastrable absolute w-20 h-20 rounded-2xl bg-emerald-50/70 border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs active:scale-95 transition-shadow">
+          <span class="font-extrabold text-sm text-stone-900 pointer-events-none">M2</span>
+          <span class="text-[10px] font-bold text-emerald-700 pointer-events-none" id="estado-M2">Libre</span>
+          <span class="text-[9px] text-stone-400 pointer-events-none">4 pax</span>
+        </div>
 
         <!-- Mesa 3 -->
-        <button type="button" onclick="interactuarMesa('M3')" id="mesa-M3" class="cursor-pointer absolute top-40 left-28 w-24 h-24 rounded-full bg-white border-2 border-[#1b7a4a] ring-4 ring-[#1b7a4a]/20 flex flex-col items-center justify-center p-1 text-center shadow-md hover:scale-105 active:scale-95 transition-transform">
-          <span class="font-extrabold text-base text-[#1b7a4a]">M3</span>
-          <span class="text-[10px] font-bold text-stone-600" id="estado-M3">Libre</span>
-          <span class="text-[9px] text-stone-400">4 pax</span>
-        </button>
+        <div id="mesa-M3" data-mesa="M3" class="mesa-arrastrable absolute w-24 h-24 rounded-full bg-white border-2 border-[#1b7a4a] ring-4 ring-[#1b7a4a]/20 flex flex-col items-center justify-center p-1 text-center shadow-md active:scale-95 transition-shadow">
+          <span class="font-extrabold text-base text-[#1b7a4a] pointer-events-none">M3</span>
+          <span class="text-[10px] font-bold text-stone-600 pointer-events-none" id="estado-M3">Libre</span>
+          <span class="text-[9px] text-stone-400 pointer-events-none">4 pax</span>
+        </div>
 
         <!-- Mesa 4 -->
-        <button type="button" onclick="interactuarMesa('M4')" id="mesa-M4" class="cursor-pointer absolute top-40 right-6 w-20 h-20 rounded-2xl bg-emerald-50/60 border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs hover:scale-105 active:scale-95 transition-transform">
-          <span class="font-extrabold text-sm text-stone-900">M4</span>
-          <span class="text-[10px] font-bold text-emerald-700" id="estado-M4">Libre</span>
-          <span class="text-[9px] text-stone-400">4 pax</span>
-        </button>
+        <div id="mesa-M4" data-mesa="M4" class="mesa-arrastrable absolute w-20 h-20 rounded-2xl bg-emerald-50/70 border-2 border-emerald-400 flex flex-col items-center justify-center p-1 text-center shadow-xs active:scale-95 transition-shadow">
+          <span class="font-extrabold text-sm text-stone-900 pointer-events-none">M4</span>
+          <span class="text-[10px] font-bold text-emerald-700 pointer-events-none" id="estado-M4">Libre</span>
+          <span class="text-[9px] text-stone-400 pointer-events-none">4 pax</span>
+        </div>
 
         <!-- Mesa 6 (Familiar Grande) -->
-        <button type="button" onclick="interactuarMesa('M6')" id="mesa-M6" class="cursor-pointer absolute bottom-4 left-1/2 -translate-x-1/2 w-48 h-16 rounded-2xl bg-stone-50 border-2 border-stone-300 flex items-center justify-between px-4 hover:border-[#1b7a4a] hover:scale-102 active:scale-95 transition-all shadow-xs">
-          <div class="text-left">
+        <div id="mesa-M6" data-mesa="M6" class="mesa-arrastrable absolute w-48 h-16 rounded-2xl bg-stone-50 border-2 border-stone-300 flex items-center justify-between px-4 hover:border-[#1b7a4a] active:scale-95 transition-all shadow-xs">
+          <div class="text-left pointer-events-none">
             <span class="font-extrabold text-sm text-stone-800">M6 • Mesa Grande</span>
             <span class="block text-[10px] text-stone-400">Capacidad: 6-8 personas</span>
           </div>
-          <span class="px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-bold" id="estado-M6">Libre</span>
-        </button>
+          <span class="px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 text-xs font-bold pointer-events-none" id="estado-M6">Libre</span>
+        </div>
       </div>
 
       <!-- PANEL LATERAL DE PROPIEDADES -->
@@ -152,7 +170,7 @@
           </div>
           <button type="button" onclick="abrirVentaEnMesa()" id="btn-accion-mesa" class="w-full py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5">
             <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-[#1b7a4a]"></i>
-            <span>Abrir comanda en esta mesa</span>
+            <span>Abrir comanda en M3</span>
           </button>
         </div>
 
@@ -160,6 +178,10 @@
           <i data-lucide="check" class="w-4 h-4"></i>
           <span>GUARDAR DISTRIBUCIÓN</span>
         </button>
+
+        <p class="text-[11px] text-stone-400 text-center leading-tight">
+          Las posiciones se guardan automáticamente al moverlas y al pulsar Guardar.
+        </p>
       </div>
 
     </div>
@@ -212,6 +234,16 @@
     let comensalesActuales = 4;
     let pedidoParaAsignar = null;
 
+    // POSICIONES POR DEFECTO (en porcentajes relativos o píxeles)
+    const POSICIONES_DEFAULT = {
+      'mesa-barra': { x: 12, y: 40 },
+      'mesa-M1': { x: 112, y: 48 },
+      'mesa-M2': { x: 340, y: 48 },
+      'mesa-M3': { x: 112, y: 160 },
+      'mesa-M4': { x: 340, y: 160 },
+      'mesa-M6': { x: 160, y: 360 }
+    };
+
     function cargarTicketsPendientes() {
       try {
         return JSON.parse(localStorage.getItem('lapiruleta_tickets_pendientes') || '[]');
@@ -229,7 +261,7 @@
             document.getElementById('banner-asignar').classList.remove('hidden');
             document.getElementById('badge-modo-asignar').classList.remove('hidden');
             document.getElementById('badge-modo-normal').classList.add('hidden');
-            document.getElementById('header-subtitulo').textContent = `Asignando comanda a mesa • Toca una mesa`;
+            document.getElementById('header-subtitulo').textContent = `Asignando comanda a mesa • Toca la mesa deseada`;
           }
         }
       } catch (e) {
@@ -248,10 +280,10 @@
         if (estadoSpan) {
           if (ticketEnMesa) {
             estadoSpan.textContent = ticketEnMesa.total + ' €';
-            estadoSpan.className = 'text-[10px] font-bold text-amber-700';
+            estadoSpan.className = 'text-[10px] font-bold text-amber-700 pointer-events-none';
           } else {
             estadoSpan.textContent = 'Libre';
-            estadoSpan.className = 'text-[10px] font-bold text-emerald-700';
+            estadoSpan.className = 'text-[10px] font-bold text-emerald-700 pointer-events-none';
           }
         }
       });
@@ -291,7 +323,6 @@
       lucide.createIcons();
     }
 
-    // FUNCIÓN CLAVE DE ASIGNACIÓN: GUARDA mesa Y ubicacion EXACTAS
     function asignarPedidoAMesa(mesaId) {
       let tickets = cargarTicketsPendientes();
       const ahora = new Date();
@@ -300,8 +331,8 @@
       const nuevoTicket = {
         id: pedidoParaAsignar.ticketId || ('t_' + Date.now()),
         numero: pedidoParaAsignar.numero || ('#T-' + String(tickets.length + 1).padStart(3, '0')),
-        mesa: mesaId,          // Guardamos explícitamente el nombre de la mesa
-        ubicacion: mesaId,     // Sincronizado para retrocompatibilidad
+        mesa: mesaId,
+        ubicacion: mesaId,
         hora: horaStr,
         timestamp: Date.now(),
         lineas: pedidoParaAsignar.lineas,
@@ -318,7 +349,6 @@
       localStorage.setItem('lapiruleta_tickets_pendientes', JSON.stringify(tickets));
       localStorage.removeItem('lapiruleta_asignar_mesa');
 
-      // Redirigir a tickets abiertos para ver la comanda con su mesa
       window.location.href = '03-tickets-mesas.html';
     }
 
@@ -346,7 +376,7 @@
       document.getElementById('banner-asignar').classList.add('hidden');
       document.getElementById('badge-modo-asignar').classList.add('hidden');
       document.getElementById('badge-modo-normal').classList.remove('hidden');
-      document.getElementById('header-subtitulo').textContent = 'Salón Principal • Toca una mesa para seleccionarla';
+      document.getElementById('header-subtitulo').textContent = 'Arrastra las mesas para colocarlas a tu gusto • Toca para abrir/asignar';
     }
 
     function cambiarComensales(delta) {
@@ -355,12 +385,159 @@
     }
 
     function guardarDistribucion() {
-      alert(`Distribución guardada para ${mesaSeleccionada} (${comensalesActuales} comensales).`);
-      window.location.href = 'index.html';
+      guardarTodasLasPosiciones();
+      const notif = document.createElement('div');
+      notif.className = 'fixed top-4 right-4 z-50 bg-[#1b7a4a] text-white px-4 py-2.5 rounded-xl shadow-lg text-xs font-bold flex items-center gap-2';
+      notif.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i><span>¡Distribución de sala guardada con éxito!</span>';
+      document.body.appendChild(notif);
+      lucide.createIcons();
+      setTimeout(() => notif.remove(), 2500);
     }
+
+    /* =====================================================================
+       SISTEMA DE ARRASTRE Y COLOCACIÓN LIBRE (TOUCH + MOUSE DRAG & DROP)
+       ===================================================================== */
+    const contenedor = document.getElementById('plano-contenedor');
+    const elementosMesas = document.querySelectorAll('.mesa-arrastrable');
+
+    function obtenerPosicionesGuardadas() {
+      try {
+        return JSON.parse(localStorage.getItem('lapiruleta_posiciones_mesas') || 'null');
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function guardarTodasLasPosiciones() {
+      const posiciones = {};
+      elementosMesas.forEach(el => {
+        posiciones[el.id] = {
+          x: parseFloat(el.style.left) || 0,
+          y: parseFloat(el.style.top) || 0
+        };
+      });
+      localStorage.setItem('lapiruleta_posiciones_mesas', JSON.stringify(posiciones));
+    }
+
+    function aplicarPosiciones() {
+      const guardadas = obtenerPosicionesGuardadas();
+      const contRect = contenedor.getBoundingClientRect();
+
+      elementosMesas.forEach(el => {
+        let pos = (guardadas && guardadas[el.id]) ? guardadas[el.id] : POSICIONES_DEFAULT[el.id];
+
+        if (!pos) {
+          pos = { x: 20, y: 20 };
+        }
+
+        // Si es la primera vez y estamos en pantalla ancha, adaptar M2 y M4 hacia la derecha si no se habían personalizado
+        if (!guardadas && (el.id === 'mesa-M2' || el.id === 'mesa-M4')) {
+          pos.x = Math.max(260, contRect.width - 100);
+        } else if (!guardadas && el.id === 'mesa-M6') {
+          pos.x = Math.max(20, (contRect.width / 2) - 96);
+        }
+
+        // Restringir dentro de los límites del contenedor
+        const maxW = Math.max(10, contRect.width - el.offsetWidth);
+        const maxH = Math.max(10, contRect.height - el.offsetHeight);
+        const finalX = Math.min(Math.max(4, pos.x), maxW);
+        const finalY = Math.min(Math.max(4, pos.y), maxH);
+
+        el.style.left = finalX + 'px';
+        el.style.top = finalY + 'px';
+      });
+    }
+
+    function restablecerPosiciones() {
+      if (!confirm('¿Restablecer la posición de todas las mesas al orden original?')) return;
+      localStorage.removeItem('lapiruleta_posiciones_mesas');
+      aplicarPosiciones();
+    }
+
+    // Configuración de listeners táctiles y ratón (Pointer Events API)
+    elementosMesas.forEach(el => {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let initialLeft = 0;
+      let initialTop = 0;
+      let hasMovedSignificantly = false;
+
+      el.addEventListener('pointerdown', (e) => {
+        // Ignorar clics con botón secundario
+        if (e.button !== undefined && e.button !== 0) return;
+
+        isDragging = true;
+        hasMovedSignificantly = false;
+        el.setPointerCapture(e.pointerId);
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        initialLeft = parseFloat(el.style.left) || el.offsetLeft;
+        initialTop = parseFloat(el.style.top) || el.offsetTop;
+
+        el.style.transition = 'none';
+        el.style.zIndex = '35';
+      });
+
+      el.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+          hasMovedSignificantly = true;
+        }
+
+        const contRect = contenedor.getBoundingClientRect();
+        const maxX = contRect.width - el.offsetWidth - 4;
+        const maxY = contRect.height - el.offsetHeight - 4;
+
+        let newX = initialLeft + dx;
+        let newY = initialTop + dy;
+
+        // Limitar dentro del recuadro
+        newX = Math.max(4, Math.min(newX, maxX));
+        newY = Math.max(4, Math.min(newY, maxY));
+
+        el.style.left = newX + 'px';
+        el.style.top = newY + 'px';
+      });
+
+      const finalizarArrastre = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+
+        el.style.zIndex = '';
+        el.style.transition = '';
+
+        if (hasMovedSignificantly) {
+          // Ha sido un arrastre: guardar la nueva posición
+          guardarTodasLasPosiciones();
+        } else {
+          // Ha sido un toque / clic: interactuar con la mesa
+          const mesaNombre = el.getAttribute('data-mesa');
+          if (mesaNombre) {
+            interactuarMesa(mesaNombre);
+          }
+        }
+      };
+
+      el.addEventListener('pointerup', finalizarArrastre);
+      el.addEventListener('pointercancel', finalizarArrastre);
+    });
+
+    window.addEventListener('resize', () => {
+      // Reajustar límites al cambiar orientación o tamaño
+      aplicarPosiciones();
+    });
 
     comprobarModoAsignacion();
     refrescarEstadosMesas();
+    aplicarPosiciones();
     interactuarMesa('M3');
     lucide.createIcons();
   </script>
