@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="es">
-<head>
+<html lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
 <title>TPV Ventas - La Piruleta</title>
@@ -9,7 +8,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
     body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -40,7 +39,7 @@
 </div>
 <!-- Accesos rápidos cabecera -->
 <div class="flex items-center gap-1.5 sm:gap-2">
-<button class="flex items-center gap-1 px-2.5 py-1 bg-emerald-800/80 hover:bg-emerald-800 rounded-xl text-xs font-bold transition-colors" onclick="asignarAMesa()" type="button">
+<button class="flex items-center gap-1 px-2.5 py-1 bg-emerald-800/80 hover:bg-emerald-800 rounded-xl text-xs font-bold transition-colors cursor-pointer" onclick="asignarAMesa()" type="button">
 <i class="w-3.5 h-3.5" data-lucide="layout-grid"></i>
 <span>Mesas</span>
 </button>
@@ -49,7 +48,7 @@
 <span>Pendientes</span>
 <span class="bg-white text-amber-700 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-extrabold ml-0.5" id="badge-contador-pendientes">0</span>
 </a>
-<button class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-100 transition-colors cursor-pointer" onclick="abrirModalAjustesGenerales()" title="Ajustes Generales del Negocio" type="button"><i class="w-3.5 h-3.5" data-lucide="sliders-horizontal"></i></button><a class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-200" href="13-config-impresoras.html" title="Ajustes de Impresoras">
+<button class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-100 transition-colors cursor-pointer" id="btn-ajustes-generales" onclick="abrirModalAjustesGenerales()" title="Ajustes Generales del Negocio" type="button"><i class="w-3.5 h-3.5" data-lucide="sliders-horizontal"></i></button><a class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-200" href="13-config-impresoras.html" title="Ajustes de Impresoras">
 <i class="w-3.5 h-3.5" data-lucide="settings"></i>
 </a>
 </div>
@@ -68,7 +67,7 @@
 </div>
 <span class="text-[10px] text-stone-400 font-medium">Cliente General</span>
 </div>
-<button class="px-2 py-0.5 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg flex items-center gap-1 transition-colors" onclick="limpiarTicket()" type="button">
+<button class="px-2 py-0.5 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-lg flex items-center gap-1 transition-colors cursor-pointer" onclick="limpiarTicket()" type="button">
 <i class="w-3.5 h-3.5" data-lucide="trash-2"></i>
 <span>Limpiar</span>
 </button>
@@ -95,44 +94,44 @@
 </div>
 </div>
 <!-- INDICADOR VISUAL DE MULTIPLICADOR DE CANTIDAD ACTIVO -->
-<div class="hidden px-3 py-1.5 bg-amber-50 border-t border-amber-200 flex items-center justify-between text-xs text-amber-900 font-bold shrink-0 animate-pulse" id="banner-multiplicador"><div class="flex items-center gap-1.5"><i class="w-4 h-4 text-amber-600" data-lucide="scale"></i><span>Peso / Cantidad: <strong class="text-base text-amber-700 bg-amber-200/80 px-2 py-0.5 rounded-md ml-1" id="valor-multiplicador">1</strong></span></div><button class="text-xs text-amber-700 hover:text-amber-900 underline font-semibold" onclick="cancelarMultiplicador()" type="button">Cancelar (C)</button></div>
+<div class="hidden px-3 py-1.5 bg-amber-50 border-t border-amber-200 flex items-center justify-between text-xs text-amber-900 font-bold shrink-0 animate-pulse" id="banner-multiplicador"><div class="flex items-center gap-1.5"><i class="w-4 h-4 text-amber-600" data-lucide="scale"></i><span>Peso / Cantidad: <strong class="text-base text-amber-700 bg-amber-200/80 px-2 py-0.5 rounded-md ml-1" id="valor-multiplicador">1</strong></span></div><button class="text-xs text-amber-700 hover:text-amber-900 underline font-semibold cursor-pointer" onclick="cancelarMultiplicador()" type="button">Cancelar (C)</button></div>
 <!-- TECLADO NUMÉRICO TÁCTIL Y ACCIONES -->
 <div class="p-2 bg-white border-t border-stone-200 grid grid-cols-4 gap-1.5 shrink-0">
 <div class="col-span-3 grid grid-cols-3 gap-1.5">
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('7')" type="button">7</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('8')" type="button">8</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('9')" type="button">9</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('4')" type="button">4</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('5')" type="button">5</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('6')" type="button">6</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('1')" type="button">1</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('2')" type="button">2</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('3')" type="button">3</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('0')" type="button">0</button>
-<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform" onclick="pulsarTeclado(',')" type="button">,</button>
-<button class="h-9 sm:h-10 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 font-extrabold text-base active:scale-95 transition-transform" onclick="pulsarTeclado('C')" type="button">C</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('7')" type="button">7</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('8')" type="button">8</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('9')" type="button">9</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('4')" type="button">4</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('5')" type="button">5</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('6')" type="button">6</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('1')" type="button">1</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('2')" type="button">2</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('3')" type="button">3</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('0')" type="button">0</button>
+<button class="h-9 sm:h-10 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-800 font-bold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado(',')" type="button">,</button>
+<button class="h-9 sm:h-10 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 font-extrabold text-base active:scale-95 transition-transform cursor-pointer" onclick="pulsarTeclado('C')" type="button">C</button>
 </div>
 <div class="col-span-1 flex flex-col gap-1.5">
-<button class="flex-1 rounded-xl bg-[#e07a5f]/20 hover:bg-[#e07a5f]/30 border border-[#e07a5f]/40 text-[#c85a3d] font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors" onclick="dejarPendiente()" type="button">
+<button class="flex-1 rounded-xl bg-[#e07a5f]/20 hover:bg-[#e07a5f]/30 border border-[#e07a5f]/40 text-[#c85a3d] font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors cursor-pointer" onclick="dejarPendiente()" type="button">
 <i class="w-3.5 h-3.5 mb-0.5" data-lucide="clock"></i>
 <span>Dejar<br/>Pendiente</span>
 </button>
-<button class="flex-1 rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors" onclick="asignarAMesa()" type="button">
+<button class="flex-1 rounded-xl bg-stone-100 hover:bg-stone-200 border border-stone-200 text-stone-700 font-bold text-[11px] flex flex-col items-center justify-center p-1 text-center transition-colors cursor-pointer" onclick="asignarAMesa()" type="button">
 <i class="w-3.5 h-3.5 mb-0.5" data-lucide="utensils"></i>
 <span>Asignar<br/>a Mesa</span>
 </button>
 </div>
 <!-- 3 BOTONES DE COBRO DIRECTO RESTAURADOS -->
 <div class="col-span-4 grid grid-cols-3 gap-1.5 pt-1">
-<button class="h-10 sm:h-11 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform" onclick="procesarCobro('Efectivo')" type="button">
+<button class="h-10 sm:h-11 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform cursor-pointer" onclick="procesarCobro('Efectivo')" type="button">
 <i class="w-4 h-4" data-lucide="banknote"></i>
 <span>EFECTIVO</span>
 </button>
-<button class="h-10 sm:h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform" onclick="procesarCobro('Tarjeta')" type="button">
+<button class="h-10 sm:h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform cursor-pointer" onclick="procesarCobro('Tarjeta')" type="button">
 <i class="w-4 h-4" data-lucide="credit-card"></i>
 <span>TARJETA</span>
 </button>
-<button class="h-10 sm:h-11 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform" onclick="procesarCobro('Bizum')" type="button">
+<button class="h-10 sm:h-11 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow active:scale-95 transition-transform cursor-pointer" onclick="procesarCobro('Bizum')" type="button">
 <i class="w-4 h-4" data-lucide="smartphone"></i>
 <span>BIZUM</span>
 </button>
@@ -145,7 +144,7 @@
 <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5" id="pills-categorias">
 </div>
 <div class="flex items-center gap-1.5 shrink-0 pl-2 border-l border-stone-200">
-<button class="px-2.5 py-1 rounded-xl bg-emerald-50 text-[#1b7a4a] border border-emerald-300 font-bold text-xs flex items-center gap-1.5 hover:bg-emerald-100 transition-colors whitespace-nowrap shadow-sm" onclick="abrirModalNuevaCategoria()" type="button">
+<button class="px-2.5 py-1 rounded-xl bg-emerald-50 text-[#1b7a4a] border border-emerald-300 font-bold text-xs flex items-center gap-1.5 hover:bg-emerald-100 transition-colors whitespace-nowrap shadow-sm cursor-pointer" onclick="abrirModalNuevaCategoria()" type="button">
 <i class="w-3.5 h-3.5" data-lucide="folder-plus"></i>
 <span>+ Categoría</span>
 </button>
@@ -218,7 +217,7 @@
 <p class="text-[11px] text-stone-500">Organiza tus productos por departamentos</p>
 </div>
 </div>
-<button class="p-1 rounded-lg bg-stone-100 text-stone-400 hover:text-stone-600" onclick="cerrarModalNuevaCategoria()" type="button">
+<button class="p-1 rounded-lg bg-stone-100 text-stone-400 hover:text-stone-600 cursor-pointer" onclick="cerrarModalNuevaCategoria()" type="button">
 <i class="w-4 h-4" data-lucide="x"></i>
 </button>
 </div>
@@ -254,16 +253,87 @@
 </div>
 <div class="p-2.5 bg-stone-50 rounded-xl border border-stone-200 flex items-center justify-between">
 <span class="text-xs font-medium text-stone-700">Mostrar en barra rápida del TPV</span>
-<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded" id="cat-mostrar" type="checkbox"/>
+<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded cursor-pointer" id="cat-mostrar" type="checkbox"/>
 </div>
 </div>
 <div class="pt-2 flex gap-2">
-<button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200 transition-colors" onclick="cerrarModalNuevaCategoria()" type="button">
+<button class="flex-1 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200 transition-colors cursor-pointer" onclick="cerrarModalNuevaCategoria()" type="button">
           Cancelar
         </button>
-<button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow transition-colors" onclick="guardarCategoria()" type="button">
+<button class="flex-1 py-2.5 rounded-xl bg-[#1b7a4a] text-white font-bold text-xs hover:bg-[#15613b] shadow transition-colors cursor-pointer" onclick="guardarCategoria()" type="button">
           Guardar Categoría
         </button>
+</div>
+</div>
+</div>
+<!-- MODAL: AJUSTES GENERALES DEL NEGOCIO -->
+<div class="hidden fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 transition-all" id="modal-ajustes-generales" style="display: none;">
+<div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-stone-200 flex flex-col max-h-[90vh] overflow-hidden">
+<div class="flex items-center justify-between border-b border-stone-200 px-5 py-3.5 bg-stone-50/80 shrink-0">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-emerald-100 text-[#1b7a4a] flex items-center justify-center">
+<i class="w-4 h-4" data-lucide="sliders-horizontal"></i>
+</div>
+<div>
+<h3 class="font-bold text-sm text-stone-900 leading-tight">Ajustes Generales del Negocio</h3>
+<p class="text-[11px] text-stone-500">Datos fiscales y configuración de tickets</p>
+</div>
+</div>
+<button class="p-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition-colors cursor-pointer" onclick="cerrarModalAjustesGenerales()" type="button">
+<i class="w-4 h-4" data-lucide="x"></i>
+</button>
+</div>
+<div class="p-5 space-y-4 overflow-y-auto flex-1">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Nombre Comercial</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-nombre-comercial" placeholder="La Piruleta TPV" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">CIF / NIF</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-cif-nif" placeholder="B-12345678" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Razón Social</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-razon-social" placeholder="Hostelería La Piruleta S.L." type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Teléfono</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-telefono" placeholder="+34 910 000 000" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Dirección Completa</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-direccion" placeholder="Calle Mayor 12, 28013 Madrid" type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-stone-100">
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Serie de Tickets</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-ticket-serie" placeholder="T-" type="text"/>
+</div>
+<div class="flex items-center justify-between sm:pt-6">
+<span class="text-xs font-semibold text-stone-700">Desglosar IVA en ticket</span>
+<input checked="" class="w-4 h-4 accent-[#1b7a4a] rounded cursor-pointer" id="cfg-mostrar-iva" type="checkbox"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Cabecera de Ticket</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-ticket-encabezado" placeholder="¡Bienvenidos a La Piruleta!" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-stone-700 mb-1">Pie de Ticket</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1b7a4a]" id="cfg-ticket-pie" placeholder="Gracias por su visita. Conserve su ticket." type="text"/>
+</div>
+</div>
+<div class="px-5 py-3.5 bg-stone-50 border-t border-stone-200 flex items-center justify-end gap-2.5 shrink-0">
+<button class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs transition-colors cursor-pointer" onclick="cerrarModalAjustesGenerales()" type="button">
+Cancelar
+</button>
+<button class="px-5 py-2.5 rounded-xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs shadow-sm transition-colors cursor-pointer" onclick="guardarAjustesGenerales()" type="button">
+Guardar Ajustes
+</button>
 </div>
 </div>
 </div>
@@ -291,7 +361,7 @@
 <span class="text-2xl font-black text-[#1b7a4a]" id="modal-cobro-total">0,00 €</span>
 </div>
 </div>
-<button class="w-full py-3.5 rounded-2xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-extrabold text-sm shadow-md active:scale-98 transition-all flex items-center justify-center gap-2" onclick="cerrarModalExitoCobro()" type="button">
+<button class="w-full py-3.5 rounded-2xl bg-[#1b7a4a] hover:bg-[#15613b] text-white font-extrabold text-sm shadow-md active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer" onclick="cerrarModalExitoCobro()" type="button">
 <span>Aceptar y Continuar</span>
 <i class="w-4 h-4" data-lucide="arrow-right"></i>
 </button>
@@ -333,6 +403,105 @@
         return JSON.parse(localStorage.getItem('lapiruleta_ventas') || '[]');
       } catch (e) {
         return [];
+      }
+    }
+
+    function obtenerAjustesGenerales() {
+      try {
+        return JSON.parse(localStorage.getItem('lapiruleta_ajustes') || '{}');
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function cargarAjustesEnFormulario() {
+      const cfg = obtenerAjustesGenerales();
+      const elNombre = document.getElementById('cfg-nombre-comercial');
+      const elCif = document.getElementById('cfg-cif-nif');
+      const elRazon = document.getElementById('cfg-razon-social');
+      const elDir = document.getElementById('cfg-direccion');
+      const elTel = document.getElementById('cfg-telefono');
+      const elHead = document.getElementById('cfg-ticket-encabezado');
+      const elFoot = document.getElementById('cfg-ticket-pie');
+      const elSerie = document.getElementById('cfg-ticket-serie');
+      const elIva = document.getElementById('cfg-mostrar-iva');
+
+      if (elNombre) elNombre.value = cfg.nombreComercial || 'LA PIRULETA';
+      if (elCif) elCif.value = cfg.cifNif || 'B-12345678';
+      if (elRazon) elRazon.value = cfg.razonSocial || 'Hostelería La Piruleta S.L.';
+      if (elDir) elDir.value = cfg.direccion || 'Calle Mayor 12, Madrid';
+      if (elTel) elTel.value = cfg.telefono || '+34 910 000 000';
+      if (elHead) elHead.value = cfg.ticketEncabezado || '¡Bienvenidos a La Piruleta!';
+      if (elFoot) elFoot.value = cfg.ticketPie || 'Gracias por su visita.';
+      if (elSerie) elSerie.value = cfg.ticketSerie || 'T-';
+      if (elIva) elIva.checked = cfg.mostrarIva !== false;
+    }
+
+    window.abrirModalAjustesGenerales = function() {
+      const modal = document.getElementById('modal-ajustes-generales');
+      if (modal) {
+        cargarAjustesEnFormulario();
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+      }
+    };
+
+    window.cerrarModalAjustesGenerales = function() {
+      const modal = document.getElementById('modal-ajustes-generales');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    };
+
+    window.guardarAjustesGenerales = function() {
+      const elNombre = document.getElementById('cfg-nombre-comercial');
+      const elCif = document.getElementById('cfg-cif-nif');
+      const elRazon = document.getElementById('cfg-razon-social');
+      const elDir = document.getElementById('cfg-direccion');
+      const elTel = document.getElementById('cfg-telefono');
+      const elHead = document.getElementById('cfg-ticket-encabezado');
+      const elFoot = document.getElementById('cfg-ticket-pie');
+      const elSerie = document.getElementById('cfg-ticket-serie');
+      const elIva = document.getElementById('cfg-mostrar-iva');
+
+      const ajustes = {
+        nombreComercial: elNombre ? elNombre.value.trim() : 'LA PIRULETA',
+        cifNif: elCif ? elCif.value.trim() : '',
+        razonSocial: elRazon ? elRazon.value.trim() : '',
+        direccion: elDir ? elDir.value.trim() : '',
+        telefono: elTel ? elTel.value.trim() : '',
+        ticketEncabezado: elHead ? elHead.value.trim() : '',
+        ticketPie: elFoot ? elFoot.value.trim() : '',
+        ticketSerie: elSerie ? elSerie.value.trim() : 'T-',
+        mostrarIva: elIva ? elIva.checked : true
+      };
+
+      try {
+        localStorage.setItem('lapiruleta_ajustes', JSON.stringify(ajustes));
+      } catch (e) {
+        console.error('Error guardando ajustes:', e);
+      }
+
+      window.cerrarModalAjustesGenerales();
+    };
+
+    function setupAjustesModalListeners() {
+      const btnHeader = document.getElementById('btn-ajustes-generales');
+      if (btnHeader) {
+        btnHeader.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.abrirModalAjustesGenerales();
+        });
+      }
+
+      const modal = document.getElementById('modal-ajustes-generales');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            window.cerrarModalAjustesGenerales();
+          }
+        });
       }
     }
 
@@ -405,7 +574,7 @@
       const cats = obtenerCategorias();
 
       let html = `
-        <button type="button" onclick="seleccionarCategoria('TODOS')" class="px-3 py-1.5 rounded-xl ${categoriaActiva === 'TODOS' ? 'bg-[#1b7a4a] text-white shadow' : 'bg-stone-100 hover:bg-stone-200 text-stone-700'} text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-colors">
+        <button type="button" onclick="seleccionarCategoria('TODOS')" class="px-3 py-1.5 rounded-xl ${categoriaActiva === 'TODOS' ? 'bg-[#1b7a4a] text-white shadow' : 'bg-stone-100 hover:bg-stone-200 text-stone-700'} text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-colors cursor-pointer">
           <i data-lucide="star" class="w-3.5 h-3.5"></i>
           <span>FAVORITOS / TODOS</span>
         </button>
@@ -414,7 +583,7 @@
       cats.forEach(c => {
         const activa = categoriaActiva === c.nombre;
         html += `
-          <button type="button" onclick="seleccionarCategoria('${c.nombre}')" class="px-3 py-1.5 rounded-xl ${activa ? 'bg-[#1b7a4a] text-white shadow' : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border border-stone-200'} text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-colors">
+          <button type="button" onclick="seleccionarCategoria('${c.nombre}')" class="px-3 py-1.5 rounded-xl ${activa ? 'bg-[#1b7a4a] text-white shadow' : 'bg-stone-50 hover:bg-stone-100 text-stone-700 border border-stone-200'} text-xs font-bold whitespace-nowrap flex items-center gap-1.5 transition-colors cursor-pointer">
             <span class="w-2 h-2 rounded-full" style="background-color: ${c.color}"></span>
             <span>${c.nombre}</span>
           </button>
@@ -471,7 +640,7 @@
       }
 
       grid.innerHTML = prods.map(p => `
-        <button type="button" onclick="agregarAlTicket('${p.id}')" class="bg-stone-50/70 hover:bg-emerald-50/40 border border-stone-200 hover:border-[#1b7a4a] p-2.5 rounded-2xl flex flex-col justify-between text-left active:scale-95 transition-all shadow-sm min-h-[95px] group">
+        <button type="button" onclick="agregarAlTicket('${p.id}')" class="bg-stone-50/70 hover:bg-emerald-50/40 border border-stone-200 hover:border-[#1b7a4a] p-2.5 rounded-2xl flex flex-col justify-between text-left active:scale-95 transition-all shadow-sm min-h-[95px] group cursor-pointer">
           <div class="flex items-start justify-between w-full">
             <div class="w-7 h-7 rounded-xl bg-white border border-stone-200 flex items-center justify-center text-stone-600 group-hover:text-[#1b7a4a] group-hover:border-[#1b7a4a]/40 shadow-xs">
               <i data-lucide="coffee" class="w-3.5 h-3.5"></i>
@@ -494,13 +663,16 @@
       if (!p) return;
 
       let cantidadASumar = 1;
-      if (bufferCantidad && parseInt(bufferCantidad, 10) > 0) {
-        cantidadASumar = parseInt(bufferCantidad, 10);
+      if (bufferCantidad) {
+        const parseada = parseFloat(bufferCantidad.replace(',', '.'));
+        if (!isNaN(parseada) && parseada > 0) {
+          cantidadASumar = parseada;
+        }
       }
 
       const index = lineasComanda.findIndex(item => item.id === prodId);
       if (index >= 0) {
-        lineasComanda[index].cant += cantidadASumar;
+        lineasComanda[index].cant = parseFloat((lineasComanda[index].cant + cantidadASumar).toFixed(3));
       } else {
         lineasComanda.push({
           id: p.id,
@@ -518,7 +690,7 @@
       const index = lineasComanda.findIndex(item => item.id === prodId);
       if (index < 0) return;
 
-      lineasComanda[index].cant += delta;
+      lineasComanda[index].cant = parseFloat((lineasComanda[index].cant + delta).toFixed(3));
       if (lineasComanda[index].cant <= 0) {
         lineasComanda.splice(index, 1);
       }
@@ -566,9 +738,9 @@
           <div class="grid grid-cols-12 px-2 py-1.5 items-center text-xs hover:bg-stone-50 rounded-xl">
             <span class="col-span-6 font-bold text-stone-900 truncate pr-1">${linea.nombre}</span>
             <div class="col-span-2 flex items-center justify-center gap-1 font-bold">
-              <button type="button" onclick="cambiarCantidad('${linea.id}', -1)" class="w-5 h-5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs font-bold">-</button>
-              <span class="w-4 text-center">${linea.cant}</span>
-              <button type="button" onclick="cambiarCantidad('${linea.id}', 1)" class="w-5 h-5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs font-bold">+</button>
+              <button type="button" onclick="cambiarCantidad('${linea.id}', -1)" class="w-5 h-5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs font-bold cursor-pointer">-</button>
+              <span class="w-4 text-center">${Number.isInteger(linea.cant) ? linea.cant : linea.cant.toFixed(2)}</span>
+              <button type="button" onclick="cambiarCantidad('${linea.id}', 1)" class="w-5 h-5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs font-bold cursor-pointer">+</button>
             </div>
             <span class="col-span-2 text-right text-stone-500">${linea.precio.toFixed(2)} €</span>
             <span class="col-span-2 text-right font-extrabold text-stone-900">${subtotal.toFixed(2)} €</span>
@@ -596,9 +768,21 @@
         return;
       }
 
-      if (valor === ',') return;
-      if (bufferCantidad === '' && valor === '0') return;
-      if (bufferCantidad.length >= 3) return;
+      if (valor === ',') {
+        if (bufferCantidad.includes(',') || bufferCantidad.includes('.')) return;
+        if (bufferCantidad === '') bufferCantidad = '0';
+        bufferCantidad += ',';
+        mostrarMultiplicador();
+        return;
+      }
+
+      if (bufferCantidad === '0' && valor !== ',') {
+        bufferCantidad = valor;
+        mostrarMultiplicador();
+        return;
+      }
+
+      if (bufferCantidad.length >= 6) return;
 
       bufferCantidad += valor;
       mostrarMultiplicador();
@@ -754,7 +938,7 @@
               id: l.id,
               nombre: l.nombre,
               precio: parseFloat(l.precio),
-              cant: parseInt(l.cant, 10) || 1
+              cant: parseFloat(l.cant) || 1
             }));
             
             ticketIdActivo = t.id || null;
@@ -772,6 +956,7 @@
       }
     }
 
+    setupAjustesModalListeners();
     renderizarPestañas();
     renderizarProductos();
     comprobarTicketRecuperado();
@@ -785,5 +970,4 @@
       });
     }
   </script>
-</body>
-</html>
+</body></html>
