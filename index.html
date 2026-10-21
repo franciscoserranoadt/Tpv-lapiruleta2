@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>TPV Ventas - La Piruleta</title>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>TPV Ventas - La Piruleta</title>
+<link href="./manifest.json" rel="manifest"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
     body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
     .font-ticket { font-family: 'Space Mono', monospace, sans-serif; }
     .scrollbar-none::-webkit-scrollbar { display: none; }
@@ -35,587 +35,519 @@
   </style>
 </head>
 <body class="bg-[#fff8f5] text-stone-800 antialiased select-none min-h-screen flex flex-col justify-between pb-safe">
-
-  <!-- CABECERA SUPERIOR TPV -->
-  <header class="sticky top-0 z-40 bg-[#1b7a4a] text-white px-3 sm:px-4 py-2 flex items-center justify-between shadow-sm">
-    <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-xl bg-white text-[#1b7a4a] flex items-center justify-center font-black text-xs shadow-xs">
+<!-- CABECERA SUPERIOR TPV -->
+<header class="sticky top-0 z-40 bg-[#1b7a4a] text-white px-3 sm:px-4 py-2 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-white text-[#1b7a4a] flex items-center justify-center font-black text-xs shadow-xs">
         LP
       </div>
-      <div>
-        <div class="flex items-center gap-1.5">
-          <h1 id="header-nombre-negocio" class="font-extrabold text-sm tracking-tight leading-tight">LA PIRULETA</h1>
-          <span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium">Terminal Táctil v6.5</span>
-        </div>
-        <p class="text-[11px] text-emerald-100 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
-          <span>Cloud Conectado • Caja 1 • Tarifa Estándar</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- Accesos rápidos superiores -->
-    <div class="flex items-center gap-2">
-      <a href="04-plano-mesas.html" class="px-2.5 py-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-white text-xs font-bold flex items-center gap-1.5 transition-colors">
-        <i data-lucide="layout-grid" class="w-4 h-4"></i>
-        <span>Mesas</span>
-      </a>
-      <a href="03-tickets-mesas.html" class="px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs">
-        <i data-lucide="clock" class="w-4 h-4"></i>
-        <span>Pendientes</span>
-        <span id="badge-pendientes-count" class="bg-white text-amber-700 text-[10px] font-black px-1.5 py-0.2 rounded-full">0</span>
-      </a>
-
-      <!-- BOTÓN VER TICKET EN VIVO EN CABECERA (CORREGIDO CON ID Y DIRECTO) -->
-      <button type="button" id="btn-ver-ticket" onclick="abrirModalTicketTermico()" class="px-2.5 py-1.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 active:scale-95 text-emerald-100 hover:text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer" title="Ver simulación de ticket impreso">
-        <i data-lucide="receipt" class="w-4 h-4 pointer-events-none"></i>
-        <span class="pointer-events-none">Ver Ticket</span>
-      </button>
-
-      <!-- BOTÓN AJUSTES GENERALES DEL NEGOCIO -->
-      <button type="button" id="btn-ajustes-generales" onclick="abrirModalAjustesGenerales()" class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 active:scale-95 text-emerald-100 transition-all cursor-pointer flex items-center justify-center" title="Ajustes Generales del Negocio y Datos Fiscales">
-        <i data-lucide="sliders-horizontal" class="w-4 h-4 pointer-events-none"></i>
-      </button>
-
-      <a href="13-config-impresoras.html" class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-100 transition-colors" title="Ajustes de Impresoras">
-        <i data-lucide="settings" class="w-4 h-4"></i>
-      </a>
-    </div>
-  </header>
-
-  <!-- CONTENEDOR PRINCIPAL: DISTRIBUCIÓN CLÁSICA DE TPV (DOS COLUMNAS) -->
-  <main class="flex-1 p-2 sm:p-3 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-3">
-    
-    <!-- COLUMNA IZQUIERDA: CESTA DE COMPRA + TECLADO TÁCTIL + BOTONES DE COBRO -->
-    <section class="lg:col-span-5 flex flex-col bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden min-h-[480px]">
-      
-      <div class="px-3.5 py-2 bg-stone-50 border-b border-stone-200 flex items-center justify-between text-xs">
-        <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span class="font-extrabold text-stone-800" id="ticket-mesa-nombre">BARRA</span>
-          <span class="text-stone-400 font-mono text-[11px]" id="ticket-numero">#T-001</span>
-          <span class="text-stone-400 text-[10px] hidden sm:inline" id="ticket-cliente-tipo">• Cliente General</span>
-        </div>
-        <button type="button" onclick="limpiarTicketCompleto()" class="text-red-600 hover:text-red-700 font-bold text-[11px] flex items-center gap-1 hover:bg-red-50 px-2 py-0.5 rounded-lg transition-colors">
-          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-          <span>Limpiar</span>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-12 px-3 py-1.5 bg-stone-100/70 text-[10px] font-extrabold text-stone-500 uppercase tracking-wider border-b border-stone-200">
-        <div class="col-span-6">Artículo</div>
-        <div class="col-span-2 text-center">Cant</div>
-        <div class="col-span-2 text-right">Precio</div>
-        <div class="col-span-2 text-right">Total</div>
-      </div>
-
-      <!-- LISTA DE ARTÍCULOS EN LA CESTA -->
-      <div id="cesta-articulos" class="flex-1 p-2.5 overflow-y-auto max-h-[220px] space-y-1.5 text-xs divide-y divide-stone-100">
-        <div id="cesta-vacia" class="h-32 flex flex-col items-center justify-center text-center text-stone-400 p-4">
-          <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-1.5 border border-amber-200">
-            <i data-lucide="receipt" class="w-5 h-5"></i>
-          </div>
-          <span class="font-bold text-stone-700 text-xs">Ticket vacío</span>
-          <span class="text-[11px] text-stone-400">Toca los productos de la derecha para sumar.</span>
-        </div>
-      </div>
-
-      <!-- TOTALES Y DESGLOSE FISCAL -->
-      <div class="px-3 py-2 bg-stone-50 border-t border-stone-200 space-y-1">
-        <div class="flex justify-between text-[11px] text-stone-500 font-medium">
-          <span>Base imponible: <span id="desglose-base">0.00</span> €</span>
-          <span>IVA inc. (10%): <span id="desglose-iva">0.00</span> €</span>
-        </div>
-        <div class="flex justify-between items-baseline pt-0.5">
-          <span class="text-xs font-black uppercase tracking-wider text-stone-700">TOTAL A PAGAR</span>
-          <div class="flex items-baseline gap-1">
-            <span class="text-2xl font-black text-[#1b7a4a]" id="ticket-total">0.00</span>
-            <span class="text-base font-extrabold text-[#1b7a4a]">€</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- INDICADOR DE MULTIPLICADOR / PESO EN CURSO -->
-      <div id="banner-multiplicador" class="hidden px-3 py-1 bg-amber-100 border-t border-amber-200 flex items-center justify-between text-xs font-bold text-amber-900">
-        <div class="flex items-center gap-1.5">
-          <i data-lucide="scale" class="w-3.5 h-3.5 text-amber-700"></i>
-          <span>Peso / Cantidad: <span id="multiplicador-valor" class="text-sm font-extrabold text-amber-950 underline">1</span></span>
-        </div>
-        <button type="button" onclick="cancelarMultiplicador()" class="text-[11px] text-amber-800 underline hover:text-amber-950">
+<div>
+<div class="flex items-center gap-1.5">
+<h1 class="font-extrabold text-sm tracking-tight leading-tight" id="header-nombre-negocio">LA PIRULETA</h1>
+<span class="text-[9px] bg-emerald-900/60 text-emerald-200 px-1.5 py-0.5 rounded-full font-medium">Terminal Táctil v6.5</span>
+</div>
+<p class="text-[11px] text-emerald-100 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+<span>Cloud Conectado • Caja 1 • Tarifa Estándar</span>
+</p>
+</div>
+</div>
+<!-- Accesos rápidos superiores -->
+<div class="flex items-center gap-2">
+<a class="px-2.5 py-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-white text-xs font-bold flex items-center gap-1.5 transition-colors" href="04-plano-mesas.html">
+<i class="w-4 h-4" data-lucide="layout-grid"></i>
+<span>Mesas</span>
+</a>
+<a class="px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-2xs" href="03-tickets-mesas.html">
+<i class="w-4 h-4" data-lucide="clock"></i>
+<span>Pendientes</span>
+<span class="bg-white text-amber-700 text-[10px] font-black px-1.5 py-0.2 rounded-full" id="badge-pendientes-count">0</span>
+</a>
+<!-- BOTÓN VER TICKET EN VIVO EN CABECERA (CORREGIDO CON ID Y DIRECTO) -->
+<button class="px-2.5 py-1.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 active:scale-95 text-emerald-100 hover:text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer" id="btn-ver-ticket" onclick="abrirModalTicketTermico()" title="Ver simulación de ticket impreso" type="button">
+<i class="w-4 h-4 pointer-events-none" data-lucide="receipt"></i>
+<span class="pointer-events-none">Ver Ticket</span>
+</button>
+<!-- BOTÓN AJUSTES GENERALES DEL NEGOCIO -->
+<button class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 active:scale-95 text-emerald-100 transition-all cursor-pointer flex items-center justify-center" id="btn-ajustes-generales" onclick="abrirModalAjustesGenerales()" title="Ajustes Generales del Negocio y Datos Fiscales" type="button">
+<i class="w-4 h-4 pointer-events-none" data-lucide="sliders-horizontal"></i>
+</button>
+<a class="p-1.5 rounded-xl bg-emerald-900/40 hover:bg-emerald-900/70 text-emerald-100 transition-colors" href="13-config-impresoras.html" title="Ajustes de Impresoras">
+<i class="w-4 h-4" data-lucide="settings"></i>
+</a>
+</div>
+</header>
+<!-- CONTENEDOR PRINCIPAL: DISTRIBUCIÓN CLÁSICA DE TPV (DOS COLUMNAS) -->
+<main class="flex-1 p-2 sm:p-3 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-3">
+<!-- COLUMNA IZQUIERDA: CESTA DE COMPRA + TECLADO TÁCTIL + BOTONES DE COBRO -->
+<section class="lg:col-span-5 flex flex-col bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden min-h-[480px]">
+<div class="px-3.5 py-2 bg-stone-50 border-b border-stone-200 flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-extrabold text-stone-800" id="ticket-mesa-nombre">BARRA</span>
+<span class="text-stone-400 font-mono text-[11px]" id="ticket-numero">#T-001</span>
+<span class="text-stone-400 text-[10px] hidden sm:inline" id="ticket-cliente-tipo">• Cliente General</span>
+</div>
+<button class="text-red-600 hover:text-red-700 font-bold text-[11px] flex items-center gap-1 hover:bg-red-50 px-2 py-0.5 rounded-lg transition-colors" onclick="limpiarTicketCompleto()" type="button">
+<i class="w-3.5 h-3.5" data-lucide="trash-2"></i>
+<span>Limpiar</span>
+</button>
+</div>
+<div class="grid grid-cols-12 px-3 py-1.5 bg-stone-100/70 text-[10px] font-extrabold text-stone-500 uppercase tracking-wider border-b border-stone-200">
+<div class="col-span-6">Artículo</div>
+<div class="col-span-2 text-center">Cant</div>
+<div class="col-span-2 text-right">Precio</div>
+<div class="col-span-2 text-right">Total</div>
+</div>
+<!-- LISTA DE ARTÍCULOS EN LA CESTA -->
+<div class="flex-1 p-2.5 overflow-y-auto max-h-[220px] space-y-1.5 text-xs divide-y divide-stone-100" id="cesta-articulos">
+<div class="h-32 flex flex-col items-center justify-center text-center text-stone-400 p-4" id="cesta-vacia">
+<div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-1.5 border border-amber-200">
+<i class="w-5 h-5" data-lucide="receipt"></i>
+</div>
+<span class="font-bold text-stone-700 text-xs">Ticket vacío</span>
+<span class="text-[11px] text-stone-400">Toca los productos de la derecha para sumar.</span>
+</div>
+</div>
+<!-- TOTALES Y DESGLOSE FISCAL -->
+<div class="px-3 py-2 bg-stone-50 border-t border-stone-200 space-y-1">
+<div class="flex justify-between text-[11px] text-stone-500 font-medium">
+<span>Base imponible: <span id="desglose-base">0.00</span> €</span>
+<span>IVA inc. (10%): <span id="desglose-iva">0.00</span> €</span>
+</div>
+<div class="flex justify-between items-baseline pt-0.5">
+<span class="text-xs font-black uppercase tracking-wider text-stone-700">TOTAL A PAGAR</span>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-black text-[#1b7a4a]" id="ticket-total">0.00</span>
+<span class="text-base font-extrabold text-[#1b7a4a]">€</span>
+</div>
+</div>
+</div>
+<!-- INDICADOR DE MULTIPLICADOR / PESO EN CURSO -->
+<div class="hidden px-3 py-1 bg-amber-100 border-t border-amber-200 flex items-center justify-between text-xs font-bold text-amber-900" id="banner-multiplicador">
+<div class="flex items-center gap-1.5">
+<i class="w-3.5 h-3.5 text-amber-700" data-lucide="scale"></i>
+<span>Peso / Cantidad: <span class="text-sm font-extrabold text-amber-950 underline" id="multiplicador-valor">1</span></span>
+</div>
+<button class="text-[11px] text-amber-800 underline hover:text-amber-950" onclick="cancelarMultiplicador()" type="button">
           Cancelar (C)
         </button>
-      </div>
-
-      <!-- TECLADO NUMÉRICO TÁCTIL CON COMA AL PESO -->
-      <div class="p-2 bg-white border-t border-stone-200 grid grid-cols-4 gap-1.5">
-        <button type="button" onclick="teclearNumero('7')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">7</button>
-        <button type="button" onclick="teclearNumero('8')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">8</button>
-        <button type="button" onclick="teclearNumero('9')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">9</button>
-        
-        <button type="button" onclick="dejarTicketPendiente()" class="row-span-2 py-2 px-1 rounded-xl bg-amber-50 hover:bg-amber-100 active:scale-95 border border-amber-300 text-amber-900 flex flex-col items-center justify-center gap-1 transition-all">
-          <i data-lucide="clock" class="w-4 h-4 text-amber-700"></i>
-          <span class="text-[10px] font-black leading-tight text-center">Dejar<br>Pendiente</span>
-        </button>
-
-        <button type="button" onclick="teclearNumero('4')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">4</button>
-        <button type="button" onclick="teclearNumero('5')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">5</button>
-        <button type="button" onclick="teclearNumero('6')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">6</button>
-
-        <button type="button" onclick="teclearNumero('1')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">1</button>
-        <button type="button" onclick="teclearNumero('2')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">2</button>
-        <button type="button" onclick="teclearNumero('3')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">3</button>
-
-        <button type="button" onclick="irAsignarMesa()" class="row-span-2 py-2 px-1 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-stone-700 flex flex-col items-center justify-center gap-1 transition-all">
-          <i data-lucide="utensils" class="w-4 h-4 text-stone-600"></i>
-          <span class="text-[10px] font-black leading-tight text-center">Asignar<br>a Mesa</span>
-        </button>
-
-        <button type="button" onclick="teclearNumero('0')" class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all">0</button>
-        <button type="button" onclick="teclearNumero(',')" id="btn-tecla-coma" class="py-2.5 rounded-xl bg-stone-50 hover:bg-emerald-50 active:scale-95 border border-stone-200 hover:border-emerald-400 text-base font-black text-stone-800 transition-all" title="Coma decimal para peso o cantidad">,</button>
-        <button type="button" onclick="cancelarMultiplicador()" class="py-2.5 rounded-xl bg-red-50 hover:bg-red-100 active:scale-95 border border-red-200 text-xs font-black text-red-700 transition-all">C</button>
-      </div>
-
-      <!-- BOTONES DE COBRO DIRECTO -->
-      <div class="p-2.5 bg-stone-50 border-t border-stone-200 grid grid-cols-3 gap-2">
-        <button type="button" onclick="procesarCobroDirecto('EFECTIVO')" class="py-3 px-2 rounded-2xl bg-[#1b7a4a] hover:bg-[#15613b] active:scale-95 text-white font-extrabold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all">
-          <i data-lucide="banknote" class="w-4 h-4"></i>
-          <span>EFECTIVO</span>
-        </button>
-        <button type="button" onclick="procesarCobroDirecto('TARJETA')" class="py-3 px-2 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-extrabold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all">
-          <i data-lucide="credit-card" class="w-4 h-4"></i>
-          <span>TARJETA</span>
-        </button>
-        <button type="button" onclick="procesarCobroDirecto('BIZUM')" class="py-3 px-2 rounded-2xl bg-[#008f85] hover:bg-[#00756d] active:scale-95 text-white font-extrabold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all">
-          <i data-lucide="smartphone" class="w-4 h-4"></i>
-          <span>BIZUM</span>
-        </button>
-      </div>
-
-    </section>
-
-    <!-- COLUMNA DERECHA: CATEGORÍAS TÁCTILES + PARRILLA DE PRODUCTOS -->
-    <section class="lg:col-span-7 flex flex-col bg-white rounded-3xl border border-stone-200 shadow-sm p-3 space-y-3">
-      
-      <div class="flex items-center justify-between gap-2 border-b border-stone-100 pb-2">
-        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1 py-0.5" id="tabs-categorias">
-          <button type="button" onclick="filtrarPorCategoria('todas')" id="tab-cat-todas" class="px-3.5 py-1.5 rounded-xl bg-[#1b7a4a] text-white text-xs font-bold shrink-0 shadow-xs flex items-center gap-1">
-            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-            <span>FAVORITOS / TODOS</span>
-          </button>
-        </div>
-
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button type="button" onclick="abrirModalNuevaCategoria()" class="px-2.5 py-1.5 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 flex items-center gap-1 shadow-2xs">
-            <i data-lucide="folder-plus" class="w-3.5 h-3.5 text-[#1b7a4a]"></i>
-            <span>+ Categoría</span>
-          </button>
-          <a href="10-catalogo-stock.html" class="p-1.5 text-stone-400 hover:text-stone-700 rounded-xl hover:bg-stone-50" title="Abrir Catálogo">
-            <i data-lucide="external-link" class="w-4 h-4"></i>
+</div>
+<!-- TECLADO NUMÉRICO TÁCTIL CON COMA AL PESO -->
+<div class="p-2 bg-white border-t border-stone-200 grid grid-cols-4 gap-1.5">
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('7')" type="button">7</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('8')" type="button">8</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('9')" type="button">9</button>
+<button class="row-span-2 py-2 px-1 rounded-xl bg-amber-50 hover:bg-amber-100 active:scale-95 border border-amber-300 text-amber-900 flex flex-col items-center justify-center gap-1 transition-all" onclick="dejarTicketPendiente()" type="button">
+<i class="w-4 h-4 text-amber-700" data-lucide="clock"></i>
+<span class="text-[10px] font-black leading-tight text-center">Dejar<br/>Pendiente</span>
+</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('4')" type="button">4</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('5')" type="button">5</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('6')" type="button">6</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('1')" type="button">1</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('2')" type="button">2</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('3')" type="button">3</button>
+<button class="row-span-2 py-2 px-1 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-stone-700 flex flex-col items-center justify-center gap-1 transition-all" onclick="irAsignarMesa()" type="button">
+<i class="w-4 h-4 text-stone-600" data-lucide="utensils"></i>
+<span class="text-[10px] font-black leading-tight text-center">Asignar<br/>a Mesa</span>
+</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 active:scale-95 border border-stone-200 text-sm font-black text-stone-800 transition-all" onclick="teclearNumero('0')" type="button">0</button>
+<button class="py-2.5 rounded-xl bg-stone-50 hover:bg-emerald-50 active:scale-95 border border-stone-200 hover:border-emerald-400 text-base font-black text-stone-800 transition-all" id="btn-tecla-coma" onclick="teclearNumero(',')" title="Coma decimal para peso o cantidad" type="button">,</button>
+<button class="py-2.5 rounded-xl bg-red-50 hover:bg-red-100 active:scale-95 border border-red-200 text-xs font-black text-red-700 transition-all" onclick="cancelarMultiplicador()" type="button">C</button>
+</div>
+<!-- BOTONES DE COBRO DIRECTO -->
+<div class="p-2.5 bg-stone-50 border-t border-stone-200 grid grid-cols-3 gap-2">
+<button class="py-3 px-2 rounded-2xl bg-[#1b7a4a] hover:bg-[#15613b] active:scale-95 text-white font-extrabold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all" onclick="procesarCobroDirecto('EFECTIVO')" type="button">
+<i class="w-4 h-4" data-lucide="banknote"></i>
+<span>EFECTIVO</span>
+</button>
+<button class="py-3 px-2 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-extrabold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all" onclick="procesarCobroDirecto('TARJETA')" type="button">
+<i class="w-4 h-4" data-lucide="credit-card"></i>
+<span>TARJETA</span>
+</button>
+<button class="py-3 px-2 rounded-2xl bg-[#008f85] hover:bg-[#00756d] active:scale-95 text-white font-extrabold text-xs shadow-sm flex items-center justify-center gap-1.5 transition-all" onclick="procesarCobroDirecto('BIZUM')" type="button">
+<i class="w-4 h-4" data-lucide="smartphone"></i>
+<span>BIZUM</span>
+</button>
+</div>
+</section>
+<!-- COLUMNA DERECHA: CATEGORÍAS TÁCTILES + PARRILLA DE PRODUCTOS -->
+<section class="lg:col-span-7 flex flex-col bg-white rounded-3xl border border-stone-200 shadow-sm p-3 space-y-3">
+<div class="flex items-center justify-between gap-2 border-b border-stone-100 pb-2">
+<div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1 py-0.5" id="tabs-categorias">
+<button class="px-3.5 py-1.5 rounded-xl bg-[#1b7a4a] text-white text-xs font-bold shrink-0 shadow-xs flex items-center gap-1" id="tab-cat-todas" onclick="filtrarPorCategoria('todas')" type="button">
+<i class="w-3.5 h-3.5 fill-current" data-lucide="star"></i>
+<span>FAVORITOS / TODOS</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<button class="px-2.5 py-1.5 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 flex items-center gap-1 shadow-2xs" onclick="abrirModalNuevaCategoria()" type="button">
+<i class="w-3.5 h-3.5 text-[#1b7a4a]" data-lucide="folder-plus"></i>
+<span>+ Categoría</span>
+</button>
+<a class="p-1.5 text-stone-400 hover:text-stone-700 rounded-xl hover:bg-stone-50" href="10-catalogo-stock.html" title="Abrir Catálogo">
+<i class="w-4 h-4" data-lucide="external-link"></i>
+</a>
+</div>
+</div>
+<!-- PARRILLA DE ARTÍCULOS TÁCTILES -->
+<div class="flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 overflow-y-auto min-h-[340px] content-start" id="parrilla-productos">
+<div class="col-span-full py-16 flex flex-col items-center justify-center text-center text-stone-400" id="productos-vacio">
+<div class="w-12 h-12 rounded-3xl bg-emerald-50 text-[#1b7a4a] flex items-center justify-center mb-2 border border-emerald-200">
+<i class="w-6 h-6" data-lucide="box"></i>
+</div>
+<h3 class="font-bold text-stone-800 text-sm">Catálogo listo y sin artículos</h3>
+<p class="text-xs text-stone-400 max-w-xs mt-1">Empieza añadiendo productos o categorías para ver las tarjetas táctiles aquí.</p>
+<a class="mt-3.5 px-4 py-2 bg-[#1b7a4a] text-white text-xs font-bold rounded-xl shadow-xs hover:bg-[#15613b] transition-colors flex items-center gap-1.5" href="10-catalogo-stock.html">
+<i class="w-3.5 h-3.5" data-lucide="plus"></i>
+<span>Añadir Artículos en Catálogo</span>
+</a>
+</div>
+</div>
+<div class="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400 font-medium">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span id="contador-productos-footer">0 productos disponibles</span>
+</span>
+<div class="flex items-center gap-2">
+<span>Toca un producto para añadir directo</span>
+<a class="text-[#1b7a4a] font-bold hover:underline flex items-center gap-0.5" href="10-catalogo-stock.html">
+<i class="w-3.5 h-3.5" data-lucide="plus"></i> Crear Rápido
           </a>
-        </div>
-      </div>
-
-      <!-- PARRILLA DE ARTÍCULOS TÁCTILES -->
-      <div id="parrilla-productos" class="flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 overflow-y-auto min-h-[340px] content-start">
-        <div id="productos-vacio" class="col-span-full py-16 flex flex-col items-center justify-center text-center text-stone-400">
-          <div class="w-12 h-12 rounded-3xl bg-emerald-50 text-[#1b7a4a] flex items-center justify-center mb-2 border border-emerald-200">
-            <i data-lucide="box" class="w-6 h-6"></i>
-          </div>
-          <h3 class="font-bold text-stone-800 text-sm">Catálogo listo y sin artículos</h3>
-          <p class="text-xs text-stone-400 max-w-xs mt-1">Empieza añadiendo productos o categorías para ver las tarjetas táctiles aquí.</p>
-          <a href="10-catalogo-stock.html" class="mt-3.5 px-4 py-2 bg-[#1b7a4a] text-white text-xs font-bold rounded-xl shadow-xs hover:bg-[#15613b] transition-colors flex items-center gap-1.5">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-            <span>Añadir Artículos en Catálogo</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400 font-medium">
-        <span class="flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span id="contador-productos-footer">0 productos disponibles</span>
-        </span>
-        <div class="flex items-center gap-2">
-          <span>Toca un producto para añadir directo</span>
-          <a href="10-catalogo-stock.html" class="text-[#1b7a4a] font-bold hover:underline flex items-center gap-0.5">
-            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Crear Rápido
-          </a>
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- =====================================================================
+</div>
+</div>
+</section>
+</main>
+<!-- =====================================================================
        MODAL 1: SIMULADOR DE TICKET TÉRMICO IMPRESO EN VIVO (Z-[70] FIABLE)
        ===================================================================== -->
-  <div id="modal-ticket-termico" style="display: none;" onclick="if(event.target === this) cerrarModalTicketTermico()" class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-stone-900 text-stone-100 rounded-3xl p-4 sm:p-5 max-w-md w-full space-y-4 shadow-2xl border border-stone-700 max-h-[92vh] flex flex-col" onclick="event.stopPropagation()">
-      
-      <!-- Barra superior del simulador -->
-      <div class="flex items-center justify-between border-b border-stone-800 pb-2.5 shrink-0 no-imprimir">
-        <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-emerald-900/60 text-emerald-300 flex items-center justify-center">
-            <i data-lucide="receipt" class="w-4 h-4"></i>
-          </div>
-          <div>
-            <h3 class="font-extrabold text-xs sm:text-sm text-white leading-tight">Simulador de Ticket Impreso</h3>
-            <p class="text-[10px] text-stone-400">Vista real de papel térmico ESC/POS</p>
-          </div>
-        </div>
-        
-        <!-- Selector de ancho de papel -->
-        <div class="flex items-center gap-1 bg-stone-800 p-1 rounded-xl text-[10px] font-bold">
-          <button type="button" id="btn-ancho-80" onclick="cambiarAnchoPapel('80')" class="px-2 py-1 rounded-lg bg-[#1b7a4a] text-white">80 mm</button>
-          <button type="button" id="btn-ancho-58" onclick="cambiarAnchoPapel('58')" class="px-2 py-1 rounded-lg text-stone-400 hover:text-white">58 mm</button>
-          <button type="button" onclick="cerrarModalTicketTermico()" class="text-stone-400 hover:text-white p-1 ml-1">
-            <i data-lucide="x" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- VISOR DEL TICKET FÍSICO (PUESTO EN PAPEL TÉRMICO) -->
-      <div class="flex-1 overflow-y-auto p-2 flex justify-center bg-stone-950/60 rounded-2xl border border-stone-800/80">
-        
-        <div id="contenedor-ticket-papel" class="w-[320px] bg-white text-stone-900 font-ticket p-4 sm:p-5 rounded-sm shadow-xl text-[11px] leading-tight select-text transition-all duration-200">
-          
-          <!-- Cabecera del ticket impreso -->
-          <div class="text-center space-y-1 border-b border-dashed border-stone-400 pb-3">
-            <div class="w-9 h-9 mx-auto rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-xs mb-1">
+<div class="fixed inset-0 z-[70] bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" id="modal-ticket-termico" onclick="if(event.target === this) cerrarModalTicketTermico()" style="display: none;">
+<div class="bg-stone-900 text-stone-100 rounded-3xl p-4 sm:p-5 max-w-md w-full space-y-4 shadow-2xl border border-stone-700 max-h-[92vh] flex flex-col" onclick="event.stopPropagation()">
+<!-- Barra superior del simulador -->
+<div class="flex items-center justify-between border-b border-stone-800 pb-2.5 shrink-0 no-imprimir">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-emerald-900/60 text-emerald-300 flex items-center justify-center">
+<i class="w-4 h-4" data-lucide="receipt"></i>
+</div>
+<div>
+<h3 class="font-extrabold text-xs sm:text-sm text-white leading-tight">Simulador de Ticket Impreso</h3>
+<p class="text-[10px] text-stone-400">Vista real de papel térmico ESC/POS</p>
+</div>
+</div>
+<!-- Selector de ancho de papel -->
+<div class="flex items-center gap-1 bg-stone-800 p-1 rounded-xl text-[10px] font-bold">
+<button class="px-2 py-1 rounded-lg bg-[#1b7a4a] text-white" id="btn-ancho-80" onclick="cambiarAnchoPapel('80')" type="button">80 mm</button>
+<button class="px-2 py-1 rounded-lg text-stone-400 hover:text-white" id="btn-ancho-58" onclick="cambiarAnchoPapel('58')" type="button">58 mm</button>
+<button class="text-stone-400 hover:text-white p-1 ml-1" onclick="cerrarModalTicketTermico()" type="button">
+<i class="w-4 h-4" data-lucide="x"></i>
+</button>
+</div>
+</div>
+<!-- VISOR DEL TICKET FÍSICO (PUESTO EN PAPEL TÉRMICO) -->
+<div class="flex-1 overflow-y-auto p-2 flex justify-center bg-stone-950/60 rounded-2xl border border-stone-800/80">
+<div class="w-[320px] bg-white text-stone-900 font-ticket p-4 sm:p-5 rounded-sm shadow-xl text-[11px] leading-tight select-text transition-all duration-200" id="contenedor-ticket-papel">
+<!-- Cabecera del ticket impreso -->
+<div class="text-center space-y-1 border-b border-dashed border-stone-400 pb-3">
+<div class="w-9 h-9 mx-auto rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-xs mb-1">
               LP
             </div>
-            <div id="tpk-nombre-negocio" class="font-bold text-sm uppercase tracking-wider text-stone-950">LA PIRULETA</div>
-            <div id="tpk-razon-social" class="text-[10px] text-stone-600">Cafetería & Panadería S.L.</div>
-            <div id="tpk-cif" class="text-[10px] font-bold">CIF: B-12345678</div>
-            <div id="tpk-direccion" class="text-[10px] text-stone-600">C/ Mayor 24, 28013 Madrid</div>
-            <div id="tpk-telefono" class="text-[10px] text-stone-600">Tel: 910 00 00 00</div>
-            <div id="tpk-encabezado" class="text-[10px] italic text-stone-500 pt-1 border-t border-stone-200 mt-1">
+<div class="font-bold text-sm uppercase tracking-wider text-stone-950" id="tpk-nombre-negocio">LA PIRULETA</div>
+<div class="text-[10px] text-stone-600" id="tpk-razon-social">Cafetería &amp; Panadería S.L.</div>
+<div class="text-[10px] font-bold" id="tpk-cif">CIF: B-12345678</div>
+<div class="text-[10px] text-stone-600" id="tpk-direccion">C/ Mayor 24, 28013 Madrid</div>
+<div class="text-[10px] text-stone-600" id="tpk-telefono">Tel: 910 00 00 00</div>
+<div class="text-[10px] italic text-stone-500 pt-1 border-t border-stone-200 mt-1" id="tpk-encabezado">
               ¡Bienvenidos a La Piruleta!
             </div>
-          </div>
-
-          <!-- Metadatos de la Factura Simplificada -->
-          <div class="py-2 border-b border-dashed border-stone-400 space-y-0.5 text-[10px]">
-            <div class="flex justify-between font-bold">
-              <span>FACTURA SIMPLIFICADA:</span>
-              <span id="tpk-ticket-num">#T-001</span>
-            </div>
-            <div class="flex justify-between text-stone-600">
-              <span>Fecha / Hora:</span>
-              <span id="tpk-fecha-hora">21/10/2026 11:30</span>
-            </div>
-            <div class="flex justify-between text-stone-600">
-              <span>Ubicación:</span>
-              <span id="tpk-mesa">BARRA</span>
-            </div>
-            <div class="flex justify-between text-stone-600">
-              <span>Caja / Terminal:</span>
-              <span>Caja 1 (TPV Principal)</span>
-            </div>
-          </div>
-
-          <!-- Encabezado de líneas -->
-          <div class="py-1.5 border-b border-stone-300 flex justify-between font-bold text-[10px] uppercase">
-            <span>Cant. Concepto</span>
-            <span>Total</span>
-          </div>
-
-          <!-- LISTA DINÁMICA DE ARTÍCULOS IMPRESOS -->
-          <div id="tpk-lineas-articulos" class="py-2 space-y-1.5 text-[11px] border-b border-dashed border-stone-400">
-            <!-- Inyectado por JS -->
-          </div>
-
-          <!-- TOTALES Y DESGLOSE -->
-          <div class="py-2.5 border-b border-dashed border-stone-400 space-y-1">
-            <div id="tpk-bloque-iva" class="space-y-0.5 text-[10px] text-stone-600">
-              <div class="flex justify-between">
-                <span>Base Imponible (10%):</span>
-                <span id="tpk-base-imp">0,00 €</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Cuota IVA (10%):</span>
-                <span id="tpk-cuota-iva">0,00 €</span>
-              </div>
-            </div>
-
-            <div class="flex justify-between items-baseline pt-1.5 text-base font-bold border-t border-stone-300">
-              <span class="text-xs uppercase">TOTAL FACTURA:</span>
-              <span id="tpk-total-pagar" class="text-lg font-black tracking-tight">0,00 €</span>
-            </div>
-          </div>
-
-          <!-- FORMA DE PAGO -->
-          <div class="py-2 border-b border-dashed border-stone-400 space-y-0.5 text-[10px]">
-            <div class="flex justify-between font-bold">
-              <span>Forma de Pago:</span>
-              <span id="tpk-metodo-pago">EFECTIVO</span>
-            </div>
-            <div class="flex justify-between text-stone-600">
-              <span>Importe Cobrado:</span>
-              <span id="tpk-cobrado">0,00 €</span>
-            </div>
-            <div class="flex justify-between text-stone-600">
-              <span>Cambio Devuelto:</span>
-              <span>0,00 €</span>
-            </div>
-          </div>
-
-          <!-- PIE DE TICKET, QR Y AGRADECIMIENTO -->
-          <div class="pt-3 text-center space-y-2">
-            <div class="w-16 h-16 mx-auto bg-stone-100 border border-stone-300 rounded p-1 flex items-center justify-center">
-              <div class="grid grid-cols-4 gap-0.5 w-full h-full p-1 bg-white">
-                <div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div><div></div>
-                <div class="bg-black"></div><div></div><div class="bg-black"></div><div class="bg-black"></div>
-                <div></div><div class="bg-black"></div><div></div><div class="bg-black"></div>
-                <div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div>
-              </div>
-            </div>
-            <div class="text-[9px] font-bold tracking-wider text-stone-500 uppercase">
+</div>
+<!-- Metadatos de la Factura Simplificada -->
+<div class="py-2 border-b border-dashed border-stone-400 space-y-0.5 text-[10px]">
+<div class="flex justify-between font-bold">
+<span>FACTURA SIMPLIFICADA:</span>
+<span id="tpk-ticket-num">#T-001</span>
+</div>
+<div class="flex justify-between text-stone-600">
+<span>Fecha / Hora:</span>
+<span id="tpk-fecha-hora">21/10/2026 11:30</span>
+</div>
+<div class="flex justify-between text-stone-600">
+<span>Ubicación:</span>
+<span id="tpk-mesa">BARRA</span>
+</div>
+<div class="flex justify-between text-stone-600">
+<span>Caja / Terminal:</span>
+<span>Caja 1 (TPV Principal)</span>
+</div>
+</div>
+<!-- Encabezado de líneas -->
+<div class="py-1.5 border-b border-stone-300 flex justify-between font-bold text-[10px] uppercase">
+<span>Cant. Concepto</span>
+<span>Total</span>
+</div>
+<!-- LISTA DINÁMICA DE ARTÍCULOS IMPRESOS -->
+<div class="py-2 space-y-1.5 text-[11px] border-b border-dashed border-stone-400" id="tpk-lineas-articulos">
+<!-- Inyectado por JS -->
+</div>
+<!-- TOTALES Y DESGLOSE -->
+<div class="py-2.5 border-b border-dashed border-stone-400 space-y-1">
+<div class="space-y-0.5 text-[10px] text-stone-600" id="tpk-bloque-iva">
+<div class="flex justify-between">
+<span>Base Imponible (10%):</span>
+<span id="tpk-base-imp">0,00 €</span>
+</div>
+<div class="flex justify-between">
+<span>Cuota IVA (10%):</span>
+<span id="tpk-cuota-iva">0,00 €</span>
+</div>
+</div>
+<div class="flex justify-between items-baseline pt-1.5 text-base font-bold border-t border-stone-300">
+<span class="text-xs uppercase">TOTAL FACTURA:</span>
+<span class="text-lg font-black tracking-tight" id="tpk-total-pagar">0,00 €</span>
+</div>
+</div>
+<!-- FORMA DE PAGO -->
+<div class="py-2 border-b border-dashed border-stone-400 space-y-0.5 text-[10px]">
+<div class="flex justify-between font-bold">
+<span>Forma de Pago:</span>
+<span id="tpk-metodo-pago">EFECTIVO</span>
+</div>
+<div class="flex justify-between text-stone-600">
+<span>Importe Cobrado:</span>
+<span id="tpk-cobrado">0,00 €</span>
+</div>
+<div class="flex justify-between text-stone-600">
+<span>Cambio Devuelto:</span>
+<span>0,00 €</span>
+</div>
+</div>
+<!-- PIE DE TICKET, QR Y AGRADECIMIENTO -->
+<div class="pt-3 text-center space-y-2">
+<div class="w-16 h-16 mx-auto bg-stone-100 border border-stone-300 rounded p-1 flex items-center justify-center">
+<div class="grid grid-cols-4 gap-0.5 w-full h-full p-1 bg-white">
+<div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div><div></div>
+<div class="bg-black"></div><div></div><div class="bg-black"></div><div class="bg-black"></div>
+<div></div><div class="bg-black"></div><div></div><div class="bg-black"></div>
+<div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div>
+</div>
+</div>
+<div class="text-[9px] font-bold tracking-wider text-stone-500 uppercase">
               Veri*Factu / Factura Electrónica
             </div>
-
-            <div id="tpk-pie" class="text-[10px] text-stone-600 italic whitespace-pre-line">
+<div class="text-[10px] text-stone-600 italic whitespace-pre-line" id="tpk-pie">
               ¡Gracias por su visita!
             </div>
-            <div class="text-[8px] text-stone-400 tracking-tight">
+<div class="text-[8px] text-stone-400 tracking-tight">
               Conserve este ticket para devoluciones o reclamaciones
             </div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- BOTONES DE ACCIÓN DEL SIMULADOR -->
-      <div class="flex items-center gap-2 pt-1 shrink-0 no-imprimir">
-        <button type="button" onclick="cerrarModalTicketTermico()" class="flex-1 py-2.5 bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold text-xs rounded-xl transition-colors">
+</div>
+</div>
+</div>
+<!-- BOTONES DE ACCIÓN DEL SIMULADOR -->
+<div class="flex items-center gap-2 pt-1 shrink-0 no-imprimir">
+<button class="flex-1 py-2.5 bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold text-xs rounded-xl transition-colors" onclick="cerrarModalTicketTermico()" type="button">
           Cerrar
         </button>
-        <button type="button" onclick="imprimirTicketFisico()" class="flex-1 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs rounded-xl shadow transition-colors flex items-center justify-center gap-2">
-          <i data-lucide="printer" class="w-4 h-4"></i>
-          <span>Imprimir Ticket Físico</span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- =====================================================================
+<button class="flex-1 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs rounded-xl shadow transition-colors flex items-center justify-center gap-2" onclick="imprimirTicketFisico()" type="button">
+<i class="w-4 h-4" data-lucide="printer"></i>
+<span>Imprimir Ticket Físico</span>
+</button>
+</div>
+</div>
+</div>
+<!-- =====================================================================
        MODAL 2: AJUSTES GENERALES DEL NEGOCIO & TICKET
        ===================================================================== -->
-  <div id="modal-ajustes-generales" style="display: none;" onclick="if(event.target === this) cerrarModalAjustesGenerales()" class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-3xl p-5 sm:p-6 max-w-lg w-full space-y-4 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-      
-      <div class="flex items-center justify-between border-b border-stone-100 pb-3">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-[#1b7a4a] flex items-center justify-center border border-emerald-200">
-            <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-tight">Ajustes Generales del Negocio</h3>
-            <p class="text-[11px] text-stone-400">Datos fiscales, CIF, encabezado y pie de ticket</p>
-          </div>
-        </div>
-        <button type="button" onclick="cerrarModalAjustesGenerales()" class="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100 transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <!-- SECCIÓN 1: DATOS FISCALES DEL NEGOCIO -->
-      <div class="space-y-3">
-        <div class="flex items-center gap-1.5 text-xs font-black text-stone-800 uppercase tracking-wider">
-          <i data-lucide="building-2" class="w-4 h-4 text-[#1b7a4a]"></i>
-          <span>Datos Fiscales & Empresa</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <div>
-            <label for="cfg-nombre-comercial" class="block text-[11px] font-bold text-stone-600 mb-1">Nombre Comercial *</label>
-            <input type="text" id="cfg-nombre-comercial" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: LA PIRULETA">
-          </div>
-          <div>
-            <label for="cfg-cif-nif" class="block text-[11px] font-bold text-stone-600 mb-1">NIF / CIF *</label>
-            <input type="text" id="cfg-cif-nif" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: B-12345678">
-          </div>
-        </div>
-
-        <div>
-          <label for="cfg-razon-social" class="block text-[11px] font-bold text-stone-600 mb-1">Razón Social / Titular Fiscal</label>
-          <input type="text" id="cfg-razon-social" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: Panadería y Cafetería La Piruleta S.L.">
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-          <div class="sm:col-span-2">
-            <label for="cfg-direccion" class="block text-[11px] font-bold text-stone-600 mb-1">Dirección Completa</label>
-            <input type="text" id="cfg-direccion" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: Calle Mayor 24, 28013 Madrid">
-          </div>
-          <div>
-            <label for="cfg-telefono" class="block text-[11px] font-bold text-stone-600 mb-1">Teléfono</label>
-            <input type="text" id="cfg-telefono" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: 910 00 00 00">
-          </div>
-        </div>
-      </div>
-
-      <!-- SECCIÓN 2: PERSONALIZACIÓN DEL TICKET IMPRESO -->
-      <div class="space-y-3 pt-2 border-t border-stone-100">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-1.5 text-xs font-black text-stone-800 uppercase tracking-wider">
-            <i data-lucide="receipt" class="w-4 h-4 text-[#1b7a4a]"></i>
-            <span>Personalización del Ticket Impreso</span>
-          </div>
-          <button type="button" onclick="cerrarModalAjustesGenerales(); abrirModalTicketTermico();" class="text-xs text-[#1b7a4a] font-bold hover:underline flex items-center gap-1 cursor-pointer">
-            <i data-lucide="eye" class="w-3.5 h-3.5"></i> Vista Previa Ticket
+<div class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" id="modal-ajustes-generales" onclick="if(event.target === this) cerrarModalAjustesGenerales()" style="display: none;">
+<div class="bg-white rounded-3xl p-5 sm:p-6 max-w-lg w-full space-y-4 shadow-2xl border border-stone-200 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+<div class="flex items-center justify-between border-b border-stone-100 pb-3">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-emerald-50 text-[#1b7a4a] flex items-center justify-center border border-emerald-200">
+<i class="w-5 h-5" data-lucide="sliders-horizontal"></i>
+</div>
+<div>
+<h3 class="font-extrabold text-stone-900 text-sm sm:text-base leading-tight">Ajustes Generales del Negocio</h3>
+<p class="text-[11px] text-stone-400">Datos fiscales, CIF, encabezado y pie de ticket</p>
+</div>
+</div>
+<button class="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100 transition-colors" onclick="cerrarModalAjustesGenerales()" type="button">
+<i class="w-5 h-5" data-lucide="x"></i>
+</button>
+</div>
+<!-- SECCIÓN 1: DATOS FISCALES DEL NEGOCIO -->
+<div class="space-y-3">
+<div class="flex items-center gap-1.5 text-xs font-black text-stone-800 uppercase tracking-wider">
+<i class="w-4 h-4 text-[#1b7a4a]" data-lucide="building-2"></i>
+<span>Datos Fiscales &amp; Empresa</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-nombre-comercial">Nombre Comercial *</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-nombre-comercial" placeholder="Ej: LA PIRULETA" type="text"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-cif-nif">NIF / CIF *</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-cif-nif" placeholder="Ej: B-12345678" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-razon-social">Razón Social / Titular Fiscal</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-razon-social" placeholder="Ej: Panadería y Cafetería La Piruleta S.L." type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+<div class="sm:col-span-2">
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-direccion">Dirección Completa</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-direccion" placeholder="Ej: Calle Mayor 24, 28013 Madrid" type="text"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-telefono">Teléfono</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-telefono" placeholder="Ej: 910 00 00 00" type="text"/>
+</div>
+</div>
+</div>
+<!-- SECCIÓN 2: PERSONALIZACIÓN DEL TICKET IMPRESO -->
+<div class="space-y-3 pt-2 border-t border-stone-100">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-xs font-black text-stone-800 uppercase tracking-wider">
+<i class="w-4 h-4 text-[#1b7a4a]" data-lucide="receipt"></i>
+<span>Personalización del Ticket Impreso</span>
+</div>
+<button class="text-xs text-[#1b7a4a] font-bold hover:underline flex items-center gap-1 cursor-pointer" onclick="cerrarModalAjustesGenerales(); abrirModalTicketTermico();" type="button">
+<i class="w-3.5 h-3.5" data-lucide="eye"></i> Vista Previa Ticket
           </button>
-        </div>
-
-        <div>
-          <label for="cfg-ticket-encabezado" class="block text-[11px] font-bold text-stone-600 mb-1">Texto de Encabezado / Saludo</label>
-          <textarea id="cfg-ticket-encabezado" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: ¡Bienvenidos a La Piruleta! Especialistas en pan artesanal y café de origen."></textarea>
-        </div>
-
-        <div>
-          <label for="cfg-ticket-pie" class="block text-[11px] font-bold text-stone-600 mb-1">Pie de Ticket / Despedida & Redes</label>
-          <textarea id="cfg-ticket-pie" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: ¡Gracias por su visita! Síguenos en @lapiruleta • Conserve su ticket para cambios o devoluciones."></textarea>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-          <div>
-            <label for="cfg-ticket-serie" class="block text-[11px] font-bold text-stone-600 mb-1">Serie / Prefijo Factura Simplificada</label>
-            <input type="text" id="cfg-ticket-serie" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: T- o 2026-">
-          </div>
-          <div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200 self-end">
-            <span class="text-[11px] font-bold text-stone-700">Desglose IVA en ticket:</span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="cfg-mostrar-iva" checked class="sr-only peer">
-              <div class="w-9 h-5 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1b7a4a]"></div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- BOTONES DE ACCIÓN -->
-      <div class="flex gap-2.5 pt-2 border-t border-stone-100">
-        <button type="button" onclick="cerrarModalAjustesGenerales()" class="flex-1 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl transition-colors">
+</div>
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-ticket-encabezado">Texto de Encabezado / Saludo</label>
+<textarea class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-encabezado" placeholder="Ej: ¡Bienvenidos a La Piruleta! Especialistas en pan artesanal y café de origen." rows="2"></textarea>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-ticket-pie">Pie de Ticket / Despedida &amp; Redes</label>
+<textarea class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-pie" placeholder="Ej: ¡Gracias por su visita! Síguenos en @lapiruleta • Conserve su ticket para cambios o devoluciones." rows="2"></textarea>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+<div>
+<label class="block text-[11px] font-bold text-stone-600 mb-1" for="cfg-ticket-serie">Serie / Prefijo Factura Simplificada</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="cfg-ticket-serie" placeholder="Ej: T- o 2026-" type="text"/>
+</div>
+<div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200 self-end">
+<span class="text-[11px] font-bold text-stone-700">Desglose IVA en ticket:</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="cfg-mostrar-iva" type="checkbox"/>
+<div class="w-9 h-5 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#1b7a4a]"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- BOTONES DE ACCIÓN -->
+<div class="flex gap-2.5 pt-2 border-t border-stone-100">
+<button class="flex-1 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl transition-colors" onclick="cerrarModalAjustesGenerales()" type="button">
           Cancelar
         </button>
-        <button type="button" onclick="guardarAjustesGenerales()" class="flex-1 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs rounded-xl shadow transition-colors flex items-center justify-center gap-1.5">
-          <i data-lucide="check" class="w-4 h-4"></i>
-          <span>Guardar Ajustes</span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- MODAL CREAR NUEVA CATEGORÍA -->
-  <div id="modal-categoria" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border border-stone-200">
-      <div class="flex items-center justify-between border-b border-stone-100 pb-2">
-        <div class="flex items-center gap-2">
-          <i data-lucide="folder-plus" class="w-5 h-5 text-[#1b7a4a]"></i>
-          <h3 class="font-extrabold text-stone-900 text-sm">Nueva Categoría</h3>
-        </div>
-        <button type="button" onclick="cerrarModalCategoria()" class="text-stone-400 hover:text-stone-600 p-1">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-      <div>
-        <label for="input-cat-nombre" class="block text-xs font-bold text-stone-700 mb-1">Nombre de la Categoría *</label>
-        <input type="text" id="input-cat-nombre" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" placeholder="Ej: Cafés, Bollería, Bocadillos, Panes...">
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-stone-700 mb-1.5">Color de identificación</label>
-        <div class="flex items-center gap-2">
-          <label class="cursor-pointer"><input type="radio" name="cat-color" value="#1b7a4a" checked class="sr-only peer"><span class="w-7 h-7 rounded-full bg-[#1b7a4a] inline-block peer-checked:ring-3 peer-checked:ring-emerald-300"></span></label>
-          <label class="cursor-pointer"><input type="radio" name="cat-color" value="#e07a5f" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-[#e07a5f] inline-block peer-checked:ring-3 peer-checked:ring-orange-300"></span></label>
-          <label class="cursor-pointer"><input type="radio" name="cat-color" value="#3b82f6" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-[#3b82f6] inline-block peer-checked:ring-3 peer-checked:ring-blue-300"></span></label>
-          <label class="cursor-pointer"><input type="radio" name="cat-color" value="#8b5cf6" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-[#8b5cf6] inline-block peer-checked:ring-3 peer-checked:ring-purple-300"></span></label>
-          <label class="cursor-pointer"><input type="radio" name="cat-color" value="#f59e0b" class="sr-only peer"><span class="w-7 h-7 rounded-full bg-[#f59e0b] inline-block peer-checked:ring-3 peer-checked:ring-amber-300"></span></label>
-        </div>
-      </div>
-
-      <div class="flex gap-2 pt-1">
-        <button type="button" onclick="cerrarModalCategoria()" class="flex-1 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl">Cancelar</button>
-        <button type="button" onclick="guardarCategoriaRapida()" class="flex-1 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs rounded-xl shadow">Guardar Categoría</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL TÁCTIL DE COBRO REGISTRADO CON ÉXITO -->
-  <div id="modal-cobro-exito" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl border border-stone-200 text-center animate-in fade-in zoom-in-95 duration-150">
-      <div class="w-14 h-14 rounded-full bg-emerald-100 text-[#1b7a4a] flex items-center justify-center mx-auto shadow-inner">
-        <i data-lucide="check-circle-2" class="w-8 h-8"></i>
-      </div>
-      <div>
-        <h3 class="text-base font-black text-stone-900">Cobro Registrado con Éxito</h3>
-        <p class="text-xs text-stone-500 mt-0.5">Venta guardada y añadida al arqueo de caja</p>
-      </div>
-
-      <div class="bg-stone-50 rounded-2xl p-3 border border-stone-100 space-y-1.5 text-xs text-left">
-        <div class="flex justify-between text-stone-500 font-medium">
-          <span>Ticket / Referencia:</span>
-          <span class="font-bold text-stone-800" id="modal-cobro-ticket">#T-001</span>
-        </div>
-        <div class="flex justify-between text-stone-500 font-medium">
-          <span>Método de Pago:</span>
-          <span class="font-extrabold text-[#1b7a4a]" id="modal-cobro-metodo">EFECTIVO</span>
-        </div>
-        <div class="flex justify-between text-stone-500 font-medium border-t border-stone-200 pt-1.5">
-          <span class="font-bold text-stone-700">Total Cobrado:</span>
-          <span class="text-base font-black text-stone-900" id="modal-cobro-total">0,00 €</span>
-        </div>
-      </div>
-
-      <!-- Botón para ver o imprimir el ticket recién cobrado -->
-      <button type="button" onclick="cerrarModalCobroExito(); abrirModalTicketTermicoUltimoCobro();" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-[#1b7a4a] border border-emerald-200 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer">
-        <i data-lucide="receipt" class="w-4 h-4"></i>
-        <span>Ver / Imprimir Ticket</span>
-      </button>
-
-      <button type="button" onclick="cerrarModalCobroExito()" class="w-full py-3 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-extrabold text-xs rounded-xl shadow transition-colors flex items-center justify-center gap-2">
-        <span>Aceptar y Continuar</span>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- NAVEGACIÓN INFERIOR PERSISTENTE -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 px-2 sm:px-5 py-2 flex items-center justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-    <div class="flex items-center justify-around sm:justify-start gap-1 sm:gap-6 w-full sm:w-auto">
-      <a href="index.html" class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-        <i data-lucide="calculator" class="w-4 h-4"></i>
-        <span>Ventas TPV</span>
-      </a>
-      <a href="03-tickets-mesas.html" class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors">
-        <i data-lucide="receipt" class="w-4 h-4 text-stone-500"></i>
-        <span>Tickets Abiertos</span>
-      </a>
-      <a href="04-plano-mesas.html" class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors">
-        <i data-lucide="layout-grid" class="w-4 h-4 text-stone-500"></i>
-        <span>Plano de Mesas</span>
-      </a>
-      <a href="05-cierre-caja.html" class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors">
-        <i data-lucide="banknote" class="w-4 h-4 text-stone-500"></i>
-        <span>Caja / Turno</span>
-      </a>
-      <a href="10-catalogo-stock.html" class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors">
-        <i data-lucide="package" class="w-4 h-4 text-stone-500"></i>
-        <span>Catálogo</span>
-      </a>
-    </div>
-
-    <div class="hidden lg:flex text-[11px] text-stone-400 items-center gap-1.5 shrink-0 pl-3">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-      <span>Terminal Conectada • Venta Directa</span>
-    </div>
-  </nav>
-
-  <!-- LÓGICA INTERACTIVA: CESTA, COMA AL PESO, AJUSTES Y SIMULADOR TÉRMICO -->
-  <script>
+<button class="flex-1 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs rounded-xl shadow transition-colors flex items-center justify-center gap-1.5" onclick="guardarAjustesGenerales()" type="button">
+<i class="w-4 h-4" data-lucide="check"></i>
+<span>Guardar Ajustes</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MODAL CREAR NUEVA CATEGORÍA -->
+<div class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4" id="modal-categoria">
+<div class="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border border-stone-200">
+<div class="flex items-center justify-between border-b border-stone-100 pb-2">
+<div class="flex items-center gap-2">
+<i class="w-5 h-5 text-[#1b7a4a]" data-lucide="folder-plus"></i>
+<h3 class="font-extrabold text-stone-900 text-sm">Nueva Categoría</h3>
+</div>
+<button class="text-stone-400 hover:text-stone-600 p-1" onclick="cerrarModalCategoria()" type="button">
+<i class="w-4 h-4" data-lucide="x"></i>
+</button>
+</div>
+<div>
+<label class="block text-xs font-bold text-stone-700 mb-1" for="input-cat-nombre">Nombre de la Categoría *</label>
+<input class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-800 focus:outline-none focus:border-[#1b7a4a]" id="input-cat-nombre" placeholder="Ej: Cafés, Bollería, Bocadillos, Panes..." type="text"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-stone-700 mb-1.5">Color de identificación</label>
+<div class="flex items-center gap-2">
+<label class="cursor-pointer"><input checked="" class="sr-only peer" name="cat-color" type="radio" value="#1b7a4a"/><span class="w-7 h-7 rounded-full bg-[#1b7a4a] inline-block peer-checked:ring-3 peer-checked:ring-emerald-300"></span></label>
+<label class="cursor-pointer"><input class="sr-only peer" name="cat-color" type="radio" value="#e07a5f"/><span class="w-7 h-7 rounded-full bg-[#e07a5f] inline-block peer-checked:ring-3 peer-checked:ring-orange-300"></span></label>
+<label class="cursor-pointer"><input class="sr-only peer" name="cat-color" type="radio" value="#3b82f6"/><span class="w-7 h-7 rounded-full bg-[#3b82f6] inline-block peer-checked:ring-3 peer-checked:ring-blue-300"></span></label>
+<label class="cursor-pointer"><input class="sr-only peer" name="cat-color" type="radio" value="#8b5cf6"/><span class="w-7 h-7 rounded-full bg-[#8b5cf6] inline-block peer-checked:ring-3 peer-checked:ring-purple-300"></span></label>
+<label class="cursor-pointer"><input class="sr-only peer" name="cat-color" type="radio" value="#f59e0b"/><span class="w-7 h-7 rounded-full bg-[#f59e0b] inline-block peer-checked:ring-3 peer-checked:ring-amber-300"></span></label>
+</div>
+</div>
+<div class="flex gap-2 pt-1">
+<button class="flex-1 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-xs rounded-xl" onclick="cerrarModalCategoria()" type="button">Cancelar</button>
+<button class="flex-1 py-2.5 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-bold text-xs rounded-xl shadow" onclick="guardarCategoriaRapida()" type="button">Guardar Categoría</button>
+</div>
+</div>
+</div>
+<!-- MODAL TÁCTIL DE COBRO REGISTRADO CON ÉXITO -->
+<div class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4" id="modal-cobro-exito">
+<div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl border border-stone-200 text-center animate-in fade-in zoom-in-95 duration-150">
+<div class="w-14 h-14 rounded-full bg-emerald-100 text-[#1b7a4a] flex items-center justify-center mx-auto shadow-inner">
+<i class="w-8 h-8" data-lucide="check-circle-2"></i>
+</div>
+<div>
+<h3 class="text-base font-black text-stone-900">Cobro Registrado con Éxito</h3>
+<p class="text-xs text-stone-500 mt-0.5">Venta guardada y añadida al arqueo de caja</p>
+</div>
+<div class="bg-stone-50 rounded-2xl p-3 border border-stone-100 space-y-1.5 text-xs text-left">
+<div class="flex justify-between text-stone-500 font-medium">
+<span>Ticket / Referencia:</span>
+<span class="font-bold text-stone-800" id="modal-cobro-ticket">#T-001</span>
+</div>
+<div class="flex justify-between text-stone-500 font-medium">
+<span>Método de Pago:</span>
+<span class="font-extrabold text-[#1b7a4a]" id="modal-cobro-metodo">EFECTIVO</span>
+</div>
+<div class="flex justify-between text-stone-500 font-medium border-t border-stone-200 pt-1.5">
+<span class="font-bold text-stone-700">Total Cobrado:</span>
+<span class="text-base font-black text-stone-900" id="modal-cobro-total">0,00 €</span>
+</div>
+</div>
+<!-- Botón para ver o imprimir el ticket recién cobrado -->
+<button class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-[#1b7a4a] border border-emerald-200 font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer" onclick="cerrarModalCobroExito(); abrirModalTicketTermicoUltimoCobro();" type="button">
+<i class="w-4 h-4" data-lucide="receipt"></i>
+<span>Ver / Imprimir Ticket</span>
+</button>
+<button class="w-full py-3 bg-[#1b7a4a] hover:bg-[#15613b] text-white font-extrabold text-xs rounded-xl shadow transition-colors flex items-center justify-center gap-2" onclick="cerrarModalCobroExito()" type="button">
+<span>Aceptar y Continuar</span>
+<i class="w-4 h-4" data-lucide="arrow-right"></i>
+</button>
+</div>
+</div>
+<!-- NAVEGACIÓN INFERIOR PERSISTENTE -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 px-2 sm:px-5 py-2 flex items-center justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+<div class="flex items-center justify-around sm:justify-start gap-1 sm:gap-6 w-full sm:w-auto">
+<a class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-200 shrink-0" href="index.html">
+<i class="w-4 h-4" data-lucide="calculator"></i>
+<span>Ventas TPV</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors" href="03-tickets-mesas.html">
+<i class="w-4 h-4 text-stone-500" data-lucide="receipt"></i>
+<span>Tickets Abiertos</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors" href="04-plano-mesas.html">
+<i class="w-4 h-4 text-stone-500" data-lucide="layout-grid"></i>
+<span>Plano de Mesas</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors" href="05-cierre-caja.html">
+<i class="w-4 h-4 text-stone-500" data-lucide="banknote"></i>
+<span>Caja / Turno</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 font-semibold text-xs shrink-0 px-2 py-1.5 rounded-xl hover:bg-stone-50 transition-colors" href="10-catalogo-stock.html">
+<i class="w-4 h-4 text-stone-500" data-lucide="package"></i>
+<span>Catálogo</span>
+</a>
+</div>
+<div class="hidden lg:flex text-[11px] text-stone-400 items-center gap-1.5 shrink-0 pl-3">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>Terminal Conectada • Venta Directa</span>
+</div>
+</nav>
+<!-- LÓGICA INTERACTIVA: CESTA, COMA AL PESO, AJUSTES Y SIMULADOR TÉRMICO -->
+<script>
     let ticketActivo = {
       id: null,
       numero: '#T-001',
@@ -709,33 +641,20 @@
         setTxt('tpk-encabezado', aj.encabezado || '¡Bienvenidos a La Piruleta!');
         setTxt('tpk-pie', aj.pie || '¡Gracias por su visita!');
 
-        // Determinar qué ticket visualizar
+        // Determinar qué ticket visualizar: PRIORIDAD ABSOLUTA AL TICKET ACTUALMENTE ABIERTO EN LA VENTA
         let ticket = ticketPersonalizado;
         if (!ticket) {
-          if (ticketActivo && ticketActivo.lineas && ticketActivo.lineas.length > 0) {
-            const totalEl = document.getElementById('ticket-total');
-            ticket = {
-              numero: ticketActivo.numero || '#T-001',
-              mesa: ticketActivo.mesa || 'BARRA',
-              lineas: ticketActivo.lineas,
-              total: parseFloat(totalEl ? totalEl.textContent : 0) || 0,
-              metodo: 'VENTA EN CURSO'
-            };
-          } else if (ultimoTicketCobrado && ultimoTicketCobrado.lineas && ultimoTicketCobrado.lineas.length > 0) {
-            ticket = ultimoTicketCobrado;
-          } else {
-            // Ejemplo demostrativo si la cesta está limpia
-            ticket = {
-              numero: (ticketActivo && ticketActivo.numero) ? ticketActivo.numero : '#T-001',
-              mesa: (ticketActivo && ticketActivo.mesa) ? ticketActivo.mesa : 'BARRA',
-              metodo: 'EFECTIVO',
-              total: 3.60,
-              lineas: [
-                { nombre: 'Café con Leche', cantidad: 1, precioUnitario: 1.70, total: 1.70 },
-                { nombre: 'Croissant Mantequilla', cantidad: 1, precioUnitario: 1.90, total: 1.90 }
-              ]
-            };
-          }
+          const totalEl = document.getElementById('ticket-total');
+          const totalCalculado = parseFloat(totalEl ? totalEl.textContent : 0) || 0;
+          const lineasActivas = (ticketActivo && Array.isArray(ticketActivo.lineas)) ? ticketActivo.lineas : [];
+
+          ticket = {
+            numero: (ticketActivo && ticketActivo.numero) ? ticketActivo.numero : '#T-001',
+            mesa: (ticketActivo && ticketActivo.mesa) ? ticketActivo.mesa : 'BARRA',
+            lineas: lineasActivas,
+            total: totalCalculado,
+            metodo: 'EN CURSO (PENDIENTE DE PAGO)'
+          };
         }
 
         const ahora = new Date();
@@ -744,7 +663,7 @@
         setTxt('tpk-ticket-num', ticket.numero || '#T-001');
         setTxt('tpk-fecha-hora', fechaStr);
         setTxt('tpk-mesa', ticket.mesa || 'BARRA');
-        setTxt('tpk-metodo-pago', ticket.metodo || 'EFECTIVO');
+        setTxt('tpk-metodo-pago', ticket.metodo || 'EN CURSO');
         
         const totalNum = parseFloat(ticket.total) || 0;
         setTxt('tpk-cobrado', totalNum.toFixed(2) + ' €');
@@ -775,7 +694,12 @@
               `;
             }).join('');
           } else {
-            contLineas.innerHTML = '<div class="text-center text-stone-400 py-2">Sin artículos</div>';
+            contLineas.innerHTML = `
+              <div class="text-center text-stone-500 py-3 italic">
+                <span class="font-bold">Ticket vacío (0 artículos)</span>
+                <div class="text-[9px] text-stone-400 mt-0.5">Cesta activa sin productos seleccionados</div>
+              </div>
+            `;
           }
         }
       } catch (err) {
@@ -1335,5 +1259,4 @@
     cargarDatos();
     lucide.createIcons();
   </script>
-</body>
-</html>
+</body></html>
