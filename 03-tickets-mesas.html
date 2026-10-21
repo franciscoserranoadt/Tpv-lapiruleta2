@@ -1,93 +1,89 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tickets y Mesas - La Piruleta TPV</title>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Tickets y Mesas - La Piruleta TPV</title>
+<link href="./manifest.json" rel="manifest"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
     body { font-family: 'Epilogue', sans-serif; -webkit-tap-highlight-color: transparent; }
   </style>
 </head>
 <body class="bg-[#fff8f5] text-stone-800 antialiased select-none pb-24">
-
-  <!-- CABECERA -->
-  <header class="sticky top-0 z-40 bg-[#1b7a4a] text-white px-4 py-2.5 flex items-center justify-between shadow-sm">
-    <div class="flex items-center gap-3">
-      <a href="index.html" class="p-1.5 rounded-xl bg-emerald-900/50 hover:bg-emerald-900/80 text-white transition-colors">
-        <i data-lucide="arrow-left" class="w-5 h-5"></i>
-      </a>
-      <div>
-        <h1 class="font-bold text-sm tracking-tight leading-tight">Tickets Abiertos y Mesas</h1>
-        <p id="subtitulo-comandas" class="text-[11px] text-emerald-100 font-medium">0 comandas activas • Total: 0,00 €</p>
-      </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <a href="04-plano-mesas.html" class="px-3 py-1.5 rounded-xl bg-white text-[#1b7a4a] font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-emerald-50 transition-colors">
-        <i data-lucide="layout-grid" class="w-4 h-4"></i>
-        <span>Ver Plano</span>
-      </a>
-      <a href="index.html" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors">
-        <i data-lucide="plus" class="w-4 h-4"></i>
-        <span>Nueva Venta</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- CONTENEDOR PRINCIPAL -->
-  <main class="p-4 max-w-4xl mx-auto space-y-4">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="font-extrabold text-sm text-stone-900">Comandas y Tickets en Curso</span>
-        <span id="badge-contador" class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">0</span>
-      </div>
-      <button type="button" onclick="descartarTodos()" id="btn-descartar-todos" class="text-xs text-rose-600 hover:text-rose-700 font-bold hidden items-center gap-1">
-        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-        <span>Descartar todos</span>
-      </button>
-    </div>
-
-    <!-- LISTADO DE TICKETS APARCADOS -->
-    <div id="lista-tickets" class="space-y-3">
-    </div>
-  </main>
-
-  <!-- NAVEGACIÓN INFERIOR PERSISTENTE (FOOTER UNIFICADO) -->
-  <footer class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md">
-    <div class="flex items-center gap-6">
-      <a href="index.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
-        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-        <span>Ventas TPV</span>
-      </a>
-      <a href="03-tickets-mesas.html" class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
-        <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
-        <span>Tickets Abiertos</span>
-      </a>
-      <a href="04-plano-mesas.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
-        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-        <span>Plano de Mesas</span>
-      </a>
-      <a href="05-cierre-caja.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
-        <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
-        <span>Caja / Turno</span>
-      </a>
-      <a href="10-catalogo-stock.html" class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs">
-        <i data-lucide="package" class="w-3.5 h-3.5"></i>
-        <span>Catálogo</span>
-      </a>
-    </div>
-    <div class="text-[11px] text-stone-400 flex items-center gap-1.5">
-      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-      <span>Terminal Conectada • Venta Directa</span>
-    </div>
-  </footer>
-
-  <script>
+<!-- CABECERA -->
+<header class="sticky top-0 z-40 bg-[#1b7a4a] text-white px-4 py-2.5 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<a class="p-1.5 rounded-xl bg-emerald-900/50 hover:bg-emerald-900/80 text-white transition-colors" href="index.html">
+<i class="w-5 h-5" data-lucide="arrow-left"></i>
+</a>
+<div>
+<h1 class="font-bold text-sm tracking-tight leading-tight">Tickets Abiertos y Mesas</h1>
+<p class="text-[11px] text-emerald-100 font-medium" id="subtitulo-comandas">0 comandas activas • Total: 0,00 €</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a class="px-3 py-1.5 rounded-xl bg-white text-[#1b7a4a] font-bold text-xs flex items-center gap-1.5 shadow-sm hover:bg-emerald-50 transition-colors" href="04-plano-mesas.html">
+<i class="w-4 h-4" data-lucide="layout-grid"></i>
+<span>Ver Plano</span>
+</a>
+<a class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors" href="index.html">
+<i class="w-4 h-4" data-lucide="plus"></i>
+<span>Nueva Venta</span>
+</a>
+</div>
+</header>
+<!-- CONTENEDOR PRINCIPAL -->
+<main class="p-4 max-w-4xl mx-auto space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-extrabold text-sm text-stone-900">Comandas y Tickets en Curso</span>
+<span class="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800" id="badge-contador">0</span>
+</div>
+<button class="text-xs text-rose-600 hover:text-rose-700 font-bold hidden items-center gap-1" id="btn-descartar-todos" onclick="descartarTodos()" type="button">
+<i class="w-3.5 h-3.5" data-lucide="trash-2"></i>
+<span>Descartar todos</span>
+</button>
+</div>
+<!-- LISTADO DE TICKETS APARCADOS -->
+<div class="space-y-3" data-mesa-badge="destacado" id="lista-tickets">
+</div>
+</main>
+<!-- NAVEGACIÓN INFERIOR PERSISTENTE (FOOTER UNIFICADO) -->
+<footer class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 px-5 py-2 flex items-center justify-between shadow-md pb-safe">
+<div class="flex items-center gap-6">
+<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="index.html">
+<i class="w-3.5 h-3.5" data-lucide="calculator"></i>
+<span>Ventas TPV</span>
+</a>
+<a class="flex items-center gap-1.5 text-[#1b7a4a] font-bold text-xs bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200" href="03-tickets-mesas.html">
+<i class="w-3.5 h-3.5" data-lucide="receipt"></i>
+<span>Tickets Abiertos</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="04-plano-mesas.html">
+<i class="w-3.5 h-3.5" data-lucide="layout-grid"></i>
+<span>Plano de Mesas</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="05-cierre-caja.html">
+<i class="w-3.5 h-3.5" data-lucide="banknote"></i>
+<span>Caja / Turno</span>
+</a>
+<a class="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 font-semibold text-xs" href="10-catalogo-stock.html">
+<i class="w-3.5 h-3.5" data-lucide="package"></i>
+<span>Catálogo</span>
+</a>
+</div>
+<div class="text-[11px] text-stone-400 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>Terminal Conectada • Venta Directa</span>
+</div>
+</footer>
+<script>
     function obtenerTicketsPendientes() {
       try {
         return JSON.parse(localStorage.getItem('lapiruleta_tickets_pendientes') || '[]');
