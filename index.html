@@ -39,6 +39,8 @@ if(!S){ // migración desde la versión de varios archivos
     pendientes:[],ventas:rd('lapiruleta_ventas_caja',[]),movimientos:[],turnos:rd('lapiruleta_historico_turnos',[]),fondo:150,n:100,activo:null};
 }
 S.ajustes={...DEF_AJ,...S.ajustes};
+if(!S.ivas)S.ivas=[{id:uid(),nombre:'Superreducido',tasa:4},{id:uid(),nombre:'Reducido',tasa:10,def:true},{id:uid(),nombre:'General',tasa:21}];
+const ivaOpts=cur=>{const l=S.ivas.map(t=>String(t.tasa));if(cur!==undefined&&!l.includes(String(cur)))l.push(String(cur));return l},ivaDef=()=>(S.ivas.find(t=>t.def)||S.ivas[0]).tasa;
 function nuevo(mesa='BARRA'){const p=S.ajustes.serie.endsWith('-')?S.ajustes.serie:S.ajustes.serie+'-';return{id:null,numero:'#'+p+(S.n++),mesa,lineas:[]}}
 if(!S.activo)S.activo=nuevo();
 function save(r=true){localStorage.setItem(K,JSON.stringify(S));if(r)render()}
@@ -55,6 +57,21 @@ const A={
  k(c){let b=V.buf;if(c=='C')b='';else if(c=='⌫')b=b.slice(0,-1);else if(c==','){if(!b.includes(','))b=(b||'0')+','}else if(b=='0')b=c;else if(b.length<7){const d=b.split(',')[1];if(d===undefined||d.length<3)b+=c}V.buf=b;$('#buf').textContent=b||'1'},
  setq(i){const q=num(V.buf);if(q>0){S.activo.lineas[i].qty=q;V.buf='';save()}},
  kp(){V.kp=!V.kp;render()},
+ ivaForm(i){const t=i<0?{nombre:'',tasa:'',def:false}:S.ivas[i],old=t.tasa;
+  modal(i<0?'Nuevo tipo de IVA':'Editar tipo de IVA',[{k:'n',l:'Nombre',v:t.nombre},{k:'t',l:'Tasa (%)',v:String(t.tasa).replace('.',','),n:1},{k:'d',l:'Por defecto en artículos nuevos',v:t.def?'Sí':'No',o:['No','Sí']}],v=>{
+   const r=num(v.t);if(!v.n.trim()||!v.t.trim()||r<0||r>100)return alert('Indica un nombre y una tasa entre 0 y 100'),false;
+   if(S.ivas.some((x,j)=>j!=i&&x.tasa==r))return alert('Ya existe un tipo con esa tasa'),false;
+   if(i<0){S.ivas.push({id:uid(),nombre:'',tasa:r,def:false});i=S.ivas.length-1}else S.productos.forEach(p=>{if(+p.iva==old)p.iva=r});
+   const x=S.ivas[i];x.nombre=v.n.trim();x.tasa=r;
+   if(v.d=='Sí')S.ivas.forEach(y=>y.def=y===x);else{x.def=false;if(!S.ivas.some(y=>y.def))(S.ivas.find(y=>y!==x)||x).def=true}
+   save()},i<0||S.ivas.length<2?'':`<button class="btn bg-red-100 text-red-700 w-full" onclick="A.delIva(${i})">Eliminar tipo</button>`)},
+ delIva(i){const t=S.ivas[i],rest=S.ivas.filter((_,j)=>j!=i),to=rest.find(y=>y.def)||rest[0],n=S.productos.filter(p=>+p.iva==t.tasa).length;
+  if(n&&!confirm(n+' artículos usan este IVA y pasarán al '+fq(to.tasa)+' %. ¿Continuar?'))return;
+  S.productos.forEach(p=>{if(+p.iva==t.tasa)p.iva=to.tasa});S.ivas.splice(i,1);if(!S.ivas.some(y=>y.def))S.ivas[0].def=true;X();save()},
+ informe(){const c=calc(),a=S.ajustes,g={};
+  S.ventas.forEach(v=>{if(v.reemb&&!(v.reembolsos||[]).length)return;v.lineas.forEach(l=>{const n=lt(l)-ramt(v,l.pid);if(n>0.004){const r=l.iva||10;g[r]=(g[r]||0)+n}})});
+  const row=(k,v,b)=>`<div class="flex justify-between${b?' font-bold':''}"><span>${k}</span><span>${v}</span></div>`,hr='<hr class="my-1 border-dashed border-black">';
+  $('#print').innerHTML=`<div class="mono leading-snug mx-auto" style="font-size:${a.fs||15}px;width:${a.ancho=='58'?'54':'76'}mm;color:#000"><div class="text-center font-bold">${esc(a.nombre)}</div><div class="text-center">INFORME DE CAJA<br>${new Date().toLocaleString('es-ES')}</div>${hr}${row('Tickets',c.vs.length)}${row('Facturado',money(c.tot),1)}${row('· Efectivo',money(c.ef))}${row('· Tarjeta',money(c.ta))}${row('· Bizum',money(c.bi))}${c.dev>0?row('Devoluciones',money(c.dev)):''}${hr}${Object.keys(g).map(r=>{const b=g[r]/(1+r/100);return row('Base '+r+'%',money(b))+row('IVA '+r+'%',money(g[r]-b))}).join('')}${hr}${row('Fondo inicial',money(S.fondo))}${row('Entradas/salidas',money(c.mv))}${row('Efectivo esperado',money(c.esp),1)}</div>`;window.print()},
  pf(k,v){S.ajustes[k]=v;if(k=='logoMode')return A.procLogo();save(false);pgs();$('#pv').innerHTML=tkt(muestra())},
  test(){$('#print').innerHTML=tkt(muestra());window.print()},
  quitarLogo(){Object.assign(S.ajustes,{logo:'',logoSrc:'',logoOn:false});save()},
@@ -106,8 +123,8 @@ const A={
   S.turnos.push({fecha:new Date().toISOString(),ventas:S.ventas,movimientos:S.movimientos,fondo:S.fondo,esperado:c.esp});S.ventas=[];S.movimientos=[];save()},
  cat_(){modal('Nueva categoría',[{k:'n',l:'Nombre',v:''}],v=>{if(v.n.trim())S.categorias.push(v.n.trim());save()})},
  delCat(i){const n=S.categorias[i];if(!confirm('¿Eliminar la categoría '+n+'? Sus artículos quedarán sin categoría.'))return;S.productos.forEach(p=>{if(p.cat==n)p.cat=''});S.categorias.splice(i,1);V.cat=-1;save()},
- prod(i){const p=i<0?{nombre:'',precio:'',iva:10,u:'ud',cat:S.categorias[0]||''}:S.productos[i];
-  modal(i<0?'Nuevo artículo':'Editar artículo',[{k:'n',l:'Nombre',v:p.nombre},{k:'p',l:'Precio (€)',v:String(p.precio).replace('.',','),n:1},{k:'i',l:'IVA %',v:String(p.iva),o:['4','10','21']},{k:'u',l:'Se vende por',v:p.u||'ud',o:['ud','kg']},{k:'c',l:'Categoría',v:p.cat,o:['',...S.categorias]}],v=>{
+ prod(i){const p=i<0?{nombre:'',precio:'',iva:ivaDef(),u:'ud',cat:S.categorias[0]||''}:S.productos[i];
+  modal(i<0?'Nuevo artículo':'Editar artículo',[{k:'n',l:'Nombre',v:p.nombre},{k:'p',l:'Precio (€)',v:String(p.precio).replace('.',','),n:1},{k:'i',l:'IVA %',v:String(p.iva),o:ivaOpts(p.iva)},{k:'u',l:'Se vende por',v:p.u||'ud',o:['ud','kg']},{k:'c',l:'Categoría',v:p.cat,o:['',...S.categorias]}],v=>{
    if(!v.n.trim())return alert('Falta el nombre'),false;const d={nombre:v.n.trim(),precio:num(v.p),iva:num(v.i),u:v.u,cat:v.c};
    i<0?S.productos.push({id:uid(),...d}):Object.assign(S.productos[i],d);save()},
    i<0?'':`<button class="btn bg-red-100 text-red-700 w-full" onclick="A.delProd(${i})">Eliminar artículo</button>`)},
@@ -153,7 +170,7 @@ caja(){const c=calc();return `<div class="p-4 max-w-xl mx-auto"><h2 class="font-
  ${c.dev>0?`<div class="flex justify-between text-sm text-red-600"><span>Devoluciones (ya descontadas)</span><span class="mono">−${money(c.dev)}</span></div>`:''}<hr class="my-2"><div class="flex justify-between text-sm"><span>Fondo inicial <button class="underline text-[#1b7a4a]" onclick="A.fondo()">cambiar</button></span><span class="mono">${money(S.fondo)}</span></div>
  <div class="flex justify-between text-sm"><span>Entradas/salidas</span><span class="mono">${money(c.mv)}</span></div>
  <div class="flex justify-between font-extrabold text-lg mt-1"><span>Efectivo esperado</span><span class="mono">${money(c.esp)}</span></div></div>
- <div class="flex gap-2 mb-3"><button class="btn bg-stone-200 flex-1" onclick="A.mov()">+ Entrada / salida</button><button class="btn bg-stone-200 flex-1" onclick="window.print()">Informe Z</button></div>
+ <div class="flex gap-2 mb-3"><button class="btn bg-stone-200 flex-1" onclick="A.mov()">+ Entrada / salida</button><button class="btn bg-stone-200 flex-1" onclick="A.informe()">Informe Z</button></div>
  ${S.movimientos.map(m=>`<div class="flex justify-between text-sm py-1 border-b"><span>${m.tipo=='entrada'?'⬆':'⬇'} ${esc(m.motivo||m.tipo)}</span><b class="mono ${m.tipo=='entrada'?'text-green-700':'text-red-600'}">${m.tipo=='entrada'?'+':'−'}${money(m.importe)}</b></div>`).join('')}
  <button class="btn bg-[#1b7a4a] text-white w-full mt-4" onclick="A.cerrar()">Finalizar y cerrar turno (${money(c.esp)})</button><p class="text-xs text-stone-500 mt-2 text-center">${S.turnos.length} turnos archivados</p></div>`},
 historial(){const l=S.ventas.map((v,i)=>[v,i]).reverse();return `<div class="p-4 max-w-2xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Ventas del turno</h2>${l.length?l.map(([v,i])=>`<button onclick="A.ver(${i})" class="w-full bg-white border rounded-2xl p-3 mb-2 flex items-center gap-3 text-left ${v.reemb?'opacity-50':''}"><div class="flex-1"><b>${esc(v.numero)}</b> · ${esc(v.mesa)}<div class="text-xs text-stone-500">${new Date(v.ts).toLocaleTimeString('es-ES')} · ${esc(v.metodo)}${v.reemb?' · reembolsado':dv(v)>0?' · devolución parcial −'+money(dv(v)):''}</div></div><b class="mono">${money(neto(v))}</b></button>`).join(''):'<p class="text-stone-500">Aún no hay ventas en este turno.</p>'}</div>`},
@@ -169,6 +186,7 @@ plantilla(){const a=S.ajustes,f=(k,l)=>`<label class="block text-xs font-bold mb
  <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Contenido</h3>${sel('ancho','Papel',[['80','Rollo 80 mm'],['58','Rollo 58 mm']])}${sel('fs','Tamaño de letra',[[11,'Pequeño'],[13,'Normal'],[15,'Grande'],[18,'Muy grande']])}${c('mesa','Mostrar mesa')}${c('ivaDet','Desglose de IVA (base y cuota)')}<div class="mt-2">${f('pie','Mensaje de agradecimiento')}${f('wifi','Wi-Fi o promoción')}<label class="block text-xs font-bold mb-2">Condiciones y devoluciones<textarea class="inp" rows="3" oninput="A.pf('legal',this.value)">${esc(a.legal)}</textarea></label></div></div></div>
  <div><div class="sticky top-2"><div class="text-xs font-bold text-stone-500 mb-1">Vista previa</div><div id="pv" class="bg-white shadow rounded-xl p-3 overflow-auto">${tkt(muestra())}</div></div></div></div></div>`},
 ajustes(){const a=S.ajustes;return `<div class="p-4 max-w-xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Ajustes</h2><div class="bg-white border rounded-2xl p-4 mb-3 text-sm"><b>${esc(a.nombre)}</b><br>CIF: ${esc(a.cif)||'—'}<br>${esc(a.dir)||'Sin dirección'}<br>Serie ${esc(a.serie)} · papel ${a.ancho} mm</div>
+ <div class="bg-white border rounded-2xl p-4 mb-3"><div class="flex items-center mb-1"><h3 class="font-extrabold flex-1">Tipos de IVA</h3><button class="btn bg-[#1b7a4a] text-white !py-1.5" onclick="A.ivaForm(-1)">+ Tipo</button></div>${S.ivas.map((t,i)=>`<button onclick="A.ivaForm(${i})" class="w-full flex items-center py-2.5 border-b last:border-0 text-left"><span class="flex-1 font-semibold">${esc(t.nombre)}${t.def?' <span class="text-xs text-[#1b7a4a]">· por defecto</span>':''}</span><b class="mono">${fq(t.tasa)} %</b></button>`).join('')}</div>
  <button class="btn bg-[#1b7a4a] text-white w-full mb-2" onclick="A.go('plantilla')">Diseñar plantilla de ticket</button><button class="btn bg-stone-200 w-full mb-2" onclick="A.negocio()">Editar datos del negocio y serie</button><button class="btn bg-stone-200 w-full mb-2" onclick="A.export()">Exportar copia de seguridad</button><button class="btn bg-red-100 text-red-700 w-full" onclick="A.reset()">Borrar todos los datos</button></div>`}
 };
 const TABS=[['venta','Venta'],['tickets','Tickets'],['mesas','Mesas'],['caja','Caja'],['historial','Historial'],['catalogo','Catálogo'],['ajustes','Ajustes']];
