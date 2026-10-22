@@ -13,8 +13,8 @@ body{font-family:Epilogue,system-ui,sans-serif;background:#fff8f5;color:#292524}
 .inp{width:100%;margin-top:.25rem;padding:.6rem;border:1px solid #d6d3d1;border-radius:.7rem;font-size:.95rem}
 .mono{font-family:'Space Mono',monospace}
 #print{display:none}
-@media print{body>*:not(#print){display:none!important}#print{display:block!important}}
-</style></head>
+@media print{body>*:not(#print){display:none!important}#print{display:block!important}#print>div{width:100%!important;padding:0 2mm}}
+</style><style id="pg"></style></head>
 <body class="h-screen flex flex-col" style="padding-top:env(safe-area-inset-top,0px)">
 <header class="bg-[#1b7a4a] text-white flex items-center gap-1 px-2 py-2 overflow-x-auto" id="nav"></header>
 <main class="flex-1 overflow-auto" id="app"></main>
@@ -25,7 +25,7 @@ const rd=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}cat
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>(+n||0).toFixed(2).replace('.',',')+' €',num=s=>parseFloat(String(s).replace(',','.'))||0;
-const V={v:'venta',cat:-1,edit:false,buf:'',kp:true},DEF_AJ={nombre:'La Piruleta',cif:'',dir:'',pie:'¡Gracias por su visita!',serie:'T-',ancho:'80',razon:'',tel:'',web:'',wifi:'',legal:'',logo:'',logoSrc:'',logoOn:false,logoTam:64,logoMode:'silueta',mesa:true,ivaDet:false};
+const V={v:'venta',cat:-1,edit:false,buf:'',kp:true},DEF_AJ={nombre:'La Piruleta',cif:'',dir:'',pie:'¡Gracias por su visita!',serie:'T-',ancho:'80',razon:'',tel:'',web:'',wifi:'',legal:'',logo:'',logoSrc:'',logoOn:false,logoTam:64,logoMode:'silueta',mesa:true,ivaDet:false,fs:15};
 
 /* ===== ESTADO CENTRAL (única fuente de verdad) ===== */
 let S=rd(K,null);
@@ -55,7 +55,7 @@ const A={
  k(c){let b=V.buf;if(c=='C')b='';else if(c=='⌫')b=b.slice(0,-1);else if(c==','){if(!b.includes(','))b=(b||'0')+','}else if(b=='0')b=c;else if(b.length<7){const d=b.split(',')[1];if(d===undefined||d.length<3)b+=c}V.buf=b;$('#buf').textContent=b||'1'},
  setq(i){const q=num(V.buf);if(q>0){S.activo.lineas[i].qty=q;V.buf='';save()}},
  kp(){V.kp=!V.kp;render()},
- pf(k,v){S.ajustes[k]=v;if(k=='logoMode')return A.procLogo();save(false);$('#pv').innerHTML=tkt(muestra())},
+ pf(k,v){S.ajustes[k]=v;if(k=='logoMode')return A.procLogo();save(false);pgs();$('#pv').innerHTML=tkt(muestra())},
  test(){$('#print').innerHTML=tkt(muestra());window.print()},
  quitarLogo(){Object.assign(S.ajustes,{logo:'',logoSrc:'',logoOn:false});save()},
  logo(f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const w0=im.naturalWidth||256,h0=im.naturalHeight||256,s=Math.min(1,256/w0),c=document.createElement('canvas');c.width=Math.round(w0*s)||256;c.height=Math.round(h0*s)||256;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);S.ajustes.logoSrc=c.toDataURL('image/png');A.procLogo()};im.src=r.result};r.readAsDataURL(f)},
@@ -126,7 +126,7 @@ function modal(t,fs,ok,extra=''){
  const f=$('#m input');f&&f.select()}
 function tkt(v){const a=S.ajustes,d=new Date(v.ts).toLocaleString('es-ES'),hr='<hr class="my-1 border-dashed border-black">',g={};
  if(a.ivaDet)(v.lineas||[]).forEach(l=>{const r=l.iva||10;g[r]=(g[r]||0)+lt(l)});
- return `<div class="mono text-[11px] leading-snug mx-auto" style="width:${a.ancho=='58'?'54':'76'}mm;color:#000">${a.logoOn&&a.logo?`<img src="${a.logo}" style="width:${a.logoTam||64}px;margin:0 auto 4px;display:block">`:''}<div class="text-center font-bold">${esc(a.nombre)}</div><div class="text-center">${[a.razon,a.cif,a.dir,[a.tel,a.web].filter(Boolean).join(' · ')].filter(Boolean).map(esc).join('<br>')}</div>${hr}${esc(v.numero)}${a.mesa!==false?' · '+esc(v.mesa):''}<br>${d}${hr}${(v.lineas||[]).map(l=>`<div class="flex justify-between"><span>${fq(l.qty)}${l.u=='kg'?' kg':'x'} ${esc(l.nombre)}</span><span>${money(lt(l))}</span></div>`).join('')}${hr}${Object.keys(g).map(r=>{const b=g[r]/(1+r/100);return `<div class="flex justify-between"><span>Base ${r}%</span><span>${money(b)}</span></div><div class="flex justify-between"><span>IVA ${r}%</span><span>${money(g[r]-b)}</span></div>`}).join('')}<div class="flex justify-between font-bold"><span>TOTAL</span><span>${money(v.total)}</span></div>${esc(v.metodo)}${v.cambio>0.004?` · Cambio ${money(v.cambio)}`:''}${dv(v)>0?`<br>Devuelto: -${money(dv(v))}<br>${v.reemb?'<b>*** REEMBOLSADO ***</b>':'Neto: '+money(neto(v))}`:''}${a.wifi?`<div class="text-center mt-2">${esc(a.wifi)}</div>`:''}<div class="text-center mt-1">${esc(a.pie)}</div>${a.legal?`<div class="text-center mt-1 text-[9px] whitespace-pre-line">${esc(a.legal)}</div>`:''}</div>`}
+ return `<div class="mono leading-snug mx-auto" style="font-size:${a.fs||15}px;width:${a.ancho=='58'?'54':'76'}mm;color:#000">${a.logoOn&&a.logo?`<img src="${a.logo}" style="width:${a.logoTam||64}px;margin:0 auto 4px;display:block">`:''}<div class="text-center font-bold">${esc(a.nombre)}</div><div class="text-center">${[a.razon,a.cif,a.dir,[a.tel,a.web].filter(Boolean).join(' · ')].filter(Boolean).map(esc).join('<br>')}</div>${hr}${esc(v.numero)}${a.mesa!==false?' · '+esc(v.mesa):''}<br>${d}${hr}${(v.lineas||[]).map(l=>`<div class="flex justify-between"><span>${fq(l.qty)}${l.u=='kg'?' kg':'x'} ${esc(l.nombre)}</span><span>${money(lt(l))}</span></div>`).join('')}${hr}${Object.keys(g).map(r=>{const b=g[r]/(1+r/100);return `<div class="flex justify-between"><span>Base ${r}%</span><span>${money(b)}</span></div><div class="flex justify-between"><span>IVA ${r}%</span><span>${money(g[r]-b)}</span></div>`}).join('')}<div class="flex justify-between font-bold"><span>TOTAL</span><span>${money(v.total)}</span></div>${esc(v.metodo)}${v.cambio>0.004?` · Cambio ${money(v.cambio)}`:''}${dv(v)>0?`<br>Devuelto: -${money(dv(v))}<br>${v.reemb?'<b>*** REEMBOLSADO ***</b>':'Neto: '+money(neto(v))}`:''}${a.wifi?`<div class="text-center mt-2">${esc(a.wifi)}</div>`:''}<div class="text-center mt-1">${esc(a.pie)}</div>${a.legal?`<div class="text-center mt-1 whitespace-pre-line" style="font-size:.8em">${esc(a.legal)}</div>`:''}</div>`}
 const muestra=()=>({numero:'#'+S.ajustes.serie+'0142',mesa:'Mesa 4',ts:Date.now(),metodo:'Efectivo',total:8.1,cambio:1.9,lineas:[{nombre:'Café con leche',precio:1.7,qty:1,iva:10},{nombre:'Croissant',precio:1.9,qty:1,iva:10},{nombre:'Tarta de zanahoria',precio:4.5,qty:1,iva:10}]});
 function calc(){const vs=S.ventas.filter(v=>!v.reemb),by=m=>S.ventas.filter(v=>v.metodo==m).reduce((s,v)=>s+neto(v),0),
  mv=S.movimientos.reduce((s,m)=>s+(m.tipo=='entrada'?m.importe:-m.importe),0),ef=by('Efectivo');
@@ -166,13 +166,14 @@ plantilla(){const a=S.ajustes,f=(k,l)=>`<label class="block text-xs font-bold mb
  <div class="grid md:grid-cols-[1fr_330px] gap-4"><div>
  <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Cabecera y datos fiscales</h3>${f('nombre','Nombre comercial (cabecera)')}${f('razon','Razón social')}${f('cif','NIF / CIF')}${f('dir','Dirección')}${f('tel','Teléfono')}${f('web','Web o Instagram')}</div>
  <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Logotipo</h3>${a.logo?`<img src="${a.logo}" class="h-14 mb-2 border">`:''}<input type="file" accept="image/*" class="text-sm mb-2" onchange="A.logo(this.files[0])">${c('logoOn','Mostrar logotipo en el ticket')}${sel('logoMode','Estilo',[['silueta','Silueta (alto contraste)'],['tramado','Tramado (fotos)']])}${sel('logoTam','Tamaño',[[40,'Pequeño'],[64,'Mediano'],[96,'Grande'],[130,'Muy grande']])}${a.logo?'<button class="text-xs text-red-600 font-bold" onclick="A.quitarLogo()">Quitar logotipo</button>':''}</div>
- <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Contenido</h3>${sel('ancho','Papel',[['80','Rollo 80 mm'],['58','Rollo 58 mm']])}${c('mesa','Mostrar mesa')}${c('ivaDet','Desglose de IVA (base y cuota)')}<div class="mt-2">${f('pie','Mensaje de agradecimiento')}${f('wifi','Wi-Fi o promoción')}<label class="block text-xs font-bold mb-2">Condiciones y devoluciones<textarea class="inp" rows="3" oninput="A.pf('legal',this.value)">${esc(a.legal)}</textarea></label></div></div></div>
+ <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Contenido</h3>${sel('ancho','Papel',[['80','Rollo 80 mm'],['58','Rollo 58 mm']])}${sel('fs','Tamaño de letra',[[11,'Pequeño'],[13,'Normal'],[15,'Grande'],[18,'Muy grande']])}${c('mesa','Mostrar mesa')}${c('ivaDet','Desglose de IVA (base y cuota)')}<div class="mt-2">${f('pie','Mensaje de agradecimiento')}${f('wifi','Wi-Fi o promoción')}<label class="block text-xs font-bold mb-2">Condiciones y devoluciones<textarea class="inp" rows="3" oninput="A.pf('legal',this.value)">${esc(a.legal)}</textarea></label></div></div></div>
  <div><div class="sticky top-2"><div class="text-xs font-bold text-stone-500 mb-1">Vista previa</div><div id="pv" class="bg-white shadow rounded-xl p-3 overflow-auto">${tkt(muestra())}</div></div></div></div></div>`},
 ajustes(){const a=S.ajustes;return `<div class="p-4 max-w-xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Ajustes</h2><div class="bg-white border rounded-2xl p-4 mb-3 text-sm"><b>${esc(a.nombre)}</b><br>CIF: ${esc(a.cif)||'—'}<br>${esc(a.dir)||'Sin dirección'}<br>Serie ${esc(a.serie)} · papel ${a.ancho} mm</div>
  <button class="btn bg-[#1b7a4a] text-white w-full mb-2" onclick="A.go('plantilla')">Diseñar plantilla de ticket</button><button class="btn bg-stone-200 w-full mb-2" onclick="A.negocio()">Editar datos del negocio y serie</button><button class="btn bg-stone-200 w-full mb-2" onclick="A.export()">Exportar copia de seguridad</button><button class="btn bg-red-100 text-red-700 w-full" onclick="A.reset()">Borrar todos los datos</button></div>`}
 };
 const TABS=[['venta','Venta'],['tickets','Tickets'],['mesas','Mesas'],['caja','Caja'],['historial','Historial'],['catalogo','Catálogo'],['ajustes','Ajustes']];
-function render(){V.v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):'venta';
+const pgs=()=>$('#pg').textContent=`@media print{@page{size:${S.ajustes.ancho}mm auto;margin:0}}`;
+function render(){pgs();V.v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):'venta';
  $('#nav').innerHTML=TABS.map(([k,n])=>`<button onclick="A.go('${k}')" class="px-3 py-2 rounded-xl text-sm font-bold whitespace-nowrap ${V.v==k||(k=='ajustes'&&V.v=='plantilla')?'bg-white text-[#1b7a4a]':'bg-emerald-900/40'}">${n}${k=='tickets'&&S.pendientes.length?` <span class="bg-amber-500 text-white rounded-full px-1.5 text-xs">${S.pendientes.length}</span>`:''}</button>`).join('');
  $('#app').innerHTML=VIEWS[V.v]()}
 addEventListener('hashchange',render);addEventListener('storage',e=>{if(e.key==K){S=JSON.parse(e.newValue);render()}});
