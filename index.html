@@ -42,7 +42,9 @@ S.ajustes={...DEF_AJ,...S.ajustes};
 function nuevo(mesa='BARRA'){const p=S.ajustes.serie.endsWith('-')?S.ajustes.serie:S.ajustes.serie+'-';return{id:null,numero:'#'+p+(S.n++),mesa,lineas:[]}}
 if(!S.activo)S.activo=nuevo();
 function save(r=true){localStorage.setItem(K,JSON.stringify(S));if(r)render()}
-const lt=l=>Math.round(l.precio*l.qty*100)/100,tot=t=>t.lineas.reduce((s,l)=>s+lt(l),0),fq=q=>String(+(+q).toFixed(3)).replace('.',',');
+const lt=l=>Math.round(l.precio*l.qty*100)/100,tot=t=>t.lineas.reduce((s,l)=>s+lt(l),0),fq=q=>String(+(+q).toFixed(3)).replace('.',','),
+rf=v=>(v.reembolsos||[]).reduce((s,r)=>s+r.importe,0),dv=v=>v.reemb&&!(v.reembolsos||[]).length?v.total:rf(v),neto=v=>Math.round((v.total-dv(v))*100)/100,
+rqty=(v,id)=>(v.reembolsos||[]).reduce((s,r)=>s+r.lineas.filter(l=>l.pid==id).reduce((a,l)=>a+l.qty,0),0),ramt=(v,id)=>(v.reembolsos||[]).reduce((s,r)=>s+r.lineas.filter(l=>l.pid==id).reduce((a,l)=>a+l.imp,0),0);
 const kpad=()=>V.kp?`<div class="px-3 py-2 border-t"><div class="flex items-center gap-2 mb-2"><div class="flex-1 bg-stone-100 rounded-xl px-3 py-2 text-right mono text-lg"><span class="text-xs text-stone-500 float-left mt-1 font-sans">Cantidad ×</span><span id="buf">${V.buf||'1'}</span></div><button class="btn bg-stone-200 !px-4" onclick="A.k('C')">C</button></div><div class="grid grid-cols-3 gap-1.5">${['7','8','9','4','5','6','1','2','3',',','0','⌫'].map(k=>`<button class="py-2.5 rounded-xl bg-stone-100 font-extrabold text-lg active:bg-stone-300" onclick="A.k('${k}')">${k}</button>`).join('')}</div></div>`:'';
 
 /* ===== ACCIONES (cada botón llama a una de estas) ===== */
@@ -64,8 +66,19 @@ const A={
    const venta={id:uid(),numero:a.numero,mesa:a.mesa,total:T,metodo:m,lineas:a.lineas,ts:Date.now(),entregado:ent,cambio:ent-T,reemb:false};
    S.ventas.push(venta);S.activo=nuevo();save();A.ver(S.ventas.length-1,true)})},
  ver(i,nuevoCobro){const v=S.ventas[i];$('#print').innerHTML=tkt(v);
-  $('#m').innerHTML=ov(`<h3 class="font-extrabold mb-2">${nuevoCobro?'✅ Cobro completado':'Ticket '+esc(v.numero)}${v.reemb?' · REEMBOLSADO':''}</h3>${v.cambio>0.004?`<p class="mb-2 font-bold text-[#1b7a4a]">Cambio: ${money(v.cambio)}</p>`:''}<div class="overflow-auto max-h-[50vh] border rounded-xl p-2 mb-3">${tkt(v)}</div><div class="flex gap-2"><button class="btn bg-stone-200 flex-1" onclick="X()">Cerrar</button>${!v.reemb&&!nuevoCobro?`<button class="btn bg-red-100 text-red-700 flex-1" onclick="A.reemb(${i})">Reembolsar</button>`:''}<button class="btn bg-[#1b7a4a] text-white flex-1" onclick="window.print()">Imprimir</button></div>`)},
- reemb(i){if(!confirm('¿Reembolsar el ticket completo? Se descontará del cierre de caja.'))return;S.ventas[i].reemb=true;X();save()},
+  $('#m').innerHTML=ov(`<h3 class="font-extrabold mb-2">${nuevoCobro?'✅ Cobro completado':'Ticket '+esc(v.numero)}${v.reemb?' · REEMBOLSADO':dv(v)>0?' · devolución parcial':''}</h3>${v.cambio>0.004?`<p class="mb-2 font-bold text-[#1b7a4a]">Cambio: ${money(v.cambio)}</p>`:''}<div class="overflow-auto max-h-[50vh] border rounded-xl p-2 mb-3">${tkt(v)}</div><div class="flex gap-2"><button class="btn bg-stone-200 flex-1" onclick="X()">Cerrar</button>${!v.reemb&&!nuevoCobro?`<button class="btn bg-red-100 text-red-700 flex-1" onclick="A.reembForm(${i})">Reembolsar</button>`:''}<button class="btn bg-[#1b7a4a] text-white flex-1" onclick="window.print()">Imprimir</button></div>`)},
+ reembForm(i){const v=S.ventas[i],ls=v.lineas.map((l,j)=>({l,j,d:+(l.qty-rqty(v,l.pid)).toFixed(3)})).filter(x=>x.d>0);
+  if(!ls.length)return alert('Este ticket ya está reembolsado por completo');
+  modal('Reembolso · '+esc(v.numero),[...ls.map(x=>({k:'q'+x.j,l:`${esc(x.l.nombre)} (disponible: ${fq(x.d)})`,v:'0',n:1})),{k:'r',l:'Motivo (opcional)',v:''}],f=>{
+   const sel=[];for(const x of ls){const q=num(f['q'+x.j]);if(q<0||q>x.d+.0005)return alert('Cantidad no válida en '+x.l.nombre),false;if(q>0)sel.push({...x,q})}
+   if(!sel.length)return alert('Indica qué cantidad devolver'),false;A.aplicar(i,sel,f.r)},
+  `<button class="btn bg-red-100 text-red-700 w-full" onclick="A.reembTodo(${i})">Reembolsar todo lo pendiente</button>`)},
+ reembTodo(i){const v=S.ventas[i],sel=v.lineas.map(l=>({l,q:+(l.qty-rqty(v,l.pid)).toFixed(3)})).filter(x=>x.q>0);
+  if(!sel.length||!confirm('¿Reembolsar todo lo pendiente de este ticket?'))return;X();A.aplicar(i,sel,'')},
+ aplicar(i,sel,motivo){const v=S.ventas[i];
+  const lineas=sel.map(x=>{const d=+(x.l.qty-rqty(v,x.l.pid)).toFixed(3);return{pid:x.l.pid,nombre:x.l.nombre,precio:x.l.precio,u:x.l.u,qty:x.q,imp:x.q>=d-.0005?+(lt(x.l)-ramt(v,x.l.pid)).toFixed(2):Math.round(x.l.precio*x.q*100)/100}});
+  (v.reembolsos=v.reembolsos||[]).push({ts:Date.now(),lineas,importe:+lineas.reduce((s,l)=>s+l.imp,0).toFixed(2),motivo:motivo||''});
+  v.reemb=v.lineas.every(l=>l.qty-rqty(v,l.pid)<=.0005);save();setTimeout(()=>A.ver(i),0)},
  mesa(i){if(V.edit)return;const m=S.mesas[i],t=S.pendientes.find(x=>x.mesa==m.nombre);
   if(t)return A.recuperar(t.id);S.activo.mesa=m.nombre;save(false);A.go('venta')},
  editar(){V.edit=!V.edit;render()},
@@ -103,10 +116,10 @@ function modal(t,fs,ok,extra=''){
  $('#mok').onclick=()=>{const v={};fs.forEach(f=>v[f.k]=$('#f_'+f.k).value);if(ok(v)!==false)X()};
  const f=$('#m input');f&&f.select()}
 function tkt(v){const a=S.ajustes,d=new Date(v.ts).toLocaleString('es-ES');
- return `<div class="mono text-[11px] leading-snug mx-auto" style="width:${a.ancho=='58'?'54':'76'}mm;color:#000"><div class="text-center font-bold">${esc(a.nombre)}</div><div class="text-center">${esc(a.cif)}<br>${esc(a.dir)}</div><hr class="my-1 border-dashed border-black">${esc(v.numero)} · ${esc(v.mesa)}<br>${d}<hr class="my-1 border-dashed border-black">${(v.lineas||[]).map(l=>`<div class="flex justify-between"><span>${fq(l.qty)}${l.u=='kg'?' kg':'x'} ${esc(l.nombre)}</span><span>${money(lt(l))}</span></div>`).join('')}<hr class="my-1 border-dashed border-black"><div class="flex justify-between font-bold"><span>TOTAL</span><span>${money(v.total)}</span></div>${esc(v.metodo)}${v.cambio>0.004?` · Cambio ${money(v.cambio)}`:''}${v.reemb?'<br><b>*** REEMBOLSADO ***</b>':''}<div class="text-center mt-2">${esc(a.pie)}</div></div>`}
-function calc(){const vs=S.ventas.filter(v=>!v.reemb),by=m=>vs.filter(v=>v.metodo==m).reduce((s,v)=>s+v.total,0),
+ return `<div class="mono text-[11px] leading-snug mx-auto" style="width:${a.ancho=='58'?'54':'76'}mm;color:#000"><div class="text-center font-bold">${esc(a.nombre)}</div><div class="text-center">${esc(a.cif)}<br>${esc(a.dir)}</div><hr class="my-1 border-dashed border-black">${esc(v.numero)} · ${esc(v.mesa)}<br>${d}<hr class="my-1 border-dashed border-black">${(v.lineas||[]).map(l=>`<div class="flex justify-between"><span>${fq(l.qty)}${l.u=='kg'?' kg':'x'} ${esc(l.nombre)}</span><span>${money(lt(l))}</span></div>`).join('')}<hr class="my-1 border-dashed border-black"><div class="flex justify-between font-bold"><span>TOTAL</span><span>${money(v.total)}</span></div>${esc(v.metodo)}${v.cambio>0.004?` · Cambio ${money(v.cambio)}`:''}${dv(v)>0?`<br>Devuelto: -${money(dv(v))}<br>${v.reemb?'<b>*** REEMBOLSADO ***</b>':'Neto: '+money(neto(v))}`:''}<div class="text-center mt-2">${esc(a.pie)}</div></div>`}
+function calc(){const vs=S.ventas.filter(v=>!v.reemb),by=m=>S.ventas.filter(v=>v.metodo==m).reduce((s,v)=>s+neto(v),0),
  mv=S.movimientos.reduce((s,m)=>s+(m.tipo=='entrada'?m.importe:-m.importe),0),ef=by('Efectivo');
- return{vs,ef,ta:by('Tarjeta'),bi:by('Bizum'),mv,tot:vs.reduce((s,v)=>s+v.total,0),esp:S.fondo+ef+mv}}
+ return{vs,ef,ta:by('Tarjeta'),bi:by('Bizum'),mv,tot:S.ventas.reduce((s,v)=>s+neto(v),0),dev:S.ventas.reduce((s,v)=>s+dv(v),0),esp:S.fondo+ef+mv}}
 
 /* ===== VISTAS ===== */
 const VIEWS={
@@ -126,13 +139,13 @@ mesas(){return `<div class="p-3 h-full flex flex-col"><div class="flex gap-2 mb-
 caja(){const c=calc();return `<div class="p-4 max-w-xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Caja y cierre de turno</h2>
  <div class="bg-white border rounded-2xl p-4 mb-3"><div class="flex justify-between"><span>Facturado (${c.vs.length} tickets)</span><b class="mono">${money(c.tot)}</b></div>
  ${[['Efectivo',c.ef],['Tarjeta',c.ta],['Bizum',c.bi]].map(([n,v])=>`<div class="flex justify-between text-sm text-stone-600"><span>· ${n}</span><span class="mono">${money(v)}</span></div>`).join('')}
- <hr class="my-2"><div class="flex justify-between text-sm"><span>Fondo inicial <button class="underline text-[#1b7a4a]" onclick="A.fondo()">cambiar</button></span><span class="mono">${money(S.fondo)}</span></div>
+ ${c.dev>0?`<div class="flex justify-between text-sm text-red-600"><span>Devoluciones (ya descontadas)</span><span class="mono">−${money(c.dev)}</span></div>`:''}<hr class="my-2"><div class="flex justify-between text-sm"><span>Fondo inicial <button class="underline text-[#1b7a4a]" onclick="A.fondo()">cambiar</button></span><span class="mono">${money(S.fondo)}</span></div>
  <div class="flex justify-between text-sm"><span>Entradas/salidas</span><span class="mono">${money(c.mv)}</span></div>
  <div class="flex justify-between font-extrabold text-lg mt-1"><span>Efectivo esperado</span><span class="mono">${money(c.esp)}</span></div></div>
  <div class="flex gap-2 mb-3"><button class="btn bg-stone-200 flex-1" onclick="A.mov()">+ Entrada / salida</button><button class="btn bg-stone-200 flex-1" onclick="window.print()">Informe Z</button></div>
  ${S.movimientos.map(m=>`<div class="flex justify-between text-sm py-1 border-b"><span>${m.tipo=='entrada'?'⬆':'⬇'} ${esc(m.motivo||m.tipo)}</span><b class="mono ${m.tipo=='entrada'?'text-green-700':'text-red-600'}">${m.tipo=='entrada'?'+':'−'}${money(m.importe)}</b></div>`).join('')}
  <button class="btn bg-[#1b7a4a] text-white w-full mt-4" onclick="A.cerrar()">Finalizar y cerrar turno (${money(c.esp)})</button><p class="text-xs text-stone-500 mt-2 text-center">${S.turnos.length} turnos archivados</p></div>`},
-historial(){const l=S.ventas.map((v,i)=>[v,i]).reverse();return `<div class="p-4 max-w-2xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Ventas del turno</h2>${l.length?l.map(([v,i])=>`<button onclick="A.ver(${i})" class="w-full bg-white border rounded-2xl p-3 mb-2 flex items-center gap-3 text-left ${v.reemb?'opacity-50':''}"><div class="flex-1"><b>${esc(v.numero)}</b> · ${esc(v.mesa)}<div class="text-xs text-stone-500">${new Date(v.ts).toLocaleTimeString('es-ES')} · ${esc(v.metodo)}${v.reemb?' · reembolsado':''}</div></div><b class="mono">${money(v.total)}</b></button>`).join(''):'<p class="text-stone-500">Aún no hay ventas en este turno.</p>'}</div>`},
+historial(){const l=S.ventas.map((v,i)=>[v,i]).reverse();return `<div class="p-4 max-w-2xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Ventas del turno</h2>${l.length?l.map(([v,i])=>`<button onclick="A.ver(${i})" class="w-full bg-white border rounded-2xl p-3 mb-2 flex items-center gap-3 text-left ${v.reemb?'opacity-50':''}"><div class="flex-1"><b>${esc(v.numero)}</b> · ${esc(v.mesa)}<div class="text-xs text-stone-500">${new Date(v.ts).toLocaleTimeString('es-ES')} · ${esc(v.metodo)}${v.reemb?' · reembolsado':dv(v)>0?' · devolución parcial −'+money(dv(v)):''}</div></div><b class="mono">${money(neto(v))}</b></button>`).join(''):'<p class="text-stone-500">Aún no hay ventas en este turno.</p>'}</div>`},
 catalogo(){return `<div class="p-4 max-w-2xl mx-auto"><div class="flex items-center mb-3"><h2 class="font-extrabold text-xl flex-1">Catálogo</h2><button class="btn bg-stone-200 mr-2" onclick="A.cat_()">+ Categoría</button><button class="btn bg-[#1b7a4a] text-white" onclick="A.prod(-1)">+ Artículo</button></div>
  <div class="flex flex-wrap gap-2 mb-3">${S.categorias.map((c,i)=>`<span class="chip">${esc(c)} <button class="text-red-500 ml-1" onclick="A.delCat(${i})">✕</button></span>`).join('')||'<span class="text-sm text-stone-500">Sin categorías</span>'}</div>
  ${S.productos.map((p,i)=>`<button onclick="A.prod(${i})" class="w-full bg-white border rounded-2xl p-3 mb-2 flex items-center gap-3 text-left"><div class="flex-1 font-bold">${esc(p.nombre)}<div class="text-xs text-stone-500">${esc(p.cat||'Sin categoría')} · IVA ${p.iva}%${p.u=='kg'?' · por kg':''}</div></div><b class="mono">${money(p.precio)}</b></button>`).join('')}</div>`},
