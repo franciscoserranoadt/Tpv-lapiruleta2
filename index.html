@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>La Piruleta TPV</title>
+<title>TPV Factu</title>
 <link rel="manifest" href="manifest.json"><meta name="theme-color" content="#1b7a4a">
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -27,7 +27,7 @@ const rd=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??d}cat
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>(+n||0).toFixed(2).replace('.',',')+' €',num=s=>parseFloat(String(s).replace(',','.'))||0;
-const V={v:'venta',cat:-1,edit:false,buf:'',kp:false},DEF_AJ={nombre:'La Piruleta',cif:'',dir:'',pie:'¡Gracias por su visita!',serie:'T-',ancho:'80',razon:'',tel:'',web:'',wifi:'',legal:'',logo:'',logoSrc:'',logoOn:false,logoTam:64,logoMode:'silueta',mesa:true,ivaDet:false,fs:15,color:'#1b7a4a',fondo:'#fff8f5',cajonModo:'ninguno',cajonAuto:true,autoImp:'no',cajonPin:'0',cajonBaud:'9600',cajonUsb:null};
+const V={v:'venta',cat:-1,edit:false,buf:'',kp:false},DEF_AJ={nombre:'Mi negocio',cif:'',dir:'',pie:'¡Gracias por su visita!',serie:'T-',ancho:'80',razon:'',tel:'',web:'',wifi:'',legal:'',logo:'',logoSrc:'',logoOn:false,logoTam:64,logoMode:'silueta',mesa:true,ivaDet:false,fs:15,color:'#1b7a4a',fondo:'#fff8f5',cajonModo:'ninguno',cajonAuto:true,autoImp:'no',cajonPin:'0',cajonBaud:'9600',cajonUsb:null,impresora:''};
 
 /* ===== ESTADO CENTRAL (única fuente de verdad) ===== */
 let S=rd(K,null);
@@ -61,27 +61,28 @@ const A={
  setq(i){const q=num(V.buf);if(q>0){S.activo.lineas[i].qty=q;V.buf='';save()}},
  kp(){V.kp=!V.kp;render()},
  cf(k,v,r){S.ajustes[k]=v;save(!!r)},
- postCobro(v){const a=S.ajustes;if(a.cajonAuto&&v.metodo=='Efectivo'&&cajonDirecto())abrirCajon();if(a.autoImp=='todos'||(a.autoImp=='efectivo'&&v.metodo=='Efectivo'))setTimeout(()=>window.print(),200)},
+ postCobro(v){const a=S.ajustes;if(a.cajonAuto&&v.metodo=='Efectivo'&&cajonDirecto())abrirCajon();if(a.autoImp=='todos'||(a.autoImp=='efectivo'&&v.metodo=='Efectivo'))setTimeout(()=>imprimir(),200)},
  probar(){if(S.ajustes.cajonModo=='driver')return A.test();abrirCajon(1)},
  async conectar(){const a=S.ajustes;try{if(a.cajonModo=='serie'){if(!navigator.serial)return toast('Este navegador no admite Web Serial (usa Chrome o Edge)');_port=await navigator.serial.requestPort();toast('Puerto seleccionado')}else{if(!navigator.usb)return toast('Este navegador no admite WebUSB (usa Chrome o Edge)');const d=await navigator.usb.requestDevice({filters:[]});a.cajonUsb={v:d.vendorId,p:d.productId};save(false);toast('Impresora USB seleccionada')}}catch(e){toast(e.name=='NotFoundError'?'No se seleccionó ningún dispositivo':'Error: '+e.message)}},
- async cerrar(){await carpeta(true);if(!confirm('¿Cerrar el turno y generar el informe Z? Se archivarán '+S.ventas.length+' tickets y la caja volverá a cero.'))return;
+ async cerrar(){if(!window.tpvNative)await carpeta(true);if(!confirm('¿Cerrar el turno y generar el informe Z? Se archivarán '+S.ventas.length+' tickets y la caja volverá a cero.'))return;
   const z=zFrom(S.ventas,S.movimientos,S.fondo,S.ventas[0]?S.ventas[0].ts:Date.now(),Date.now());z.z='Z-'+String(S.zn+1).padStart(4,'0');
   try{await dbPut('cierres',z);for(const v of S.ventas)await dbPut('tickets',v)}catch(e){return alert('No se pudo guardar el cierre en el archivo del navegador, así que NO se ha cerrado el turno: '+(e.message||e))}
   const ts=S.ventas.slice();S.zn++;S.ventas=[];S.movimientos=[];V.cierres=null;V.st=null;save();
   guardarCopia(z,ts).then(ok=>{if(ok)toast('Copia del cierre guardada en la carpeta');else if(S.carpetaNombre)toast('No se pudo escribir en la carpeta de copias')}).catch(()=>toast('No se pudo escribir en la carpeta de copias'));
   A.verZ(z.id,z)},
- informe(){const z=zFrom(S.ventas,S.movimientos,S.fondo,S.ventas[0]?S.ventas[0].ts:Date.now(),Date.now());z.z='PROVISIONAL (turno sin cerrar)';$('#print').innerHTML=zHtml(z);window.print()},
+ informe(){const z=zFrom(S.ventas,S.movimientos,S.fondo,S.ventas[0]?S.ventas[0].ts:Date.now(),Date.now());z.z='PROVISIONAL (turno sin cerrar)';$('#print').innerHTML=zHtml(z);imprimir()},
  async verZ(id,z0){try{const z=z0||V.cierres.find(x=>x.id==id)||await dbGet('cierres',id);$('#print').innerHTML=zHtml(z);
   V.tk=(await Promise.all(z.ticketIds.map(i=>dbGet('tickets',i)))).filter(Boolean);
-  $('#m').innerHTML=ov(`<div class="overflow-auto max-h-[50vh] border rounded-xl p-2 mb-3">${zHtml(z)}</div><div class="flex gap-2 mb-3"><button class="btn bg-stone-200 flex-1" onclick="X()">Cerrar</button><button class="btn bg-stone-200 flex-1" onclick="A.expZ('${z.id}')">Exportar</button><button class="btn bgc text-white flex-1" onclick="window.print()">Imprimir</button></div><div class="text-xs font-bold mb-1">Tickets de este cierre (${V.tk.length})</div>${V.tk.map((v,i)=>`<button onclick="A.verArch(${i},'tk')" class="w-full text-left text-sm py-1.5 border-b flex justify-between"><span>${esc(v.numero)} · ${esc(v.metodo)}${v.reemb?' · reembolsado':''}</span><b class="mono">${money(neto(v))}</b></button>`).join('')}`)}catch(e){toast('No se pudo abrir el cierre: '+e.message)}},
+  $('#m').innerHTML=ov(`<div class="overflow-auto max-h-[50vh] border rounded-xl p-2 mb-3">${zHtml(z)}</div><div class="flex gap-2 mb-3"><button class="btn bg-stone-200 flex-1" onclick="X()">Cerrar</button><button class="btn bg-stone-200 flex-1" onclick="A.expZ('${z.id}')">Exportar</button><button class="btn bgc text-white flex-1" onclick="imprimir()">Imprimir</button></div><div class="text-xs font-bold mb-1">Tickets de este cierre (${V.tk.length})</div>${V.tk.map((v,i)=>`<button onclick="A.verArch(${i},'tk')" class="w-full text-left text-sm py-1.5 border-b flex justify-between"><span>${esc(v.numero)} · ${esc(v.metodo)}${v.reemb?' · reembolsado':''}</span><b class="mono">${money(neto(v))}</b></button>`).join('')}`)}catch(e){toast('No se pudo abrir el cierre: '+e.message)}},
  async expZ(id){try{const z=await dbGet('cierres',id),ts=(await Promise.all(z.ticketIds.map(i=>dbGet('tickets',i)))).filter(Boolean);dl(ymd(new Date(z.cierre))+'_'+z.z+'.json',{version:1,z,tickets:ts})}catch(e){toast('No se pudo exportar: '+e.message)}},
  hv(k){V.hv=k;if(k=='cierres'&&!V.cierres)dbAll('cierres').then(l=>{V.cierres=l.sort((a,b)=>b.cierre-a.cierre);render()}).catch(()=>toast('No se pudo leer el archivo'));render()},
  async buscar(){V.bd=$('#bd').value;V.bh=$('#bh').value;V.bq=$('#bq').value.trim().toLowerCase();
   const a=V.bd?new Date(V.bd+'T00:00:00').getTime():0,b=V.bh?new Date(V.bh+'T23:59:59.999').getTime():Date.now()+864e5;
   try{let l=await dbAll('tickets',IDBKeyRange.bound(a,b),'ts');if(V.bq)l=l.filter(v=>String(v.numero).toLowerCase().includes(V.bq)||String(v.mesa).toLowerCase().includes(V.bq));V.tb=l.sort((x,y)=>y.ts-x.ts);render()}catch(e){toast('No se pudo buscar: '+e.message)}},
- async elegirCarpeta(){if(!window.showDirectoryPicker)return toast('Este navegador no permite elegir carpeta (usa Chrome o Edge en el PC)');
+ async elegirCarpeta(){if(window.tpvNative){const n=await tpvNative.elegirCarpeta();if(n){S.carpetaNombre=n;save();toast('Carpeta de copias: '+n)}return}
+  if(!window.showDirectoryPicker)return toast('Este navegador no permite elegir carpeta (usa Chrome o Edge en el PC)');
   try{const h=await showDirectoryPicker({mode:'readwrite'});await tx('meta','readwrite',o=>o.put(h,'carpeta'));S.carpetaNombre=h.name;save();toast('Carpeta de copias: '+h.name)}catch(e){if(e.name!='AbortError')toast('No se pudo elegir la carpeta: '+e.message)}},
- async export(){try{dl('piruleta-copia-'+ymd(new Date())+'.json',{version:1,estado:S,tickets:await dbAll('tickets'),cierres:await dbAll('cierres')});S.ultimaCopia=Date.now();save()}catch(e){toast('No se pudo exportar: '+e.message)}},
+ async export(){try{dl('tpvfactu-copia-'+ymd(new Date())+'.json',{version:1,estado:S,tickets:await dbAll('tickets'),cierres:await dbAll('cierres')});S.ultimaCopia=Date.now();save()}catch(e){toast('No se pudo exportar: '+e.message)}},
  async importar(f){if(!f)return;try{const d=JSON.parse(await f.text());
   if(d.estado){if(!confirm('Restaurar sustituirá los datos actuales por los de la copia. ¿Continuar?'))return;for(const t of d.tickets||[])await dbPut('tickets',t);for(const z of d.cierres||[])await dbPut('cierres',z);localStorage.setItem(K,JSON.stringify(d.estado));location.reload()}
   else if(d.z&&d.tickets){await dbPut('cierres',d.z);for(const t of d.tickets)await dbPut('tickets',t);V.cierres=null;V.st=null;toast('Cierre '+d.z.z+' restaurado');render()}
@@ -100,7 +101,7 @@ const A={
   if(n&&!confirm(n+' artículos usan este IVA y pasarán al '+fq(to.tasa)+' %. ¿Continuar?'))return;
   S.productos.forEach(p=>{if(+p.iva==t.tasa)p.iva=to.tasa});S.ivas.splice(i,1);if(!S.ivas.some(y=>y.def))S.ivas[0].def=true;X();save()},
  pf(k,v){S.ajustes[k]=v;if(k=='logoMode')return A.procLogo();save(false);pgs();$('#pv').innerHTML=tkt(muestra())},
- test(){$('#print').innerHTML=tkt(muestra());window.print()},
+ test(){$('#print').innerHTML=tkt(muestra());imprimir()},
  quitarLogo(){Object.assign(S.ajustes,{logo:'',logoSrc:'',logoOn:false});save()},
  logo(f){if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const w0=im.naturalWidth||256,h0=im.naturalHeight||256,s=Math.min(1,256/w0),c=document.createElement('canvas');c.width=Math.round(w0*s)||256;c.height=Math.round(h0*s)||256;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);S.ajustes.logoSrc=c.toDataURL('image/png');A.procLogo()};im.src=r.result};r.readAsDataURL(f)},
  procLogo(){const a=S.ajustes;if(!a.logoSrc)return save();const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),w=c.width=im.width,H=c.height=im.height,x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,H);x.drawImage(im,0,0);
@@ -121,7 +122,7 @@ const A={
  ver(i,nc){A.verV(S.ventas[i],nc,i)},
  verArch(i,k){A.verV(V[k][i])},
  verV(v,nuevoCobro,i){$('#print').innerHTML=tkt(v);
-  $('#m').innerHTML=ov(`<h3 class="font-extrabold mb-2">${nuevoCobro?'✅ Cobro completado':'Ticket '+esc(v.numero)}${v.reemb?' · REEMBOLSADO':dv(v)>0?' · devolución parcial':''}</h3>${v.cambio>0.004?`<p class="mb-2 font-bold txc">Cambio: ${money(v.cambio)}</p>`:''}<div class="overflow-auto max-h-[50vh] border rounded-xl p-2 mb-3">${tkt(v)}</div><div class="flex gap-2"><button class="btn bg-stone-200 flex-1" onclick="X()">Cerrar</button>${!v.reemb&&!nuevoCobro&&i!==undefined?`<button class="btn bg-red-100 text-red-700 flex-1" onclick="A.reembForm(${i})">Reembolsar</button>`:''}<button class="btn bgc text-white flex-1" onclick="window.print()">Imprimir</button></div>`)},
+  $('#m').innerHTML=ov(`<h3 class="font-extrabold mb-2">${nuevoCobro?'✅ Cobro completado':'Ticket '+esc(v.numero)}${v.reemb?' · REEMBOLSADO':dv(v)>0?' · devolución parcial':''}</h3>${v.cambio>0.004?`<p class="mb-2 font-bold txc">Cambio: ${money(v.cambio)}</p>`:''}<div class="overflow-auto max-h-[50vh] border rounded-xl p-2 mb-3">${tkt(v)}</div><div class="flex gap-2"><button class="btn bg-stone-200 flex-1" onclick="X()">Cerrar</button>${!v.reemb&&!nuevoCobro&&i!==undefined?`<button class="btn bg-red-100 text-red-700 flex-1" onclick="A.reembForm(${i})">Reembolsar</button>`:''}<button class="btn bgc text-white flex-1" onclick="imprimir()">Imprimir</button></div>`)},
  reembForm(i){const v=S.ventas[i],ls=v.lineas.map((l,j)=>({l,j,d:+(l.qty-rqty(v,l.pid)).toFixed(3)})).filter(x=>x.d>0);
   if(!ls.length)return alert('Este ticket ya está reembolsado por completo');
   modal('Reembolso · '+esc(v.numero),[...ls.map(x=>({k:'q'+x.j,l:`${esc(x.l.nombre)} (disponible: ${fq(x.d)})`,v:'0',n:1})),{k:'r',l:'Motivo (opcional)',v:''}],f=>{
@@ -190,7 +191,10 @@ const tx=(s,m,f)=>DB.then(d=>new Promise((ok,ko)=>{const t=d.transaction(s,m),r=
 const dbPut=(s,v)=>tx(s,'readwrite',o=>o.put(JSON.parse(JSON.stringify(v)))),dbGet=(s,k)=>tx(s,'readonly',o=>o.get(k)),dbCount=s=>tx(s,'readonly',o=>o.count()),
  dbAll=(s,range,idx)=>tx(s,'readonly',o=>(idx?o.index(idx):o).getAll(range));
 async function carpeta(pedir){try{const h=await tx('meta','readonly',o=>o.get('carpeta'));if(!h)return null;let p=await h.queryPermission({mode:'readwrite'});if(p!='granted'&&pedir)p=await h.requestPermission({mode:'readwrite'});return p=='granted'?h:null}catch(e){return null}}
-async function guardarCopia(z,ts){const h=await carpeta(false);if(!h)return false;const f=new Date(z.cierre),dy=await h.getDirectoryHandle(String(f.getFullYear()),{create:true}),fh=await dy.getFileHandle(ymd(f)+'_'+z.z+'.json',{create:true}),w=await fh.createWritable();await w.write(JSON.stringify({version:1,z,tickets:ts},null,1));await w.close();S.ultimaCopia=Date.now();save(false);return true}
+async function guardarCopia(z,ts){const f=new Date(z.cierre),rel=f.getFullYear()+'/'+ymd(f)+'_'+z.z+'.json',txt=JSON.stringify({version:1,z,tickets:ts},null,1);
+ if(window.tpvNative){if(!(await tpvNative.guardarCopia(rel,txt)))return false}
+ else{const h=await carpeta(false);if(!h)return false;const dy=await h.getDirectoryHandle(String(f.getFullYear()),{create:true}),fh=await dy.getFileHandle(ymd(f)+'_'+z.z+'.json',{create:true}),w=await fh.createWritable();await w.write(txt);await w.close()}
+ S.ultimaCopia=Date.now();save(false);return true}
 async function migrar(){if(!(S.turnos||[]).length)return;const base=S.zn;let i=0;for(const t of S.turnos){const vs=t.ventas||[],ci=Date.parse(t.fecha)||Date.now(),z=zFrom(vs,t.movimientos||[],t.fondo||0,vs[0]?vs[0].ts:ci,ci);z.id='mig'+ci+'-'+i;z.z='Z-'+String(base+(++i)).padStart(4,'0');await dbPut('cierres',z);for(const v of vs)await dbPut('tickets',v)}S.zn=base+i;S.turnos=[];save(false)}
 async function loadStats(){try{const [t,c]=await Promise.all([dbCount('tickets'),dbCount('cierres')]),zs=c?await dbAll('cierres'):[];V.st={t,c,d:zs.length?Math.min(...zs.map(z=>z.apertura||z.cierre)):0}}catch(e){V.st={t:0,c:0,d:0}}render()}
 const avisoCopia=()=>{const d=S.ultimaCopia?Math.floor((Date.now()-S.ultimaCopia)/864e5):null;return(!S.carpetaNombre&&(d===null||d>30))||(S.carpetaNombre&&d!==null&&d>35)?`<div class="bg-amber-50 border border-amber-300 text-amber-900 text-xs rounded-xl p-3 mb-3">${d===null?'Aún no has hecho ninguna copia de seguridad.':'Hace '+d+' días de la última copia.'} Elige una carpeta de copias en Ajustes o exporta una copia: así conservas los cierres 5 años aunque se borren los datos del navegador.</div>`:''};
@@ -238,11 +242,12 @@ plantilla(){const a=S.ajustes,f=(k,l)=>`<label class="block text-xs font-bold mb
 ajustes(){const a=S.ajustes;return `<div class="p-4 max-w-xl mx-auto"><h2 class="font-extrabold text-xl mb-3">Ajustes</h2><div class="bg-white border rounded-2xl p-4 mb-3 text-sm"><b>${esc(a.nombre)}</b><br>CIF: ${esc(a.cif)||'—'}<br>${esc(a.dir)||'Sin dirección'}<br>Serie ${esc(a.serie)} · papel ${a.ancho} mm</div>
  <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-1">Archivo y copias de seguridad</h3><p class="text-xs text-stone-600 mb-2">Cada ticket y cada informe Z se guardan en el archivo del navegador y no se borran de forma automática. ${V.st?`Ahora hay ${V.st.t} tickets y ${V.st.c} cierres${V.st.d?' desde el '+new Date(V.st.d).toLocaleDateString('es-ES'):''}.`:'Cargando…'}</p><div class="text-sm mb-2">Carpeta de copias: <b>${esc(S.carpetaNombre||'sin elegir')}</b>${S.ultimaCopia?' · última copia '+new Date(S.ultimaCopia).toLocaleDateString('es-ES'):''}</div><div class="grid grid-cols-2 gap-2"><button class="btn bg-stone-200" onclick="A.elegirCarpeta()">Elegir carpeta</button><button class="btn bg-stone-200" onclick="A.export()">Exportar todo</button></div><label class="btn bg-stone-200 block text-center mt-2">Restaurar copia<input type="file" accept=".json" class="hidden" onchange="A.importar(this.files[0])"></label></div>
  <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Cajón monedero</h3>
- <label class="block text-xs font-bold mb-2">Cómo se abre<select class="inp" onchange="A.cf('cajonModo',this.value,1)">${opts([['ninguno','No usar cajón'],['driver','Al imprimir (lo ordena el driver)'],['serie','Directo por puerto COM (Web Serial)'],['usb','Directo por USB (WebUSB)']],a.cajonModo)}</select></label>
+ ${window.tpvNative?`<label class="block text-xs font-bold mb-2">Impresora de tickets<select class="inp" onchange="A.cf('impresora',this.value)">${opts([['','Preguntar al imprimir'],...(V.imps||[]).map(n=>[n,n])],a.impresora)}</select></label>`:''}
+ <label class="block text-xs font-bold mb-2">Cómo se abre<select class="inp" onchange="A.cf('cajonModo',this.value,1)">${opts([['ninguno','No usar cajón'],['driver','Al imprimir (lo ordena el driver)'],...(window.tpvNative?[['windows','Directo a la impresora de Windows (recomendado)']]:[]),['serie','Directo por puerto COM (Web Serial)'],['usb','Directo por USB (WebUSB)']],a.cajonModo)}</select></label>
  ${a.cajonModo!='ninguno'?`<label class="flex items-center gap-2 py-1 text-sm"><input type="checkbox" class="w-5 h-5" ${a.cajonAuto?'checked':''} onchange="A.cf('cajonAuto',this.checked)">Abrir al cobrar en efectivo</label>
  <label class="block text-xs font-bold my-2">Imprimir ticket al cobrar<select class="inp" onchange="A.cf('autoImp',this.value)">${opts([['no','No'],['efectivo','Solo en efectivo'],['todos','Siempre']],a.autoImp)}</select></label>`:''}
  ${a.cajonModo=='driver'?'<p class="text-xs text-stone-600 mb-2">Activa en el driver de tu impresora (Windows: Impresoras → Preferencias de impresión o Propiedades → Configuración del dispositivo) la opción de abrir el cajón antes o después de imprimir. Para que se abra al cobrar, pon «Imprimir ticket al cobrar» en «Solo en efectivo» o «Siempre».</p>':''}
- ${cajonDirecto()?`<div class="grid grid-cols-2 gap-3"><label class="block text-xs font-bold">Pin del cajón<select class="inp" onchange="A.cf('cajonPin',this.value)">${opts([['0','Pin 2 (habitual)'],['1','Pin 5']],a.cajonPin)}</select></label>${a.cajonModo=='serie'?`<label class="block text-xs font-bold">Velocidad<select class="inp" onchange="A.cf('cajonBaud',this.value)">${opts([['9600','9600'],['19200','19200'],['38400','38400'],['115200','115200']],a.cajonBaud)}</select></label>`:'<span></span>'}</div><div class="flex gap-2 mt-3"><button class="btn bg-stone-200 flex-1" onclick="A.conectar()">Conectar impresora</button><button class="btn bgc text-white flex-1" onclick="A.probar()">Probar apertura</button></div>`:''}
+ ${cajonDirecto()?`<div class="grid grid-cols-2 gap-3"><label class="block text-xs font-bold">Pin del cajón<select class="inp" onchange="A.cf('cajonPin',this.value)">${opts([['0','Pin 2 (habitual)'],['1','Pin 5']],a.cajonPin)}</select></label>${a.cajonModo=='serie'?`<label class="block text-xs font-bold">Velocidad<select class="inp" onchange="A.cf('cajonBaud',this.value)">${opts([['9600','9600'],['19200','19200'],['38400','38400'],['115200','115200']],a.cajonBaud)}</select></label>`:'<span></span>'}</div><div class="flex gap-2 mt-3">${a.cajonModo!='windows'?'<button class="btn bg-stone-200 flex-1" onclick="A.conectar()">Conectar impresora</button>':''}<button class="btn bgc text-white flex-1" onclick="A.probar()">Probar apertura</button></div>`:''}
  ${a.cajonModo=='driver'?'<button class="btn bg-stone-200 w-full" onclick="A.test()">Imprimir prueba</button>':''}</div>
  <div class="bg-white border rounded-2xl p-4 mb-3"><h3 class="font-extrabold mb-2">Colores de la app</h3><div class="flex flex-wrap gap-2 mb-3">${TEMAS.map(([n,c,f])=>`<button onclick="A.tema('${c}','${f}')" class="chip flex items-center gap-2" ${a.color==c&&a.fondo==f?`style="border:2px solid ${c}"`:''}><span class="w-4 h-4 rounded-full inline-block" style="background:${c}"></span>${n}</button>`).join('')}</div><div class="grid grid-cols-2 gap-3"><label class="text-xs font-bold">Color principal<input type="color" value="${a.color}" oninput="A.col('color',this.value)" class="block w-full h-10 mt-1 rounded-lg border"></label><label class="text-xs font-bold">Color de fondo<input type="color" value="${a.fondo}" oninput="A.col('fondo',this.value)" class="block w-full h-10 mt-1 rounded-lg border"></label></div></div>
  <div class="bg-white border rounded-2xl p-4 mb-3"><div class="flex items-center mb-1"><h3 class="font-extrabold flex-1">Tipos de IVA</h3><button class="btn bgc text-white !py-1.5" onclick="A.ivaForm(-1)">+ Tipo</button></div>${S.ivas.map((t,i)=>`<button onclick="A.ivaForm(${i})" class="w-full flex items-center py-2.5 border-b last:border-0 text-left"><span class="flex-1 font-semibold">${esc(t.nombre)}${t.def?' <span class="text-xs txc">· por defecto</span>':''}</span><b class="mono">${fq(t.tasa)} %</b></button>`).join('')}</div>
@@ -252,8 +257,9 @@ const TABS=[['venta','Venta'],['tickets','Tickets'],['mesas','Mesas'],['caja','C
 const TEMAS=[['Verde','#1b7a4a','#fff8f5'],['Azul','#1d4ed8','#f5f8ff'],['Rosa','#be185d','#fff5f9'],['Morado','#6d28d9','#faf5ff'],['Naranja','#c2410c','#fff8f1'],['Grafito','#292524','#f5f5f4']];
 const applyTheme=()=>{const a=S.ajustes,r=document.documentElement.style,m=document.querySelector('meta[name=theme-color]');r.setProperty('--c',a.color);r.setProperty('--bg',a.fondo);m&&m.setAttribute('content',a.color)};
 const toast=m=>{const t=document.createElement('div');t.textContent=m;t.className='fixed bottom-4 left-1/2 -translate-x-1/2 bg-black text-white text-sm px-4 py-2 rounded-xl z-[60] max-w-[90vw] text-center';document.body.append(t);setTimeout(()=>t.remove(),3800)};
-const opts=(l,cur)=>l.map(([k,n])=>`<option value="${k}" ${cur==k?'selected':''}>${n}</option>`).join('');
-let _port=null;const cajonDirecto=()=>['serie','usb'].includes(S.ajustes.cajonModo);
+const imprimir=()=>window.tpvNative?tpvNative.imprimir(S.ajustes.impresora||''):window.print();
+const opts=(l,cur)=>l.map(([k,n])=>`<option value="${esc(k)}" ${cur==k?'selected':''}>${esc(n)}</option>`).join('');
+let _port=null;const cajonDirecto=()=>['serie','usb','windows'].includes(S.ajustes.cajonModo);
 async function abrirCajon(msg){const a=S.ajustes,d=new Uint8Array([27,112,+a.cajonPin||0,25,250]);
  try{
   if(a.cajonModo=='serie'){if(!navigator.serial)throw Error('Este navegador no admite Web Serial (usa Chrome o Edge)');
@@ -265,11 +271,12 @@ async function abrirCajon(msg){const a=S.ajustes,d=new Uint8Array([27,112,+a.caj
    for(const i of dv.configuration.interfaces){for(const al of i.alternates){const e=al.endpoints.find(e=>e.direction=='out'&&e.type=='bulk');if(e){ifc=i.interfaceNumber;ep=e.endpointNumber;break}}if(ep)break}
    if(ep===undefined)throw Error('La impresora no tiene salida USB compatible');
    await dv.claimInterface(ifc);await dv.transferOut(ep,d);await dv.releaseInterface(ifc);await dv.close()}
+  else if(a.cajonModo=='windows'){if(!window.tpvNative)throw Error('Solo disponible en la app de escritorio');const r=await tpvNative.abrirCajon(a.impresora||'',+a.cajonPin||0);if(r!==true)throw Error(r||'Error desconocido')}
   else return;
   if(msg)toast('Pulso enviado al cajón')
  }catch(e){toast('No se pudo abrir el cajón: '+(e.message||e))}}
 const pgs=()=>$('#pg').textContent=`@media print{@page{size:${S.ajustes.ancho}mm auto;margin:0}}`;
-function render(){pgs();applyTheme();if(V.v=='ajustes'&&!V.st&&!V.stl){V.stl=1;loadStats()}V.v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):'venta';
+function render(){pgs();applyTheme();if(V.v=='ajustes'&&!V.st&&!V.stl){V.stl=1;loadStats()}if(V.v=='ajustes'&&window.tpvNative&&!V.imps){V.imps=[];tpvNative.impresoras().then(l=>{V.imps=l;render()}).catch(()=>{})}V.v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):'venta';
  $('#nav').innerHTML=TABS.map(([k,n])=>`<button onclick="A.go('${k}')" class="px-3 py-2 rounded-xl text-sm font-bold whitespace-nowrap ${V.v==k||(k=='ajustes'&&V.v=='plantilla')?'bg-white txc':'bg-black/25'}">${n}${k=='tickets'&&S.pendientes.length?` <span class="bg-amber-500 text-white rounded-full px-1.5 text-xs">${S.pendientes.length}</span>`:''}</button>`).join('');
  $('#app').innerHTML=VIEWS[V.v]()}
 addEventListener('hashchange',render);addEventListener('storage',e=>{if(e.key==K){S=JSON.parse(e.newValue);render()}});
